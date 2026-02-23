@@ -263,6 +263,31 @@ function renderQuests() {
     
     // Penalties
     renderPenalties(recentPen);
+
+    // Weekly Muscle Coverage
+    renderMuscleCoverage();
+}
+
+function renderMuscleCoverage() {
+    const grid = document.getElementById('muscleCoverageGrid');
+    if (!grid || typeof getWeeklyCoverage !== 'function') return;
+
+    const coverage = getWeeklyCoverage();
+    const groupIcons = { 'Chest': '🫁', 'Back': '🔙', 'Shoulders': '🪨', 'Arms': '💪', 'Legs': '🦵', 'Core': '🎯' };
+
+    grid.innerHTML = coverage.map(c => {
+        const icon = groupIcons[c.group] || '◈';
+        const status = c.days >= 2 ? 'hit' : c.days === 1 ? 'partial' : 'miss';
+        const dots = '●'.repeat(Math.min(c.days, 3)) + '○'.repeat(Math.max(0, 2 - c.days));
+        return `
+            <div class="mc-item mc-${status}">
+                <div class="mc-icon">${icon}</div>
+                <div class="mc-name">${c.group}</div>
+                <div class="mc-dots">${dots}</div>
+                <div class="mc-count">${c.days}×</div>
+            </div>
+        `;
+    }).join('');
 }
 
 function renderPenalties(penalties) {

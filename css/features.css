@@ -4,6 +4,49 @@
    Shop, Decay System, Calendar, Sound Toggle
    ========================================== */
 
+/* ========== WEEKLY MUSCLE COVERAGE ========== */
+.muscle-coverage-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:8px;padding:10px;
+}
+.mc-item{
+    display:flex;flex-direction:column;align-items:center;
+    padding:8px 4px;border-radius:8px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.02);
+    transition:all .3s;
+}
+.mc-hit{
+    border-color:var(--green);
+    background:rgba(76,175,80,.08);
+}
+.mc-partial{
+    border-color:var(--gold);
+    background:rgba(255,215,0,.06);
+}
+.mc-miss{
+    border-color:var(--border);
+    opacity:.6;
+}
+.mc-icon{ font-size:1.2rem;margin-bottom:2px; }
+.mc-name{
+    font-family:var(--heading);font-size:.7rem;
+    color:var(--text);letter-spacing:.5px;
+}
+.mc-dots{
+    font-size:.65rem;letter-spacing:2px;margin:2px 0;
+    color:var(--dim);
+}
+.mc-hit .mc-dots{ color:var(--green); }
+.mc-partial .mc-dots{ color:var(--gold); }
+.mc-count{
+    font-family:var(--mono);font-size:.6rem;
+    color:var(--dim);
+}
+.mc-hit .mc-count{ color:var(--green); }
+.mc-partial .mc-count{ color:var(--gold); }
+
 /* ========== AVATAR ========== */
 .avatar-wrap{
     display:flex;flex-direction:column;align-items:center;
