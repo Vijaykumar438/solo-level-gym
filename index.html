@@ -372,9 +372,10 @@
                 <div class="sw-header">[Report — Sustenance]</div>
                 <div class="log-form">
                     <div class="lf-two">
-                        <div class="lf-row">
+                        <div class="lf-row food-autocomplete-wrap">
                             <label>Food Item</label>
-                            <input type="text" id="logFood" placeholder="e.g. Chicken Breast">
+                            <input type="text" id="logFood" placeholder="Type to search..." autocomplete="off">
+                            <div class="food-suggestions hidden" id="foodSuggestions"></div>
                         </div>
                         <div class="lf-row">
                             <label>Meal</label>
@@ -387,6 +388,10 @@
                                 <option value="Post-Workout">Post-Workout</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="lf-row">
+                        <label>Servings <small id="servingHint"></small></label>
+                        <input type="number" id="logServings" min="0.25" step="0.25" value="1">
                     </div>
                     <div class="lf-three">
                         <div class="lf-row">
@@ -408,6 +413,12 @@
                     </div>
                     <button class="sys-btn" id="submitFood">[REPORT SUSTENANCE]</button>
                 </div>
+            </div>
+
+            <!-- Energy Balance — Intake vs Output -->
+            <div class="sys-window mt" id="energyBalanceSection">
+                <div class="sw-header">[Energy Balance — Intake vs Output]</div>
+                <div class="energy-balance" id="energyBalance"></div>
             </div>
 
             <!-- Today Feed -->

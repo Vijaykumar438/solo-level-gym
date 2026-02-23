@@ -36,6 +36,102 @@ const TITLES = {
     999: 'He Who Must Not Be Challenged'
 };
 
+// ═══════════════════════════════════════════
+//  FOOD DATABASE — Auto-fill macros per 100g or standard serving
+//  { name, serving, servingLabel, protein, carbs, fats }
+// ═══════════════════════════════════════════
+const FOOD_DB = [
+    // ---- Protein Sources ----
+    { name:'Chicken Breast',       serving:150, servingLabel:'150g',   protein:46, carbs:0, fats:5 },
+    { name:'Chicken Thigh',        serving:150, servingLabel:'150g',   protein:38, carbs:0, fats:14 },
+    { name:'Grilled Chicken',      serving:150, servingLabel:'150g',   protein:43, carbs:0, fats:7 },
+    { name:'Turkey Breast',        serving:150, servingLabel:'150g',   protein:45, carbs:0, fats:3 },
+    { name:'Salmon',               serving:150, servingLabel:'150g',   protein:34, carbs:0, fats:18 },
+    { name:'Tuna',                 serving:150, servingLabel:'150g',   protein:40, carbs:0, fats:2 },
+    { name:'Shrimp',               serving:150, servingLabel:'150g',   protein:36, carbs:0, fats:3 },
+    { name:'Tilapia',              serving:150, servingLabel:'150g',   protein:35, carbs:0, fats:4 },
+    { name:'Beef Steak',           serving:200, servingLabel:'200g',   protein:50, carbs:0, fats:20 },
+    { name:'Ground Beef (lean)',   serving:150, servingLabel:'150g',   protein:38, carbs:0, fats:15 },
+    { name:'Lamb',                 serving:150, servingLabel:'150g',   protein:37, carbs:0, fats:18 },
+    { name:'Pork Chop',            serving:150, servingLabel:'150g',   protein:39, carbs:0, fats:12 },
+    { name:'Egg (whole)',          serving:50,  servingLabel:'1 egg',  protein:6, carbs:1, fats:5 },
+    { name:'Egg Whites',           serving:100, servingLabel:'3 whites',protein:11, carbs:1, fats:0 },
+    { name:'Paneer',               serving:100, servingLabel:'100g',   protein:18, carbs:3, fats:21 },
+    { name:'Tofu',                 serving:150, servingLabel:'150g',   protein:12, carbs:3, fats:6 },
+    { name:'Whey Protein Shake',   serving:30,  servingLabel:'1 scoop',protein:24, carbs:3, fats:1 },
+    { name:'Greek Yogurt',         serving:170, servingLabel:'1 cup',  protein:17, carbs:6, fats:5 },
+    { name:'Cottage Cheese',       serving:150, servingLabel:'150g',   protein:18, carbs:5, fats:6 },
+
+    // ---- Carb Sources ----
+    { name:'White Rice',           serving:200, servingLabel:'1 cup cooked', protein:4, carbs:52, fats:0 },
+    { name:'Brown Rice',           serving:200, servingLabel:'1 cup cooked', protein:5, carbs:46, fats:2 },
+    { name:'Basmati Rice',         serving:200, servingLabel:'1 cup cooked', protein:4, carbs:50, fats:0 },
+    { name:'Oats / Oatmeal',      serving:40,  servingLabel:'½ cup dry',protein:5, carbs:27, fats:3 },
+    { name:'Bread (white)',        serving:50,  servingLabel:'2 slices',protein:5, carbs:26, fats:2 },
+    { name:'Bread (whole wheat)',  serving:50,  servingLabel:'2 slices',protein:6, carbs:22, fats:2 },
+    { name:'Pasta',                serving:200, servingLabel:'1 cup cooked', protein:7, carbs:43, fats:1 },
+    { name:'Sweet Potato',         serving:150, servingLabel:'1 medium',protein:3, carbs:30, fats:0 },
+    { name:'Potato',               serving:150, servingLabel:'1 medium',protein:3, carbs:26, fats:0 },
+    { name:'Quinoa',               serving:185, servingLabel:'1 cup cooked', protein:8, carbs:39, fats:4 },
+    { name:'Roti / Chapati',       serving:40,  servingLabel:'1 roti', protein:3, carbs:18, fats:2 },
+    { name:'Naan',                 serving:90,  servingLabel:'1 naan', protein:8, carbs:45, fats:3 },
+    { name:'Idli',                 serving:40,  servingLabel:'1 idli', protein:2, carbs:8, fats:0 },
+    { name:'Dosa',                 serving:80,  servingLabel:'1 dosa', protein:3, carbs:22, fats:3 },
+    { name:'Upma',                 serving:200, servingLabel:'1 bowl', protein:5, carbs:30, fats:6 },
+    { name:'Poha',                 serving:200, servingLabel:'1 bowl', protein:4, carbs:35, fats:5 },
+    { name:'Cornflakes',           serving:30,  servingLabel:'1 cup',  protein:2, carbs:24, fats:0 },
+    { name:'Muesli / Granola',     serving:50,  servingLabel:'½ cup',  protein:5, carbs:33, fats:6 },
+
+    // ---- Fruits ----
+    { name:'Banana',               serving:120, servingLabel:'1 medium',protein:1, carbs:27, fats:0 },
+    { name:'Apple',                serving:180, servingLabel:'1 medium',protein:0, carbs:25, fats:0 },
+    { name:'Orange',               serving:150, servingLabel:'1 medium',protein:1, carbs:15, fats:0 },
+    { name:'Mango',                serving:150, servingLabel:'1 cup',  protein:1, carbs:25, fats:0 },
+    { name:'Watermelon',           serving:200, servingLabel:'1 cup',  protein:1, carbs:15, fats:0 },
+    { name:'Grapes',               serving:150, servingLabel:'1 cup',  protein:1, carbs:27, fats:0 },
+    { name:'Berries (mixed)',      serving:150, servingLabel:'1 cup',  protein:1, carbs:17, fats:0 },
+    { name:'Dates',                serving:40,  servingLabel:'3 dates',protein:1, carbs:27, fats:0 },
+
+    // ---- Fats & Nuts ----
+    { name:'Almonds',              serving:30,  servingLabel:'~23 nuts',protein:6, carbs:6, fats:14 },
+    { name:'Peanuts',              serving:30,  servingLabel:'handful', protein:7, carbs:5, fats:14 },
+    { name:'Cashews',              serving:30,  servingLabel:'~18 nuts',protein:5, carbs:9, fats:12 },
+    { name:'Walnuts',              serving:30,  servingLabel:'~7 halves',protein:4, carbs:4, fats:18 },
+    { name:'Peanut Butter',        serving:32,  servingLabel:'2 tbsp', protein:7, carbs:6, fats:16 },
+    { name:'Avocado',              serving:100, servingLabel:'½ avocado',protein:2, carbs:9, fats:15 },
+    { name:'Olive Oil',            serving:14,  servingLabel:'1 tbsp', protein:0, carbs:0, fats:14 },
+    { name:'Butter / Ghee',        serving:14,  servingLabel:'1 tbsp', protein:0, carbs:0, fats:12 },
+    { name:'Cheese',               serving:30,  servingLabel:'1 slice',protein:7, carbs:0, fats:9 },
+
+    // ---- Dairy / Drinks ----
+    { name:'Whole Milk',           serving:250, servingLabel:'1 glass',protein:8, carbs:12, fats:8 },
+    { name:'Skim Milk',            serving:250, servingLabel:'1 glass',protein:8, carbs:12, fats:0 },
+    { name:'Buttermilk / Chaas',   serving:250, servingLabel:'1 glass',protein:4, carbs:6, fats:2 },
+    { name:'Lassi',                serving:250, servingLabel:'1 glass',protein:6, carbs:20, fats:4 },
+    { name:'Protein Bar',          serving:60,  servingLabel:'1 bar',  protein:20, carbs:22, fats:8 },
+
+    // ---- Meals / Mixed ----
+    { name:'Dal (lentil soup)',    serving:200, servingLabel:'1 bowl', protein:12, carbs:24, fats:4 },
+    { name:'Rajma (kidney beans)', serving:200, servingLabel:'1 bowl', protein:10, carbs:28, fats:3 },
+    { name:'Chole (chickpeas)',    serving:200, servingLabel:'1 bowl', protein:11, carbs:30, fats:5 },
+    { name:'Chicken Curry',        serving:200, servingLabel:'1 bowl', protein:28, carbs:8, fats:14 },
+    { name:'Egg Curry',            serving:200, servingLabel:'1 bowl', protein:14, carbs:8, fats:12 },
+    { name:'Fish Curry',           serving:200, servingLabel:'1 bowl', protein:25, carbs:6, fats:10 },
+    { name:'Biryani (chicken)',    serving:300, servingLabel:'1 plate',protein:25, carbs:55, fats:14 },
+    { name:'Fried Rice',           serving:250, servingLabel:'1 plate',protein:10, carbs:50, fats:10 },
+    { name:'Pizza (2 slices)',     serving:200, servingLabel:'2 slices',protein:16, carbs:50, fats:18 },
+    { name:'Burger',               serving:200, servingLabel:'1 burger',protein:20, carbs:35, fats:18 },
+    { name:'Sandwich',             serving:180, servingLabel:'1 sandwich',protein:14, carbs:30, fats:10 },
+    { name:'Salad (mixed)',        serving:200, servingLabel:'1 bowl', protein:4, carbs:10, fats:5 },
+    { name:'Wrap / Roll',          serving:200, servingLabel:'1 wrap', protein:15, carbs:32, fats:10 },
+    { name:'Noodles / Maggi',      serving:200, servingLabel:'1 pack', protein:8, carbs:42, fats:12 },
+    { name:'Paratha (stuffed)',    serving:80,  servingLabel:'1 paratha',protein:5, carbs:25, fats:8 },
+    { name:'Samosa',               serving:60,  servingLabel:'1 samosa',protein:3, carbs:18, fats:8 },
+    { name:'Pav Bhaji',            serving:300, servingLabel:'1 plate',protein:10, carbs:50, fats:15 },
+    { name:'Thali (veg)',          serving:500, servingLabel:'1 thali',protein:18, carbs:70, fats:16 },
+    { name:'Thali (non-veg)',      serving:500, servingLabel:'1 thali',protein:30, carbs:65, fats:20 },
+];
+
 const CALORIE_RATES = {
     'Push-ups':     { low: 4, medium: 6, high: 8 },
     'Pull-ups':     { low: 5, medium: 8, high: 11 },

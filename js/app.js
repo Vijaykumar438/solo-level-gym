@@ -168,8 +168,223 @@ function updateCalPreview() {
     const p = parseFloat(document.getElementById('logProtein').value) || 0;
     const c = parseFloat(document.getElementById('logCarbs').value) || 0;
     const f = parseFloat(document.getElementById('logFats').value) || 0;
-    const cal = (p * 4) + (c * 4) + (f * 9);
+    const cal = Math.round((p * 4) + (c * 4) + (f * 9));
     document.getElementById('calPreview').textContent = cal + ' kcal estimated';
+}
+
+// ═══════════════════════════════════════════
+//  FOOD AUTOCOMPLETE — Smart food search
+// ═══════════════════════════════════════════
+let _selectedFoodItem = null;
+let _sugActiveIdx = -1;
+
+function initFoodAutocomplete() {
+    const input = document.getElementById('logFood');
+    const sugBox = document.getElementById('foodSuggestions');
+    const servingsInput = document.getElementById('logServings');
+    if (!input || !sugBox) return;
+
+    input.addEventListener('input', () => {
+        const q = input.value.trim().toLowerCase();
+        _sugActiveIdx = -1;
+        if (q.length < 2) { sugBox.classList.add('hidden'); return; }
+
+        const matches = FOOD_DB.filter(f => f.name.toLowerCase().includes(q)).slice(0, 8);
+        if (matches.length === 0) { sugBox.classList.add('hidden'); return; }
+
+        sugBox.innerHTML = matches.map((f, i) => {
+            const cal = Math.round((f.protein * 4) + (f.carbs * 4) + (f.fats * 9));
+            return `<div class="food-sug-item" data-idx="${i}">
+                <div>
+                    <span class="food-sug-name">${highlightMatch(f.name, q)}</span>
+                </div>
+                <div class="food-sug-meta">
+                    <div class="food-sug-macro">P:${f.protein} C:${f.carbs} F:${f.fats}</div>
+                    <div>${cal} kcal · ${f.servingLabel}</div>
+                </div>
+            </div>`;
+        }).join('');
+
+        sugBox.classList.remove('hidden');
+
+        // Bind click on suggestions
+        sugBox.querySelectorAll('.food-sug-item').forEach((el, i) => {
+            el.addEventListener('click', () => selectFoodSuggestion(matches[i]));
+        });
+    });
+
+    // Keyboard navigation
+    input.addEventListener('keydown', (e) => {
+        const items = sugBox.querySelectorAll('.food-sug-item');
+        if (sugBox.classList.contains('hidden') || items.length === 0) return;
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            _sugActiveIdx = Math.min(_sugActiveIdx + 1, items.length - 1);
+            updateSugActive(items);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            _sugActiveIdx = Math.max(_sugActiveIdx - 1, 0);
+            updateSugActive(items);
+        } else if (e.key === 'Enter' && _sugActiveIdx >= 0) {
+            e.preventDefault();
+            items[_sugActiveIdx].click();
+        } else if (e.key === 'Escape') {
+            sugBox.classList.add('hidden');
+        }
+    });
+
+    // Close suggestions on outside click
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.food-autocomplete-wrap')) {
+            sugBox.classList.add('hidden');
+        }
+    });
+
+    // Servings multiplier
+    if (servingsInput) {
+        servingsInput.addEventListener('input', () => {
+            if (_selectedFoodItem) applyFoodServings(_selectedFoodItem);
+        });
+    }
+}
+
+function highlightMatch(name, query) {
+    const idx = name.toLowerCase().indexOf(query);
+    if (idx === -1) return name;
+    return name.substring(0, idx) +
+        '<span class="food-sug-match">' + name.substring(idx, idx + query.length) + '</span>' +
+        name.substring(idx + query.length);
+}
+
+function updateSugActive(items) {
+    items.forEach((el, i) => {
+        el.classList.toggle('active', i === _sugActiveIdx);
+    });
+    if (_sugActiveIdx >= 0 && items[_sugActiveIdx]) {
+        items[_sugActiveIdx].scrollIntoView({ block: 'nearest' });
+    }
+}
+
+function selectFoodSuggestion(food) {
+    _selectedFoodItem = food;
+    document.getElementById('logFood').value = food.name;
+    document.getElementById('foodSuggestions').classList.add('hidden');
+    document.getElementById('servingHint').textContent = `(1 serving = ${food.servingLabel})`;
+    document.getElementById('logServings').value = 1;
+    applyFoodServings(food);
+}
+
+function applyFoodServings(food) {
+    const qty = parseFloat(document.getElementById('logServings').value) || 1;
+    document.getElementById('logProtein').value = Math.round(food.protein * qty * 10) / 10;
+    document.getElementById('logCarbs').value = Math.round(food.carbs * qty * 10) / 10;
+    document.getElementById('logFats').value = Math.round(food.fats * qty * 10) / 10;
+    updateCalPreview();
+}
+
+// ═══════════════════════════════════════════
+//  ENERGY BALANCE — Intake vs Output
+// ═══════════════════════════════════════════
+function renderEnergyBalance() {
+    const el = document.getElementById('energyBalance');
+    if (!el) return;
+
+    const todayFoods = getTodayFoods();
+    const todayWorkouts = getTodayWorkouts();
+
+    // Calories IN
+    let calIn = 0, totalP = 0, totalC = 0, totalF = 0;
+    todayFoods.forEach(f => {
+        calIn += f.calories || 0;
+        totalP += f.protein || 0;
+        totalC += f.carbs || 0;
+        totalF += f.fats || 0;
+    });
+
+    // Calories OUT — workout burn
+    let workoutBurn = 0;
+    todayWorkouts.forEach(w => { workoutBurn += w.calBurned || 0; });
+
+    // Estimated BMR (Mifflin-St Jeor, simplified for male ~175cm)
+    // If physique weight available, use it; otherwise default 70kg
+    const bodyWeight = (D.physique && D.physique.currentWeight) ? D.physique.currentWeight : 70;
+    const bmr = Math.round(10 * bodyWeight + 6.25 * 175 - 5 * 25 + 5); // ~1750-1900 for 70-80kg
+    const bmrToday = Math.round(bmr * (new Date().getHours() / 24)); // Proportional to time of day
+
+    const calOut = workoutBurn + bmrToday;
+    const net = calIn - calOut;
+    const totalOut = workoutBurn + bmr; // Full day estimate
+
+    // Bar widths
+    const maxCal = Math.max(calIn, calOut, 500);
+    const inPct = Math.min(100, Math.round((calIn / maxCal) * 100));
+    const outPct = Math.min(100, Math.round((calOut / maxCal) * 100));
+
+    // Verdict
+    let verdict, verdictClass, verdictDesc;
+    const absNet = Math.abs(net);
+    if (net > 200) {
+        verdict = `+${net} kcal SURPLUS`;
+        verdictClass = 'surplus';
+        verdictDesc = 'You are in a calorie surplus. Ideal for muscle building / bulking.';
+    } else if (net < -200) {
+        verdict = `${net} kcal DEFICIT`;
+        verdictClass = 'deficit';
+        verdictDesc = 'You are in a calorie deficit. Ideal for fat loss / cutting.';
+    } else {
+        verdict = `${net >= 0 ? '+' : ''}${net} kcal MAINTENANCE`;
+        verdictClass = 'balanced';
+        verdictDesc = 'Roughly at maintenance. Good for recomposition.';
+    }
+
+    el.innerHTML = `
+        <div class="eb-summary">
+            <div class="eb-col eb-in">
+                <div class="eb-col-label">Intake</div>
+                <div class="eb-col-val">${calIn}</div>
+                <div class="eb-col-sub">kcal consumed</div>
+            </div>
+            <div class="eb-vs">⚔</div>
+            <div class="eb-col eb-out">
+                <div class="eb-col-label">Output</div>
+                <div class="eb-col-val">${calOut}</div>
+                <div class="eb-col-sub">${workoutBurn} exercise + ${bmrToday} BMR</div>
+            </div>
+        </div>
+        <div class="eb-bar-wrap">
+            <div class="eb-bar-labels">
+                <span>🍖 Intake: ${calIn} kcal</span>
+                <span>🔥 Output: ${calOut} kcal</span>
+            </div>
+            <div class="eb-bar-track">
+                <div class="eb-bar-in" style="width:${inPct}%"></div>
+                <div class="eb-bar-out" style="width:${outPct}%"></div>
+            </div>
+        </div>
+        <div class="eb-verdict ${verdictClass}">
+            <div class="eb-verdict-label">— Energy Verdict —</div>
+            <div class="eb-verdict-val">${verdict}</div>
+            <div class="eb-verdict-desc">${verdictDesc}</div>
+        </div>
+        <div class="eb-breakdown">
+            <div class="eb-break-item">
+                <div class="eb-break-val">${Math.round(totalP)}g</div>
+                <div class="eb-break-label">Protein</div>
+            </div>
+            <div class="eb-break-item">
+                <div class="eb-break-val">${Math.round(totalC)}g</div>
+                <div class="eb-break-label">Carbs</div>
+            </div>
+            <div class="eb-break-item">
+                <div class="eb-break-val">${Math.round(totalF)}g</div>
+                <div class="eb-break-label">Fats</div>
+            </div>
+        </div>
+        <div style="text-align:center;margin-top:10px;font-family:var(--mono);font-size:clamp(.6rem,1.5vw,.7rem);color:var(--dim)">
+            Est. full-day output: ${totalOut} kcal (BMR ${bmr} + exercise ${workoutBurn}) · Based on ${bodyWeight}kg body weight
+        </div>
+    `;
 }
 
 // ---- Form Handlers ----
@@ -217,7 +432,10 @@ function handleFoodSubmit() {
     document.getElementById('logProtein').value = '';
     document.getElementById('logCarbs').value = '';
     document.getElementById('logFats').value = '';
+    document.getElementById('logServings').value = '1';
+    document.getElementById('servingHint').textContent = '';
     document.getElementById('calPreview').textContent = '0 kcal estimated';
+    _selectedFoodItem = null;
     refreshUI();
 }
 
@@ -433,6 +651,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ['logProtein', 'logCarbs', 'logFats'].forEach(id => {
         document.getElementById(id).addEventListener('input', updateCalPreview);
     });
+
+    // Food autocomplete
+    initFoodAutocomplete();
 
     // Physique button
     document.getElementById('savePhysBtn').addEventListener('click', handlePhysiqueSubmit);

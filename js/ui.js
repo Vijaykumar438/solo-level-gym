@@ -88,6 +88,9 @@ function refreshUI() {
     // Feed
     renderTodayFeed();
     
+    // Energy Balance
+    if (typeof renderEnergyBalance === 'function') renderEnergyBalance();
+    
     // Skills & Achievements
     renderSkills();
     renderAchievements();
