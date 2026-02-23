@@ -31,6 +31,8 @@ function initTabs() {
             if (target === 'shop' && typeof renderShop === 'function') setTimeout(renderShop, 50);
             if (target === 'skilltree' && typeof renderSkillTree === 'function') setTimeout(renderSkillTree, 50);
             if (target === 'tutorial' && typeof renderTutorial === 'function') setTimeout(renderTutorial, 50);
+            if (target === 'journal' && typeof renderJournal === 'function') setTimeout(renderJournal, 50);
+            if (target === 'log' && typeof renderTemplates === 'function') setTimeout(renderTemplates, 50);
         });
     });
 }
@@ -106,6 +108,25 @@ function refreshUI() {
 
     // Shadow Army
     if (typeof renderArmyPanel === 'function') renderArmyPanel();
+
+    // Journal tab badge (unread count)
+    if (typeof getUnreadJournalCount === 'function') {
+        const count = getUnreadJournalCount();
+        const journalTab = document.querySelector('.tab[data-tab="journal"]');
+        if (journalTab) {
+            let badge = journalTab.querySelector('.tab-badge');
+            if (count > 0) {
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'tab-badge';
+                    journalTab.appendChild(badge);
+                }
+                badge.textContent = count;
+            } else if (badge) {
+                badge.remove();
+            }
+        }
+    }
 }
 
 // ---- Stats rendering ----

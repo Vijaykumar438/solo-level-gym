@@ -650,6 +650,9 @@ function appInit() {
     // Initialize tabs
     initTabs();
 
+    // Initialize template creator dropdown
+    if (typeof populateCreatorSelect === 'function') populateCreatorSelect();
+
     // Boot animation
     bootSequence();
 }

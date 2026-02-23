@@ -144,7 +144,8 @@
             <button class="tab" data-tab="skills"><span class="tab-icon">◇</span> Skills</button>
             <button class="tab" data-tab="skilltree"><span class="tab-icon">🌳</span> Tree</button>
             <button class="tab" data-tab="analysis"><span class="tab-icon">△</span> Analysis</button>
-            <button class="tab" data-tab="tutorial"><span class="tab-icon">📖</span> Guide</button>
+            <button class="tab" data-tab="journal"><span class="tab-icon">📖</span> Journal</button>
+            <button class="tab" data-tab="tutorial"><span class="tab-icon">�</span> Guide</button>
         </nav>
 
         <!-- ===== STATUS TAB ===== -->
@@ -314,6 +315,12 @@
 
         <!-- ===== LOG TAB ===== -->
         <section class="panel" data-panel="log">
+            <!-- Workout Templates -->
+            <div class="sys-window">
+                <div class="sw-header">[Workout Templates — Quick Log]</div>
+                <div id="templatesContent" class="templates-content"></div>
+            </div>
+
             <!-- Workout Log -->
             <div class="sys-window">
                 <div class="sw-header">[Report — Workout]</div>
@@ -580,6 +587,11 @@
             </div>
         </section>
 
+        <!-- ===== JOURNAL TAB ===== -->
+        <section class="panel" data-panel="journal">
+            <div id="journalContent"></div>
+        </section>
+
         <!-- ===== TUTORIAL TAB ===== -->
         <section class="panel" data-panel="tutorial">
             <div id="tutorialContent"></div>
@@ -629,6 +641,31 @@
             </div>
         </div>
 
+        <!-- Template Creator Overlay -->
+        <div id="templateCreatorOverlay" class="tpl-creator-overlay hidden">
+            <div class="tpl-creator-box">
+                <div class="tpl-creator-title">⚙ CREATE TEMPLATE</div>
+                <div class="tpl-creator-form">
+                    <div class="lf-row">
+                        <label>Template Name</label>
+                        <input type="text" id="tplCreatorName" placeholder="e.g. My Push Day" maxlength="30" autocomplete="off">
+                    </div>
+                    <div class="lf-row">
+                        <label>Add Exercise</label>
+                        <div class="tpl-creator-add">
+                            <select id="tplCreatorExercise"></select>
+                            <button class="tpl-creator-add-btn" onclick="addCreatorExercise()">+</button>
+                        </div>
+                    </div>
+                    <div id="tplCreatorList" class="tpl-creator-list"></div>
+                    <div class="tpl-creator-actions">
+                        <button class="sys-btn" onclick="saveCustomTemplate()">[SAVE TEMPLATE]</button>
+                        <button class="sys-btn dm-danger" onclick="closeTemplateCreator()">[CANCEL]</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Decay Report Overlay -->
         <div id="decayOverlay" class="decay-overlay hidden">
             <div class="decay-box">
@@ -669,6 +706,8 @@
     <script src="js/features.js"></script>
     <script src="js/skill-tree.js"></script>
     <script src="js/tutorial.js"></script>
+    <script src="js/journal.js"></script>
+    <script src="js/templates.js"></script>
     <script src="js/avatar.js"></script>
     <script src="js/app.js"></script>
 

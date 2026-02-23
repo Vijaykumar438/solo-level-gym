@@ -399,6 +399,8 @@ function getDefaultData() {
         penalties: [],   // { id, date, reason, xpLost }
         shadowArmy: 0,
         skillTree: { strength: [], endurance: [], shadow: [] },
+        templates: [],      // custom workout templates
+        journalRead: [],    // IDs of read journal chapters
         boss: null,
         lastShadowMission: 0,
         loginStreak: 0,
