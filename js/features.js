@@ -198,15 +198,16 @@ function getWeeklyBoss() {
     
     if (!D.boss) D.boss = {};
     
-    if (D.boss.weekKey !== weekKey) {
-        // New week, new boss — pick from rank pool using week as seed
+    if (D.boss.weekKey !== weekKey || !D.boss.img) {
+        // New week or missing img (upgrade from old data) — pick from rank pool
         const rank = getRank(D.level);
         const pool = BOSS_POOL[rank.name] || BOSS_POOL.E;
         const bossIdx = weekNum % pool.length;
         const template = pool[bossIdx];
         
-        // Scale HP by level
+        // Scale HP by level — keep current HP if same week (img upgrade)
         const hpScale = 1 + (D.level * 0.05);
+        const isSameWeek = D.boss.weekKey === weekKey;
         
         D.boss = {
             weekKey,
@@ -214,10 +215,10 @@ function getWeeklyBoss() {
             img: template.img,
             rank: rank.name,
             maxHp: Math.round(template.hp * hpScale),
-            currentHp: Math.round(template.hp * hpScale),
+            currentHp: isSameWeek && D.boss.currentHp != null ? D.boss.currentHp : Math.round(template.hp * hpScale),
             reward: template.reward,
-            defeated: false,
-            damageLog: [] // { date, damage, source }
+            defeated: isSameWeek ? !!D.boss.defeated : false,
+            damageLog: isSameWeek && D.boss.damageLog ? D.boss.damageLog : []
         };
         saveGame();
     }
@@ -402,9 +403,10 @@ function renderBossPanel() {
     document.getElementById('bossRankLabel').textContent = boss.rank + '-Rank';
     const bossIconEl = document.getElementById('bossIcon');
     if (boss.img) {
-        bossIconEl.innerHTML = '<img src="' + boss.img + '" alt="' + boss.name + '" draggable="false">';
+        const imgPath = boss.img.startsWith('/') ? boss.img : '/' + boss.img;
+        bossIconEl.innerHTML = '<img src="' + imgPath + '" alt="' + boss.name + '" draggable="false" onerror="this.style.display=\'none\';this.parentNode.textContent=\'☠\'">';
     } else {
-        bossIconEl.textContent = '👹';
+        bossIconEl.textContent = '☠';
     }
     document.getElementById('bossName').textContent = boss.name;
     
