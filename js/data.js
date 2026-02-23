@@ -8,7 +8,8 @@ const RANKS = [
     { min: 31, max: 60, name: 'C', title: 'C-Rank', css: 'rank-c' },
     { min: 61, max: 100, name: 'B', title: 'B-Rank', css: 'rank-b' },
     { min: 101, max: 200, name: 'A', title: 'A-Rank', css: 'rank-a' },
-    { min: 201, max: 9999, name: 'S', title: 'S-Rank', css: 'rank-s' }
+    { min: 201, max: 350, name: 'S', title: 'S-Rank', css: 'rank-s' },
+    { min: 351, max: 9999, name: 'X', title: 'National Level', css: 'rank-x' }
 ];
 
 const TITLES = {
@@ -25,7 +26,14 @@ const TITLES = {
     100: 'Monarch Apparent',
     150: 'Shadow Sovereign',
     200: 'Absolute Being',
-    250: 'The Shadow Monarch'
+    250: 'The Shadow Monarch',
+    351: 'National Level Hunter',
+    400: 'The Threat',
+    450: 'Calamity',
+    500: 'The Monster',
+    600: 'Extinction-Class Entity',
+    750: 'The Absolute Nightmare',
+    999: 'He Who Must Not Be Challenged'
 };
 
 const CALORIE_RATES = {
@@ -57,7 +65,9 @@ const SKILLS_DEFS = [
     { id: 'shadow_vit',    name: 'Ancient Shadow Vitality',    type: 'Passive', icon: '🖤', desc: 'END growth +15%. The shadows sustain you.', unlock: 25 },
     { id: 'first_monarch', name: 'Breath of the First Monarch',type: 'Rune',   icon: '👑', desc: 'All stats growth +5%. You glimpse the Monarch within.', unlock: 40 },
     { id: 'arise',         name: 'Arise',                     type: 'Ultimate',icon: '🌑', desc: 'PHS growth +20%. The shadow army awakens within you.', unlock: 60 },
-    { id: 'domain',        name: 'Domain of Shadows',         type: 'Domain',  icon: '⬛', desc: 'All growth +10%. Reality bends to your will.', unlock: 100 }
+    { id: 'domain',        name: 'Domain of Shadows',         type: 'Domain',  icon: '⬛', desc: 'All growth +10%. Reality bends to your will.', unlock: 100 },
+    { id: 'national_aura', name: 'Threat Aura',               type: 'Domain',  icon: '☠️', desc: 'All growth +15%. You are no longer a hunter — you are the danger.', unlock: 200 },
+    { id: 'extinction',    name: 'Extinction Protocol',       type: 'Ultimate',icon: '💀', desc: 'All stats growth +25%. Nations tremble at your name.', unlock: 351 }
 ];
 
 const ACHIEVEMENTS_DEFS = [
@@ -73,7 +83,12 @@ const ACHIEVEMENTS_DEFS = [
     { id: 'lv10',         name: 'D-Rank Ascension',   icon: '⭐', desc: 'Reach level 10',                  cond: d => d.level >= 10 },
     { id: 'lv30',         name: 'C-Rank Ascension',   icon: '🌟', desc: 'Reach level 30',                  cond: d => d.level >= 30 },
     { id: 'lv60',         name: 'B-Rank Ascension',   icon: '✨', desc: 'Reach level 60',                  cond: d => d.level >= 60 },
-    { id: 'lv100',        name: 'A-Rank Ascension',   icon: '💎', desc: 'Reach level 100',                 cond: d => d.level >= 100 }
+    { id: 'lv100',        name: 'A-Rank Ascension',   icon: '💎', desc: 'Reach level 100',                 cond: d => d.level >= 100 },
+    { id: 'lv200',        name: 'S-Rank Ascension',   icon: '🏆', desc: 'Reach level 200',                 cond: d => d.level >= 200 },
+    { id: 'lv351',        name: 'National Level',     icon: '☠️', desc: 'Reach level 351 — You are no longer a hunter', cond: d => d.level >= 351 },
+    { id: 'w100',         name: 'Centurion',          icon: '🗡️', desc: 'Complete 100 workouts',            cond: d => d.stats.totalWorkouts >= 100 },
+    { id: 'cal50k',       name: 'Extinction Event',   icon: '💀', desc: 'Burn 50,000 calories total',       cond: d => d.stats.totalCalBurned >= 50000 },
+    { id: 'streak90',     name: 'The Monster',        icon: '👹', desc: 'Maintain 90-day streak',           cond: d => d.streak >= 90 }
 ];
 
 const WISDOM = [

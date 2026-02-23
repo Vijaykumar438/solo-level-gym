@@ -16,6 +16,8 @@ const SHOP_ITEMS = [
     { id: 'w_monarchs_katana',   cat: 'weapon',  name: "Monarch's Katana",         icon: '⚔️',  desc: "One clean cut. One purpose. Zero hesitation.",                                     cost: 5000, rankReq: 'A', tier: 5 },
     { id: 'w_divine_spear',      cat: 'weapon',  name: 'Divine Spear',             icon: '🔱',  desc: "It pierces through every excuse, every lie you told yourself.",                    cost: 7000, rankReq: 'A', tier: 5 },
     { id: 'w_shadow_monarch',    cat: 'weapon',  name: "Shadow Sovereign's Blade", icon: '🌑',  desc: "The final weapon. Forged from every tear, every sleepless night, every rep.",       cost: 15000, rankReq: 'S', tier: 6 },
+    { id: 'w_extinction_blade',  cat: 'weapon',  name: "Extinction Blade",         icon: '💀',  desc: "A weapon that should not exist. Neither should you — at this level.",               cost: 30000, rankReq: 'X', tier: 7 },
+    { id: 'w_national_scythe',   cat: 'weapon',  name: "National Level Scythe",    icon: '⚰️',  desc: "You don't fight anymore. You end things. This is the proof.",                      cost: 50000, rankReq: 'X', tier: 7 },
 
     // ===== POTIONS — Consumable buffs =====
     { id: 'p_xp_minor',         cat: 'potion',  name: 'XP Elixir (Minor)',        icon: '🧪',  desc: "Grants +50 XP instantly. Small steps compound.",                                  cost: 30,   rankReq: 'E', tier: 1, consumable: true, effect: { type: 'xp', value: 50 } },
@@ -33,6 +35,8 @@ const SHOP_ITEMS = [
     { id: 'r_demon_heart',      cat: 'relic',   name: "Demon's Heart",            icon: '♥️',  desc: "Ripped from your inner demons. Permanent +3 STR.",                                cost: 1200, rankReq: 'B', tier: 4, passive: { stat: 'str', value: 3 } },
     { id: 'r_lightning_core',   cat: 'relic',   name: 'Lightning Core',           icon: '⚡',  desc: "Speed of someone who stopped waiting. Permanent +3 AGI.",                        cost: 1200, rankReq: 'B', tier: 4, passive: { stat: 'agi', value: 3 } },
     { id: 'r_monarchs_crown',   cat: 'relic',   name: "Monarch's Crown",          icon: '👑',  desc: "You earned this. No one gave it to you. Permanent +5 ALL stats.",                cost: 10000, rankReq: 'A', tier: 5, passive: { stat: 'all', value: 5 } },
+    { id: 'r_threat_core',      cat: 'relic',   name: "Threat Core",              icon: '🩸',  desc: "The beating heart of a monster. Permanent +5 STR, +5 END.",                     cost: 20000, rankReq: 'S', tier: 6, passive: { stat: 'str', value: 5 } },
+    { id: 'r_extinction_sigil', cat: 'relic',   name: "Extinction Sigil",         icon: '☠️',  desc: "Nations branded you. You branded yourself. Permanent +10 ALL stats.",           cost: 50000, rankReq: 'X', tier: 7, passive: { stat: 'all', value: 10 } },
 
     // ===== SCROLLS — Wisdom & Titles =====
     { id: 's_scroll_pain',      cat: 'scroll',  name: 'Scroll of Pain',           icon: '📜',  desc: "Pain is the price of growth. Pay it willingly.",                                  cost: 60,   rankReq: 'E', tier: 1 },
@@ -41,6 +45,8 @@ const SHOP_ITEMS = [
     { id: 's_scroll_monarch',   cat: 'scroll',  name: 'Monarch Manuscript',       icon: '📜',  desc: "A king is not born. A king is forged in the fire others ran from.",              cost: 1000, rankReq: 'B', tier: 4 },
     { id: 's_scroll_sovereign', cat: 'scroll',  name: 'Sovereign Codex',          icon: '📜',  desc: "I am the one who remained when everyone else left.",                             cost: 3000, rankReq: 'A', tier: 5 },
     { id: 's_scroll_absolute',  cat: 'scroll',  name: 'Absolute Truth',           icon: '📜',  desc: "The Shadow Monarch needs no validation. Only discipline.",                       cost: 8000, rankReq: 'S', tier: 6 },
+    { id: 's_scroll_threat',    cat: 'scroll',  name: "The Threat's Manifesto",   icon: '📜',  desc: "You were once the weakest. Now nations classify you as a disaster.",             cost: 20000, rankReq: 'X', tier: 7 },
+    { id: 's_scroll_extinction',cat: 'scroll',  name: 'Extinction Codex',         icon: '📜',  desc: "He is no longer a hunter. He is the calamity they warned about.",                cost: 40000, rankReq: 'X', tier: 7 },
 ];
 
 // Rank order for comparison

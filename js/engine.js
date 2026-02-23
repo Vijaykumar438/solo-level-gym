@@ -55,7 +55,7 @@ function levelUp() {
     D.xp -= needed;
     D.level++;
     
-    // Grant free stat points (3-5 based on rank)
+    // Grant free stat points (3-7 based on rank)
     const rank = getRank(D.level);
     let pts = 3;
     if (rank.name === 'D') pts = 3;
@@ -63,6 +63,7 @@ function levelUp() {
     else if (rank.name === 'B') pts = 4;
     else if (rank.name === 'A') pts = 5;
     else if (rank.name === 'S') pts = 5;
+    else if (rank.name === 'X') pts = 7;
     D.freePoints += pts;
     
     // Auto +1 to all stats

@@ -90,6 +90,12 @@ function buildWorkoutQuest(level, rank) {
             { title: 'Shadow Sovereign Protocol',   desc: `Complete the ultimate session: 10+ exercises, progressive overload throughout` },
             { title: 'Arise: Full System Override',  desc: `Push every muscle group to failure today — log everything` },
         ],
+        X: [
+            { title: "The Threat's Protocol",       desc: `${qScale(level,500,750)}+ total reps across 10+ exercises — you are no longer human` },
+            { title: 'National Level Annihilation', desc: `3+ workout sessions today, 120+ min total — nations fall before you` },
+            { title: 'Extinction-Class Training',   desc: `Complete 12+ exercises, max intensity every set — the monster feeds` },
+            { title: 'Calamity Workout',            desc: `Every muscle group destroyed. Progressive overload on all. No mercy. No rest.` },
+        ],
     };
 
     const template = qPick(pools[r] || pools.E);
@@ -132,6 +138,11 @@ function buildCardioQuest(level, rank) {
             { title: 'Shadow Marathon',     desc: `Run ${qScale(level,10,15)}+ km or 60+ min continuous` },
             { title: 'Antares Protocol',    desc: `Double cardio session: AM + PM, total ${qScale(level,60,90)}+ min` },
         ],
+        X: [
+            { title: "The Monster's Run",   desc: `${qScale(level,90,120)} min of cardio — you don't stop until the world does` },
+            { title: 'National Level Marathon', desc: `Run ${qScale(level,15,25)}+ km — the threat runs endlessly` },
+            { title: 'Extinction Cardio',   desc: `Triple cardio session: AM + noon + PM, total ${qScale(level,90,150)}+ min` },
+        ],
     };
 
     const template = qPick(pools[r] || pools.E);
@@ -173,6 +184,11 @@ function buildNutritionQuest(level, rank) {
             { title: "Monarch's Feast",       desc: `${qScale(level,200,250)}g protein, 6 clean meals, zero cheat — perfection` },
             { title: 'Shadow Sovereign Diet', desc: 'Every gram tracked. Every meal timed. No exceptions. No mercy.' },
             { title: 'Absolute Nutrition',    desc: 'Hit exact macro targets: P/C/F all within ±5% — surgical precision' },
+        ],
+        X: [
+            { title: "The Threat's Feast",    desc: `${qScale(level,250,350)}g protein, 7 meals, zero cheat — the monster must be fed` },
+            { title: 'Extinction Diet',       desc: 'Every calorie weaponized. Every macro perfected. You are the system now.' },
+            { title: 'National Level Fuel',   desc: `${qScale(level,280,400)}g protein, all macros ±3%, timed around triple sessions` },
         ],
     };
 
@@ -219,6 +235,11 @@ function buildDisciplineQuest(level, rank) {
             { title: "Monarch's Discipline",   desc: 'Every second accounted for. Perfect routine. Zero deviation.' },
             { title: 'Shadow Sovereign Code',  desc: '5 AM wake + cold shower + meditate + train + read + 8hr sleep' },
             { title: 'Absolute Willpower',     desc: 'The perfect day: every habit, every meal, every minute — executed.' },
+        ],
+        X: [
+            { title: "The Threat's Code",      desc: '4 AM wake. Ice bath 3min. Meditate 30min. Train twice. Read. No sugar. No weakness.' },
+            { title: 'National Level Discipline', desc: 'The monster obeys no one — except its own code. Perfect day. Every day.' },
+            { title: 'Extinction Protocol',    desc: 'Zero deviation. Zero complaint. Zero failure. You are beyond human limitation.' },
         ],
     };
 
@@ -267,6 +288,12 @@ function buildBonusQuest(level, rank) {
             { title: 'Bonus: Shadow Endurance',  desc: '1000 total reps of any exercises across the day' },
             { title: 'Bonus: PR Destruction',    desc: 'Break a personal record on 2+ different lifts' },
             { title: 'Bonus: 25K Steps',         desc: '25,000+ steps — the Shadow Monarch never rests' },
+        ],
+        X: [
+            { title: 'Bonus: Extinction Day',    desc: '3 workouts + 15K run + all meals perfect + full discipline — inhuman' },
+            { title: 'Bonus: Monster Endurance',  desc: '1500+ total reps across the day — the threat feeds on volume' },
+            { title: 'Bonus: PR Annihilation',    desc: 'Break a personal record on 3+ different lifts — human limits do not apply' },
+            { title: 'Bonus: 30K Steps',          desc: '30,000+ steps — the monster roams without rest' },
         ],
     };
 

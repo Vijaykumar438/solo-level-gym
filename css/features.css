@@ -91,6 +91,7 @@
 .avatar-b .avatar-svg{filter:drop-shadow(0 0 15px rgba(171,71,188,0.25))}
 .avatar-a .avatar-svg{filter:drop-shadow(0 0 20px rgba(255,167,38,0.3))}
 .avatar-s .avatar-svg{filter:drop-shadow(0 0 25px rgba(255,215,64,0.35))}
+.avatar-x .avatar-svg{filter:drop-shadow(0 0 30px rgba(255,23,68,0.4)) drop-shadow(0 0 60px rgba(213,0,0,0.2))}
 
 
 /* ========== SHADOW MISSION OVERLAY ========== */
@@ -548,6 +549,7 @@
 .rank-tag-b{color:#b388ff;border:1px solid rgba(179,136,255,.4)}
 .rank-tag-a{color:#ff5252;border:1px solid rgba(255,82,82,.4)}
 .rank-tag-s{color:#ffd740;border:1px solid var(--gold);background:rgba(255,215,64,.1);text-shadow:0 0 6px rgba(255,215,64,.4)}
+.rank-tag-x{color:#ff1744;border:1px solid #ff1744;background:rgba(255,23,68,.12);text-shadow:0 0 8px rgba(255,23,68,.5);box-shadow:0 0 10px rgba(213,0,0,.2)}
 .shop-item-cost{font-family:var(--font);font-size:.75rem;color:var(--gold);font-weight:600}
 
 .shop-item-actions{

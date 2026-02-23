@@ -25,7 +25,7 @@ function renderAvatar() {
     svg.innerHTML += getBodyForRank(rankName);
     
     // Particle effects for higher ranks
-    if (['A', 'S'].includes(rankName)) {
+    if (['A', 'S', 'X'].includes(rankName)) {
         svg.innerHTML += getAvatarParticles(rankName);
     }
     
@@ -78,6 +78,18 @@ function getAuraForRank(rank) {
             </defs>
             <circle cx="100" cy="180" r="80" fill="none" stroke="rgba(255,215,64,0.2)" stroke-width="2" class="aura-pulse"/>
             <circle cx="100" cy="180" r="60" fill="none" stroke="rgba(79,195,247,0.1)" stroke-width="1" class="aura-pulse-delay"/>`;
+        case 'X': return `
+            <ellipse cx="100" cy="200" rx="100" ry="180" fill="url(#auraGradX)" class="aura-breathe"/>
+            <ellipse cx="100" cy="200" rx="80" ry="145" fill="url(#auraGradX2)" class="aura-breathe-fast"/>
+            <ellipse cx="100" cy="200" rx="60" ry="110" fill="url(#auraGradX3)" class="aura-breathe"/>
+            <defs>
+                <radialGradient id="auraGradX"><stop offset="0%" stop-color="rgba(213,0,0,0.25)"/><stop offset="100%" stop-color="rgba(213,0,0,0)"/></radialGradient>
+                <radialGradient id="auraGradX2"><stop offset="0%" stop-color="rgba(0,0,0,0.2)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+                <radialGradient id="auraGradX3"><stop offset="0%" stop-color="rgba(255,23,68,0.15)"/><stop offset="100%" stop-color="rgba(255,23,68,0)"/></radialGradient>
+            </defs>
+            <circle cx="100" cy="180" r="90" fill="none" stroke="rgba(213,0,0,0.25)" stroke-width="2.5" class="aura-pulse"/>
+            <circle cx="100" cy="180" r="70" fill="none" stroke="rgba(255,23,68,0.15)" stroke-width="1.5" class="aura-pulse-delay"/>
+            <circle cx="100" cy="180" r="50" fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="1" class="aura-pulse"/>`;
         default: return '';
     }
 }
@@ -90,7 +102,8 @@ function getBodyForRank(rank) {
         C: { fill: 'rgba(66,165,245,0.12)',  stroke: '#42a5f5', glow: 'url(#glowC)', muscle: 2 },
         B: { fill: 'rgba(171,71,188,0.12)',  stroke: '#ab47bc', glow: 'url(#glowB)', muscle: 3 },
         A: { fill: 'rgba(255,167,38,0.12)',  stroke: '#ffa726', glow: 'url(#glowA)', muscle: 4 },
-        S: { fill: 'rgba(255,215,64,0.12)',  stroke: '#ffd740', glow: 'url(#glowS)', muscle: 5 }
+        S: { fill: 'rgba(255,215,64,0.12)',  stroke: '#ffd740', glow: 'url(#glowS)', muscle: 5 },
+        X: { fill: 'rgba(213,0,0,0.15)',     stroke: '#ff1744', glow: 'url(#glowX)', muscle: 6 }
     };
     
     const c = colors[rank] || colors.E;
@@ -121,6 +134,7 @@ function getBodyForRank(rank) {
         <circle cx="92" cy="62" r="2.5" fill="${c.stroke}" class="avatar-eye"/>
         <circle cx="108" cy="62" r="2.5" fill="${c.stroke}" class="avatar-eye"/>
         ${rank === 'S' ? '<circle cx="92" cy="62" r="1" fill="#ffd740"/><circle cx="108" cy="62" r="1" fill="#ffd740"/>' : ''}
+        ${rank === 'X' ? '<circle cx="92" cy="62" r="2" fill="#ff1744"/><circle cx="108" cy="62" r="2" fill="#ff1744"/><circle cx="92" cy="62" r="0.8" fill="#fff"/><circle cx="108" cy="62" r="0.8" fill="#fff"/>' : ''}
         
         <!-- Neck -->
         <line x1="100" y1="87" x2="100" y2="100" stroke="${c.stroke}" stroke-width="${sw + 1}"/>
@@ -174,6 +188,22 @@ function getBodyForRank(rank) {
                  fill="rgba(255,215,64,0.3)" stroke="#ffd740" stroke-width="1.2"/>
         ` : ''}
         
+        ${rank === 'X' ? `
+        <!-- Demon Horns -->
+        <path d="M78,55 Q72,25 65,10" fill="none" stroke="#ff1744" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M122,55 Q128,25 135,10" fill="none" stroke="#ff1744" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Horn glow tips -->
+        <circle cx="65" cy="10" r="3" fill="#ff1744" opacity="0.6"/>
+        <circle cx="135" cy="10" r="3" fill="#ff1744" opacity="0.6"/>
+        <!-- Threat markings on face -->
+        <line x1="82" y1="55" x2="78" y2="70" stroke="#d50000" stroke-width="1" opacity="0.5"/>
+        <line x1="118" y1="55" x2="122" y2="70" stroke="#d50000" stroke-width="1" opacity="0.5"/>
+        <!-- Chest scars -->
+        <line x1="88" y1="125" x2="100" y2="145" stroke="#d50000" stroke-width="0.8" opacity="0.4"/>
+        <line x1="112" y1="125" x2="100" y2="145" stroke="#d50000" stroke-width="0.8" opacity="0.4"/>
+        <line x1="95" y1="150" x2="105" y2="165" stroke="#d50000" stroke-width="0.6" opacity="0.3"/>
+        ` : ''}
+        
         ${rank === 'A' ? `
         <!-- Shoulder armor hints -->
         <path d="M${100 - shoulder - 5},100 Q${100 - shoulder},95 ${100 - shoulder + 5},100" fill="none" stroke="${c.stroke}" stroke-width="2" opacity="0.6"/>
@@ -184,15 +214,25 @@ function getBodyForRank(rank) {
 
 function getAvatarParticles(rank) {
     let particles = '';
-    const count = rank === 'S' ? 12 : 6;
-    const color = rank === 'S' ? '#ffd740' : '#ffa726';
+    const count = rank === 'X' ? 20 : rank === 'S' ? 12 : 6;
+    const color = rank === 'X' ? '#ff1744' : rank === 'S' ? '#ffd740' : '#ffa726';
     
     for (let i = 0; i < count; i++) {
         const x = 30 + Math.random() * 140;
         const y = 50 + Math.random() * 300;
-        const r = 1 + Math.random() * 2;
+        const r = 1 + Math.random() * (rank === 'X' ? 3 : 2);
         const delay = Math.random() * 3;
-        particles += `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" opacity="0.4" class="avatar-particle" style="animation-delay:${delay}s"/>`;
+        particles += `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" opacity="${rank === 'X' ? 0.5 : 0.4}" class="avatar-particle" style="animation-delay:${delay}s"/>`;
+    }
+    // X-rank dark energy particles
+    if (rank === 'X') {
+        for (let i = 0; i < 8; i++) {
+            const x = 40 + Math.random() * 120;
+            const y = 60 + Math.random() * 280;
+            const r = 2 + Math.random() * 3;
+            const delay = Math.random() * 4;
+            particles += `<circle cx="${x}" cy="${y}" r="${r}" fill="#000" opacity="0.3" class="avatar-particle" style="animation-delay:${delay}s"/>`;
+        }
     }
     return particles;
 }
