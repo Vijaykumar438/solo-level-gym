@@ -59,8 +59,22 @@ const TUTORIAL_SECTIONS = [
         title: 'Workout & Food Logging',
         content: `The <strong>Log Tab</strong> is where you report your training:<br><br>
         <strong>Workout Log:</strong> Select exercise, reps, sets, weight, and intensity. The System calculates calories burned, XP gained, and deals boss damage automatically.<br><br>
-        <strong>Food Log:</strong> Track meals with protein, carbs, and fats. Auto-calculates calories. Proper nutrition fuels your progression.<br><br>
+        <strong>Food Log:</strong> Start typing a food name and the <strong>smart autocomplete</strong> will suggest matching items from a database of 80+ common foods (chicken, rice, eggs, dal, biryani, protein shakes, etc.). Select one and the System auto-fills protein, carbs, and fats for you.<br><br>
+        <strong>Servings:</strong> Adjust the servings multiplier (0.5×, 1×, 2× etc.) and all macros scale automatically. You can always override the values manually.<br><br>
         <span class="tut-tip">💡 Tip: Higher intensity = more XP and calories burned. Push yourself.</span>`
+    },
+    {
+        id: 'energy',
+        icon: '⚖',
+        title: 'Energy Balance (Intake vs Output)',
+        content: `Below the food log, the <strong>Energy Balance</strong> panel tracks the collision between what you eat and what you burn — in real time:<br><br>
+        <strong>🍖 Intake:</strong> Total calories consumed today (from all food logs).<br>
+        <strong>🔥 Output:</strong> Calories burned from workouts + your estimated BMR (Basal Metabolic Rate, auto-calculated from your body weight in the Physique Tracker).<br><br>
+        <strong>The Verdict:</strong><br>
+        • <span style="color:var(--green)">SURPLUS</span> — Eating more than burning. Good for muscle building / bulking.<br>
+        • <span style="color:var(--red)">DEFICIT</span> — Burning more than eating. Good for fat loss / cutting.<br>
+        • <span style="color:var(--blue)">MAINTENANCE</span> — Roughly balanced. Good for body recomposition.<br><br>
+        <span class="tut-tip">💡 Tip: Set your body weight in the Physique Tracker (Status tab) for accurate BMR. The output adjusts proportionally throughout the day.</span>`
     },
     {
         id: 'boss',
@@ -118,7 +132,8 @@ const TUTORIAL_SECTIONS = [
         content: `The <strong>Analysis Tab</strong> tracks your journey with:<br><br>
         <strong>Dungeon Calendar:</strong> A GitHub-style heatmap showing daily activity over the entire year. Brighter squares = more XP that day.<br><br>
         <strong>Charts:</strong> 7-day XP progress, calorie tracking, and macro breakdown (protein/carbs/fats).<br><br>
-        <strong>Lifetime Records:</strong> Total workouts, calories, quests, days active, shadow missions, and bosses slain — your hunter resume.`
+        <strong>Lifetime Records:</strong> Total workouts, calories, quests, days active, shadow missions, and bosses slain — your hunter resume.<br><br>
+        <span class="tut-tip">💡 For daily intake vs output analysis, check the Energy Balance panel in the Log tab.</span>`
     },
     {
         id: 'cloud',
@@ -135,12 +150,14 @@ const TUTORIAL_SECTIONS = [
         content: `<strong>Maximize your progression:</strong><br><br>
         1. <strong>Never break your streak.</strong> Consistency is the #1 factor. Even a light workout counts.<br>
         2. <strong>Clear all 5 daily gates.</strong> The bonus XP for full completion stacks up fast.<br>
-        3. <strong>Log food regularly.</strong> Nutrition quests give free XP and discipline growth.<br>
-        4. <strong>Fight the weekly boss.</strong> Boss kills give massive rewards + shadow soldiers.<br>
-        5. <strong>Accept shadow missions.</strong> They're free XP bursts disguised as quick challenges.<br>
-        6. <strong>Invest skill points wisely.</strong> Pick a branch that matches your training style.<br>
-        7. <strong>Check the shop often.</strong> Relics give permanent growth bonuses.<br>
-        8. <strong>High intensity = more XP.</strong> Push harder when you can, rest when you must.<br><br>
+        3. <strong>Log food regularly.</strong> Use the smart search — just type and pick. Track every meal.<br>
+        4. <strong>Watch your energy balance.</strong> Bulking? Stay in surplus. Cutting? Stay in deficit.<br>
+        5. <strong>Fight the weekly boss.</strong> Boss kills give massive rewards + shadow soldiers.<br>
+        6. <strong>Accept shadow missions.</strong> They're free XP bursts disguised as quick challenges.<br>
+        7. <strong>Invest skill points wisely.</strong> Pick a branch that matches your training style.<br>
+        8. <strong>Check the shop often.</strong> Relics give permanent growth bonuses.<br>
+        9. <strong>High intensity = more XP.</strong> Push harder when you can, rest when you must.<br>
+        10. <strong>Set your weight.</strong> Physique Tracker gives accurate BMR for energy balance.<br><br>
         <span class="tut-highlight">"Arise. The System is watching."</span>`
     }
 ];
@@ -183,9 +200,10 @@ function renderTutorial() {
         <div class="tut-qs-title">⚡ QUICK START</div>
         <div class="tut-qs-steps">
             <div class="tut-qs-step"><span class="tut-qs-num">1</span> Go to <strong>Log Tab</strong> → Report a workout</div>
-            <div class="tut-qs-step"><span class="tut-qs-num">2</span> Check <strong>Daily Gate</strong> → Clear your quests</div>
-            <div class="tut-qs-step"><span class="tut-qs-num">3</span> Level up → Distribute stat points</div>
-            <div class="tut-qs-step"><span class="tut-qs-num">4</span> Come back tomorrow → Build your streak</div>
+            <div class="tut-qs-step"><span class="tut-qs-num">2</span> Log food → Type a name, pick from suggestions</div>
+            <div class="tut-qs-step"><span class="tut-qs-num">3</span> Check <strong>Daily Gate</strong> → Clear your quests</div>
+            <div class="tut-qs-step"><span class="tut-qs-num">4</span> Level up → Distribute stat points</div>
+            <div class="tut-qs-step"><span class="tut-qs-num">5</span> Come back tomorrow → Build your streak</div>
         </div>
     </div>`;
 
