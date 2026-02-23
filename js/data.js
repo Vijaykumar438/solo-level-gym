@@ -333,8 +333,10 @@ function getDefaultData() {
 }
 
 function xpForLevel(level) {
-    if (level <= 1) return 120;
-    return Math.floor(120 * Math.pow(1.18, level - 1));
+    // Smooth quadratic curve: ~370 at Lv1 → ~20,825 at Lv350
+    // Consistent player reaches X-Rank (Lv351) in ~3 years
+    if (level <= 1) return 370;
+    return Math.floor(350 + 20 * level + 0.11 * level * level);
 }
 
 function getRank(level) {
