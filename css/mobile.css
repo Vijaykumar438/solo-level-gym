@@ -1,0 +1,302 @@
+/* ========== MOBILE PWA ENHANCEMENTS ========== */
+
+/* Safe area insets for notched phones */
+.sys-header{
+    padding-top: max(20px, env(safe-area-inset-top, 20px));
+    padding-left: max(25px, env(safe-area-inset-left, 25px));
+    padding-right: max(25px, env(safe-area-inset-right, 25px));
+}
+
+.panel{
+    padding-bottom: max(60px, calc(60px + env(safe-area-inset-bottom, 0px)));
+}
+
+.tab-nav{
+    padding-left: max(25px, env(safe-area-inset-left, 25px));
+}
+
+/* Prevent pull-to-refresh / overscroll */
+html{
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+body{
+    overscroll-behavior-y: contain;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+/* Standalone PWA — add status bar padding */
+@media (display-mode: standalone) {
+    .sys-header{
+        padding-top: max(48px, env(safe-area-inset-top, 48px));
+    }
+}
+
+/* ---- Touch-friendly sizes ---- */
+/* Minimum 44px touch targets (Apple HIG) */
+.tab{
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quest-item{
+    min-height: 60px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.quest-item:active:not(.cleared):not(.failed){
+    transform: scale(0.97);
+    background: rgba(79,195,247,0.08);
+}
+
+.sys-btn{
+    min-height: 46px;
+    min-width: 120px;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.sys-btn:active{
+    transform: scale(0.96);
+}
+
+.sp-btn{
+    min-height: 46px;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.sp-btn:active{
+    transform: scale(0.93);
+}
+
+.stat-card{
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Better input styling on mobile */
+input, select{
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 6px;
+}
+
+select{
+    padding-right: 30px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234fc3f7' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+/* Feed delete button - bigger touch target */
+.fi-del{
+    min-width: 36px;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(255,82,82,0.3);
+    background: transparent;
+    color: var(--red);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.fi-del:active{
+    background: var(--red);
+    color: #fff;
+    transform: scale(0.9);
+}
+
+/* ---- Mobile breakpoint refinements ---- */
+@media (max-width: 480px){
+    .sys-header{
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding-bottom: 14px;
+    }
+    
+    .header-quick{
+        justify-content: center;
+    }
+    
+    .sys-bracket{ font-size: 1.4rem }
+    .sys-title{ font-size: 1rem; letter-spacing: 6px }
+    
+    .tab{
+        padding: 12px 12px;
+        font-size: .75rem;
+    }
+    .tab-icon{ display: none }
+    
+    .stat-card{
+        padding: 12px 8px;
+    }
+    .sc-val{ font-size: 1.5rem }
+    .sc-name{ font-size: .6rem }
+    
+    .phys-form{
+        grid-template-columns: 1fr 1fr;
+    }
+    .phys-form .sys-btn{
+        grid-column: 1 / -1;
+    }
+    
+    .lf-two, .lf-three{
+        grid-template-columns: 1fr !important;
+    }
+    
+    .lu-level{ font-size: 4rem }
+    .lu-label{ font-size: 1.2rem }
+    
+    .boot-glitch{ font-size: 2.5rem; letter-spacing: 8px }
+    .boot-enter{ font-size: .9rem; padding: 12px 30px }
+    
+    .data-mgmt{
+        flex-direction: column;
+    }
+    .dm-btn{
+        width: 100%;
+    }
+}
+
+@media (max-width: 380px){
+    html{ font-size: 13px }
+    .stats-grid{ grid-template-columns: repeat(2, 1fr) }
+    .phs-card{ grid-column: 1 / -1 }
+    .sp-grid{ grid-template-columns: repeat(2, 1fr) }
+}
+
+/* ---- Landscape phone ---- */
+@media (max-height: 500px) and (orientation: landscape){
+    .boot-screen{
+        overflow-y: auto;
+    }
+    .boot-glitch{ font-size: 2rem }
+    .boot-content{ padding: 10px }
+    .boot-msg{ font-size: .8rem; margin: 5px 0 }
+    
+    .lu-box{ padding: 20px }
+    .lu-level{ font-size: 3rem }
+}
+
+/* ---- Install prompt banner ---- */
+.install-banner{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9000;
+    background: linear-gradient(180deg, rgba(10,15,30,0.95), rgba(4,6,14,0.98));
+    border-top: 1px solid var(--border);
+    padding: 16px 20px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: slideUp .4s ease;
+}
+
+@keyframes slideUp{
+    from{ transform: translateY(100%) }
+    to{ transform: translateY(0) }
+}
+
+.install-banner img{
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+}
+
+.install-banner-text{
+    flex: 1;
+}
+
+.install-banner-title{
+    font-family: var(--font);
+    font-size: .9rem;
+    color: var(--blue);
+    margin-bottom: 2px;
+}
+
+.install-banner-sub{
+    font-size: .8rem;
+    color: var(--dim);
+}
+
+.install-banner .sys-btn{
+    min-width: 90px;
+    min-height: 40px;
+    font-size: .8rem !important;
+    padding: 8px 16px !important;
+}
+
+.install-banner-close{
+    background: none;
+    border: none;
+    color: var(--dim);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    min-width: 36px;
+    min-height: 36px;
+}
+
+/* ---- Smooth scrolling momentum ---- */
+.panel{
+    -webkit-overflow-scrolling: touch;
+}
+
+.quest-list, .today-feed, .skills-list, .achieve-list{
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ---- Active states for all interactive elements ---- */
+.tab:active{
+    background: rgba(79,195,247,0.06);
+}
+
+.rank-badge:active{
+    transform: scale(0.95);
+}
+
+.wisdom-box:active{
+    border-color: rgba(79,195,247,0.3);
+}
+
+.feed-item{
+    transition: transform 0.15s;
+}
+
+.feed-item:active{
+    transform: scale(0.98);
+}
+
+.skill-item:not(.locked):active,
+.ach-item:not(.locked):active{
+    background: rgba(79,195,247,0.08);
+}
+
+/* ---- Vibration feedback hint (visual) ---- */
+@keyframes tapPulse{
+    0%{ box-shadow: 0 0 0 0 rgba(79,195,247,0.3) }
+    70%{ box-shadow: 0 0 0 10px rgba(79,195,247,0) }
+    100%{ box-shadow: 0 0 0 0 rgba(79,195,247,0) }
+}
+
+.quest-item.just-cleared{
+    animation: questClear .6s ease, tapPulse .6s ease;
+}

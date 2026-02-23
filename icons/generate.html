@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head><title>Icon Generator</title></head>
+<body style="background:#111;color:#fff;font-family:monospace;padding:20px">
+<h2>Solo Leveling Icon Generator</h2>
+<p>Click each button to download that size. Save them to the <code>icons/</code> folder.</p>
+<div id="buttons"></div>
+<canvas id="canvas" style="display:none"></canvas>
+<script>
+const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+const container = document.getElementById('buttons');
+
+sizes.forEach(size => {
+    const btn = document.createElement('button');
+    btn.textContent = `Download ${size}x${size}`;
+    btn.style.cssText = 'margin:8px;padding:10px 20px;background:#4fc3f7;border:none;color:#000;cursor:pointer;font-size:14px;border-radius:4px;font-family:monospace';
+    btn.onclick = () => generateIcon(size);
+    container.appendChild(btn);
+});
+
+function generateIcon(size) {
+    const canvas = document.getElementById('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    const s = size / 512; // scale factor
+
+    // Background
+    const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+    grad.addColorStop(0, '#0a1628');
+    grad.addColorStop(1, '#04060e');
+    
+    // Rounded rect
+    const r = 80 * s;
+    ctx.beginPath();
+    ctx.roundRect(0, 0, size, size, r);
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Border
+    ctx.beginPath();
+    ctx.roundRect(8*s, 8*s, size-16*s, size-16*s, (72)*s);
+    ctx.strokeStyle = 'rgba(79,195,247,0.3)';
+    ctx.lineWidth = 2*s;
+    ctx.stroke();
+
+    // Diamond
+    ctx.beginPath();
+    ctx.moveTo(256*s, 60*s);
+    ctx.lineTo(420*s, 256*s);
+    ctx.lineTo(256*s, 452*s);
+    ctx.lineTo(92*s, 256*s);
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(79,195,247,0.25)';
+    ctx.lineWidth = 2.5*s;
+    ctx.stroke();
+
+    // Hexagon fill
+    ctx.beginPath();
+    ctx.moveTo(256*s, 140*s);
+    ctx.lineTo(340*s, 196*s);
+    ctx.lineTo(340*s, 316*s);
+    ctx.lineTo(256*s, 372*s);
+    ctx.lineTo(172*s, 316*s);
+    ctx.lineTo(172*s, 196*s);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(79,195,247,0.06)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(79,195,247,0.5)';
+    ctx.lineWidth = 2*s;
+    ctx.stroke();
+
+    // S letter with glow
+    ctx.save();
+    ctx.shadowColor = '#4fc3f7';
+    ctx.shadowBlur = 20*s;
+    ctx.font = `900 ${160*s}px "Arial Black", sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#4fc3f7';
+    ctx.fillText('S', 256*s, 250*s);
+    ctx.restore();
+
+    // SYSTEM text
+    ctx.save();
+    ctx.font = `700 ${28*s}px Arial, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(79,195,247,0.6)';
+    ctx.letterSpacing = `${12*s}px`;
+    ctx.fillText('SYSTEM', 256*s, 400*s);
+    ctx.restore();
+
+    // Download
+    const link = document.createElement('a');
+    link.download = `icon-${size}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+</script>
+</body>
+</html>

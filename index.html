@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>SYSTEM — Solo Leveling</title>
+
+    <!-- PWA Meta -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0f1e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SYSTEM">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="SYSTEM">
+    <meta name="msapplication-TileColor" content="#04060e">
+    <meta name="msapplication-TileImage" content="icons/icon-144.png">
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="icons/icon-152.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/panels.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/features.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Firebase SDKs (compat mode for vanilla JS) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-particles"></div>
+        <div class="login-box">
+            <div class="login-glitch" data-text="SYSTEM">SYSTEM</div>
+            <div class="login-line"></div>
+            <div class="login-subtitle">HUNTER IDENTIFICATION REQUIRED</div>
+
+            <button id="googleSignInBtn" class="login-btn login-btn-google">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="google-icon" alt="">
+                Sign in with Google
+            </button>
+
+            <div class="login-divider">
+                <span class="login-divider-line"></span>
+                <span class="login-divider-text">OR</span>
+                <span class="login-divider-line"></span>
+            </div>
+
+            <div class="login-guest">
+                <input type="text" id="guestNameInput" class="login-input" placeholder="Enter Hunter Name..." maxlength="24" autocomplete="off">
+                <button id="guestSignInBtn" class="login-btn login-btn-guest">[ENTER AS GUEST]</button>
+            </div>
+
+            <p id="loginError" class="login-error hidden"></p>
+
+            <div class="login-footer">
+                <p class="login-note">⚡ Google sign-in syncs progress across devices</p>
+                <p class="login-note">👤 Guest mode saves locally only</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boot Screen -->
+    <div id="bootScreen" class="boot-screen hidden">
+        <div class="boot-content">
+            <div class="boot-glitch" data-text="SYSTEM">SYSTEM</div>
+            <div class="boot-line"></div>
+            <div class="boot-text">
+                <p id="bootMsg1" class="boot-msg">[Detecting life signs... confirmed.]</p>
+                <p id="bootMsg2" class="boot-msg">[Candidate qualifies for the Program.]</p>
+                <p id="bootMsg3" class="boot-msg">[Binding System to Player...]</p>
+                <p id="bootMsg4" class="boot-msg">[Awakening complete.]</p>
+            </div>
+            <button id="bootEnter" class="boot-enter hidden">[ENTER THE SYSTEM]</button>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" class="main-app hidden">
+        <!-- Floating Particles -->
+        <canvas id="particleCanvas" class="particle-canvas"></canvas>
+
+        <!-- System Header -->
+        <header class="sys-header">
+            <div class="sys-logo">
+                <span class="sys-bracket">[</span>
+                <span class="sys-title">S Y S T E M</span>
+                <span class="sys-bracket">]</span>
+                <span id="syncIndicator" class="sync-indicator sync-saved" title="Cloud sync">☁</span>
+            </div>
+            <div class="header-quick">
+                <div class="hq-item hq-user">
+                    <img id="userAvatar" class="user-avatar" src="" alt="" style="display:none">
+                    <span id="userDisplayName" class="user-name"></span>
+                </div>
+                <div class="hq-item">
+                    <span class="hq-label">LV</span>
+                    <span class="hq-val" id="hqLevel">1</span>
+                </div>
+                <div class="hq-item rank-badge" id="hqRankBadge">
+                    <span class="hq-val" id="hqRank">E</span>
+                </div>
+                <div class="hq-item">
+                    <span class="hq-label">GOLD</span>
+                    <span class="hq-val gold-text" id="hqGold">0</span>
+                </div>
+                <button id="linkGoogleBtn" class="hq-link-btn hidden" title="Link Google Account">🔗</button>
+                <button id="signOutBtn" class="hq-signout-btn" title="Sign Out">⏻</button>
+            </div>
+        </header>
+
+        <!-- XP Bar -->
+        <div class="xp-bar-wrap">
+            <div class="xp-info">
+                <span>EXP</span>
+                <span id="xpText">0 / 120</span>
+            </div>
+            <div class="xp-track">
+                <div class="xp-fill" id="xpFill"></div>
+                <div class="xp-shine"></div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab active" data-tab="status"><span class="tab-icon">◈</span> Status</button>
+            <button class="tab" data-tab="gates"><span class="tab-icon">⬡</span> Daily Gate</button>
+            <button class="tab" data-tab="log"><span class="tab-icon">⬢</span> Log</button>
+            <button class="tab" data-tab="shop"><span class="tab-icon">⬟</span> Shop</button>
+            <button class="tab" data-tab="skills"><span class="tab-icon">◇</span> Skills</button>
+            <button class="tab" data-tab="analysis"><span class="tab-icon">△</span> Analysis</button>
+        </nav>
+
+        <!-- ===== STATUS TAB ===== -->
+        <section class="panel active" data-panel="status">
+            <div class="sys-window">
+                <div class="sw-header">[Status Window]</div>
+                <div class="sw-body">
+                    <div class="sw-row"><span class="sw-key">Player</span><span class="sw-val" id="playerName">Hunter</span></div>
+                    <div class="sw-row"><span class="sw-key">Level</span><span class="sw-val" id="swLevel">1</span></div>
+                    <div class="sw-row"><span class="sw-key">Rank</span><span class="sw-val" id="swRank">E-Rank</span></div>
+                    <div class="sw-row"><span class="sw-key">Title</span><span class="sw-val" id="swTitle">The Weakest Hunter</span></div>
+                    <div class="sw-row"><span class="sw-key">Weapon</span><span class="sw-val" id="swWeapon">—</span></div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card" data-stat="str">
+                    <div class="sc-icon">⚔</div>
+                    <div class="sc-name">STR</div>
+                    <div class="sc-val" id="statSTR">5</div>
+                    <div class="sc-bar"><div class="sc-fill" id="barSTR"></div></div>
+                </div>
+                <div class="stat-card" data-stat="agi">
+                    <div class="sc-icon">⚡</div>
+                    <div class="sc-name">AGI</div>
+                    <div class="sc-val" id="statAGI">4</div>
+                    <div class="sc-bar"><div class="sc-fill" id="barAGI"></div></div>
+                </div>
+                <div class="stat-card" data-stat="vit">
+                    <div class="sc-icon">♥</div>
+                    <div class="sc-name">VIT</div>
+                    <div class="sc-val" id="statVIT">5</div>
+                    <div class="sc-bar"><div class="sc-fill" id="barVIT"></div></div>
+                </div>
+                <div class="stat-card" data-stat="end">
+                    <div class="sc-icon">◉</div>
+                    <div class="sc-name">END</div>
+                    <div class="sc-val" id="statEND">4</div>
+                    <div class="sc-bar"><div class="sc-fill" id="barEND"></div></div>
+                </div>
+                <div class="stat-card" data-stat="wil">
+                    <div class="sc-icon">☬</div>
+                    <div class="sc-name">WIL</div>
+                    <div class="sc-val" id="statWIL">3</div>
+                    <div class="sc-bar"><div class="sc-fill" id="barWIL"></div></div>
+                </div>
+                <div class="stat-card phs-card" data-stat="phs">
+                    <div class="sc-icon">☉</div>
+                    <div class="sc-name">PHS</div>
+                    <div class="sc-val" id="statPHS">3.0</div>
+                    <div class="sc-bar"><div class="sc-fill phs-fill" id="barPHS"></div></div>
+                </div>
+            </div>
+
+            <!-- Free stat points -->
+            <div class="stat-points-panel hidden" id="statPointsPanel">
+                <div class="sw-header">[Distribute Stat Points]</div>
+                <div class="sp-available">Available: <span id="freePoints">0</span></div>
+                <div class="sp-grid">
+                    <button class="sp-btn" data-alloc="str">STR +1</button>
+                    <button class="sp-btn" data-alloc="agi">AGI +1</button>
+                    <button class="sp-btn" data-alloc="vit">VIT +1</button>
+                    <button class="sp-btn" data-alloc="end">END +1</button>
+                    <button class="sp-btn" data-alloc="wil">WIL +1</button>
+                    <button class="sp-btn" data-alloc="phs">PHS +1</button>
+                </div>
+            </div>
+
+            <!-- Physique Goals -->
+            <div class="sys-window mt">
+                <div class="sw-header">[Physique Tracker]</div>
+                <div class="sw-body">
+                    <div class="phys-form" id="physForm">
+                        <div class="pf-row">
+                            <label>Current Weight (kg)</label>
+                            <input type="number" id="pCurWeight" step="0.1">
+                        </div>
+                        <div class="pf-row">
+                            <label>Target Weight (kg)</label>
+                            <input type="number" id="pTarWeight" step="0.1">
+                        </div>
+                        <button class="sys-btn" id="savePhysBtn">[UPDATE]</button>
+                    </div>
+                    <div id="physProgress" class="phys-prog"></div>
+                </div>
+            </div>
+
+            <!-- Ancient Wisdom -->
+            <div class="wisdom-box" id="wisdomBox">
+                <div class="wb-label">— Words of the Departed Monarchs —</div>
+                <div class="wb-text" id="wisdomText">"The body breaks before the will — forge the latter in fire."</div>
+            </div>
+
+            <!-- Rank Avatar -->
+            <div id="avatarContainer" class="avatar-wrap"></div>
+
+            <!-- Shadow Army -->
+            <div class="army-window" id="armySection">
+                <div class="army-header">☬ SHADOW ARMY</div>
+                <div class="army-body">
+                    <div class="army-icon">👤</div>
+                    <div class="army-info">
+                        <div class="army-count" id="armyCount">0</div>
+                        <div class="army-rank-name" id="armyRankName">No Shadows</div>
+                    </div>
+                    <div class="army-visual" id="armyVisual"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== DAILY GATE TAB ===== -->
+        <section class="panel" data-panel="gates">
+            <div class="sys-window">
+                <div class="sw-header">[Daily Gate — <span id="gateDate"></span>]</div>
+                <div class="gate-meta">
+                    <div class="gm-item">
+                        <span class="gm-icon">🔥</span>
+                        <span class="gm-val" id="streakVal">0</span>
+                        <span class="gm-label">Day Streak</span>
+                    </div>
+                    <div class="gm-item">
+                        <span class="gm-icon">◈</span>
+                        <span class="gm-val" id="gateProgress">0/5</span>
+                        <span class="gm-label">Cleared</span>
+                    </div>
+                    <div class="gm-item penalty-box" id="penaltyIndicator">
+                        <span class="gm-icon">☠</span>
+                        <span class="gm-val" id="penaltyCount">0</span>
+                        <span class="gm-label">Penalties</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quest-list" id="questList"></div>
+
+            <div class="gate-bonus" id="gateBonusBox">
+                <span class="gb-icon">◆</span>
+                <span>Clear all gates: <strong id="gateBonusText">+150 Bonus XP, +50 Gold</strong></span>
+            </div>
+
+            <!-- Penalty Log -->
+            <div class="sys-window mt" id="penaltySection">
+                <div class="sw-header penalty-header">[Penalty Record]</div>
+                <div id="penaltyLog" class="penalty-log"></div>
+            </div>
+
+            <!-- Weekly Boss Raid -->
+            <div class="boss-window" id="bossSection">
+                <div class="boss-header">
+                    <span class="boss-header-title">☠ WEEKLY BOSS RAID</span>
+                    <span class="boss-rank" id="bossRankLabel">—</span>
+                </div>
+                <div class="boss-body" id="bossBody">
+                    <div class="boss-icon" id="bossIcon">👹</div>
+                    <div class="boss-name" id="bossName">Loading…</div>
+                    <div class="boss-hp-info">
+                        <span>HP</span>
+                        <span id="bossHpText">0 / 0</span>
+                    </div>
+                    <div class="boss-hp-track">
+                        <div class="boss-hp-fill" id="bossHpFill" style="width:100%"></div>
+                    </div>
+                    <div class="boss-damage-hint">[Log workouts to deal damage]</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LOG TAB ===== -->
+        <section class="panel" data-panel="log">
+            <!-- Workout Log -->
+            <div class="sys-window">
+                <div class="sw-header">[Report — Workout]</div>
+                <div class="log-form">
+                    <div class="lf-row">
+                        <label>Exercise</label>
+                        <select id="logExercise">
+                            <option value="">— Select —</option>
+                            <option value="Push-ups">Push-ups</option>
+                            <option value="Pull-ups">Pull-ups</option>
+                            <option value="Squats">Squats</option>
+                            <option value="Deadlift">Deadlift</option>
+                            <option value="Bench Press">Bench Press</option>
+                            <option value="OHP">Overhead Press</option>
+                            <option value="Running">Running</option>
+                            <option value="Cycling">Cycling</option>
+                            <option value="Swimming">Swimming</option>
+                            <option value="HIIT">HIIT</option>
+                            <option value="Boxing">Boxing</option>
+                            <option value="Jump Rope">Jump Rope</option>
+                            <option value="Walking">Walking</option>
+                            <option value="Yoga">Yoga</option>
+                            <option value="Rows">Barbell Rows</option>
+                            <option value="Plank">Plank (seconds)</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="lf-two">
+                        <div class="lf-row">
+                            <label>Reps / Duration (min)</label>
+                            <input type="number" id="logReps" min="1">
+                        </div>
+                        <div class="lf-row">
+                            <label>Sets / Rounds</label>
+                            <input type="number" id="logSets" min="1" value="1">
+                        </div>
+                    </div>
+                    <div class="lf-row">
+                        <label>Weight Used (kg) <small>(optional)</small></label>
+                        <input type="number" id="logWeight" step="0.5" min="0">
+                    </div>
+                    <div class="lf-row">
+                        <label>Intensity</label>
+                        <select id="logIntensity">
+                            <option value="low">Low — Warm-up pace</option>
+                            <option value="medium" selected>Medium — Working effort</option>
+                            <option value="high">High — Near max effort</option>
+                        </select>
+                    </div>
+                    <button class="sys-btn" id="submitWorkout">[REPORT WORKOUT]</button>
+                </div>
+            </div>
+
+            <!-- Food Log -->
+            <div class="sys-window mt">
+                <div class="sw-header">[Report — Sustenance]</div>
+                <div class="log-form">
+                    <div class="lf-two">
+                        <div class="lf-row">
+                            <label>Food Item</label>
+                            <input type="text" id="logFood" placeholder="e.g. Chicken Breast">
+                        </div>
+                        <div class="lf-row">
+                            <label>Meal</label>
+                            <select id="logMeal">
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Dinner">Dinner</option>
+                                <option value="Snack">Snack</option>
+                                <option value="Pre-Workout">Pre-Workout</option>
+                                <option value="Post-Workout">Post-Workout</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="lf-three">
+                        <div class="lf-row">
+                            <label>Protein (g)</label>
+                            <input type="number" id="logProtein" min="0" step="0.1">
+                        </div>
+                        <div class="lf-row">
+                            <label>Carbs (g)</label>
+                            <input type="number" id="logCarbs" min="0" step="0.1">
+                        </div>
+                        <div class="lf-row">
+                            <label>Fats (g)</label>
+                            <input type="number" id="logFats" min="0" step="0.1">
+                        </div>
+                    </div>
+                    <div class="cal-preview">
+                        <span>[Auto-calculated]</span>
+                        <span class="cal-val" id="calPreview">0 kcal</span>
+                    </div>
+                    <button class="sys-btn" id="submitFood">[REPORT SUSTENANCE]</button>
+                </div>
+            </div>
+
+            <!-- Today Feed -->
+            <div class="sys-window mt">
+                <div class="sw-header">[Today's Report Log]</div>
+                <div id="todayFeed" class="today-feed"></div>
+            </div>
+        </section>
+
+        <!-- ===== SHOP TAB ===== -->
+        <section class="panel" data-panel="shop">
+            <!-- Equipped Weapon Display -->
+            <div class="sys-window shop-equipped-window">
+                <div class="sw-header">[Equipped Weapon]</div>
+                <div class="sw-body">
+                    <div id="equippedWeaponDisplay" class="equipped-display">
+                        <div class="equipped-empty">No weapon equipped</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shop Header -->
+            <div class="shop-header-panel mt">
+                <div class="shop-banner">
+                    <div class="shop-banner-icon">⚔</div>
+                    <div class="shop-banner-text">
+                        <div class="shop-banner-title">HUNTER'S ARMORY</div>
+                        <div class="shop-banner-sub">Trophies of your evolution. Proof you rose from the ashes.</div>
+                    </div>
+                </div>
+                <div class="shop-stats-row">
+                    <div class="shop-stat">
+                        <span class="shop-stat-icon">💰</span>
+                        <span class="shop-stat-val gold-text" id="shopGoldDisplay">0</span>
+                        <span class="shop-stat-label">Gold</span>
+                    </div>
+                    <div class="shop-stat">
+                        <span class="shop-stat-icon">📦</span>
+                        <span class="shop-stat-val" id="shopCollectionCount">0/0</span>
+                        <span class="shop-stat-label">Collected</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shop Filters -->
+            <div class="shop-filters mt">
+                <button class="shop-filter-btn active" data-filter="all">ALL</button>
+                <button class="shop-filter-btn" data-filter="weapon">⚔ Weapons</button>
+                <button class="shop-filter-btn" data-filter="potion">🧪 Potions</button>
+                <button class="shop-filter-btn" data-filter="relic">💍 Relics</button>
+                <button class="shop-filter-btn" data-filter="scroll">📜 Scrolls</button>
+            </div>
+
+            <!-- Shop Items Grid -->
+            <div class="shop-grid" id="shopContent" data-filter="all"></div>
+        </section>
+
+        <!-- ===== SKILLS TAB ===== -->
+        <section class="panel" data-panel="skills">
+            <div class="sys-window">
+                <div class="sw-header">[Skills & Perks]</div>
+                <div id="skillsList" class="skills-list"></div>
+            </div>
+
+            <div class="sys-window mt">
+                <div class="sw-header">[Achievements]</div>
+                <div id="achieveList" class="achieve-list"></div>
+            </div>
+        </section>
+
+        <!-- ===== ANALYSIS TAB ===== -->
+        <section class="panel" data-panel="analysis">
+            <div class="sys-window">
+                <div class="sw-header">[Progress Analysis — 7 Day]</div>
+                <div class="chart-wrap"><canvas id="chartXP"></canvas></div>
+            </div>
+            <div class="sys-window mt">
+                <div class="sw-header">[Calorie Intel]</div>
+                <div class="chart-wrap"><canvas id="chartCal"></canvas></div>
+            </div>
+            <div class="sys-window mt">
+                <div class="sw-header">[Macro Breakdown — Today]</div>
+                <div class="chart-wrap chart-small"><canvas id="chartMacro"></canvas></div>
+            </div>
+            <div class="sys-window mt">
+                <div class="sw-header">[Lifetime Record]</div>
+                <div class="lifetime-grid">
+                    <div class="lt-item"><span class="lt-val" id="ltWorkouts">0</span><span class="lt-label">Workouts</span></div>
+                    <div class="lt-item"><span class="lt-val" id="ltCalBurned">0</span><span class="lt-label">Cal Burned</span></div>
+                    <div class="lt-item"><span class="lt-val" id="ltCalEaten">0</span><span class="lt-label">Cal Consumed</span></div>
+                    <div class="lt-item"><span class="lt-val" id="ltMeals">0</span><span class="lt-label">Meals Logged</span></div>
+                    <div class="lt-item"><span class="lt-val" id="ltQuests">0</span><span class="lt-label">Quests Done</span></div>
+                    <div class="lt-item"><span class="lt-val" id="ltDays">0</span><span class="lt-label">Days Active</span></div>
+                    <div class="lt-item"><span class="lt-val" id="ltShadowMissions">0</span><span class="lt-label">Shadow Missions</span></div>
+                    <div class="lt-item"><span class="lt-val" id="ltBosses">0</span><span class="lt-label">Bosses Slain</span></div>
+                </div>
+            </div>
+
+            <!-- Data Management -->
+            <div class="sys-window mt">
+                <div class="sw-header">[Data Management]</div>
+                <div class="data-mgmt">
+                    <button class="sys-btn dm-btn" id="btnExport">⬇ Export Save</button>
+                    <button class="sys-btn dm-btn" id="btnImport">⬆ Import Save</button>
+                    <button class="sys-btn dm-btn dm-danger" id="btnReset" onclick="handleResetData()">☠ Reset All Data</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Notification -->
+        <div id="sysNotif" class="sys-notif"></div>
+
+        <!-- Level Up Overlay -->
+        <div id="levelUpOverlay" class="level-up-overlay hidden">
+            <div class="lu-box">
+                <div class="lu-flash"></div>
+                <div class="lu-label">LEVEL UP</div>
+                <div class="lu-level" id="luLevel">2</div>
+                <div class="lu-sub" id="luSub">+4 free stat points</div>
+                <div class="lu-wisdom" id="luWisdom"></div>
+                <button class="sys-btn" id="luClose">[CONTINUE]</button>
+            </div>
+        </div>
+
+        <!-- Shadow Mission Overlay -->
+        <div id="shadowMissionOverlay" class="sm-overlay hidden">
+            <div class="sm-box sm-entrance">
+                <div class="sm-alert">⚠ EMERGENCY QUEST ⚠</div>
+                <div class="sm-title" id="smTitle"></div>
+                <div class="sm-desc" id="smDesc"></div>
+                <div class="sm-reward" id="smReward"></div>
+                <div class="sm-timer-wrap">
+                    <div class="sm-timer-track"><div class="sm-timer-fill" id="smTimerFill" style="width:100%"></div></div>
+                    <div class="sm-timer-text" id="smTimer">--:--</div>
+                </div>
+                <div class="sm-buttons">
+                    <button class="sm-btn-accept" id="smComplete">[MISSION COMPLETE]</button>
+                    <button class="sm-btn-skip" id="smSkip">[SKIP]</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Reward Overlay -->
+        <div id="loginRewardOverlay" class="lr-overlay hidden">
+            <div class="lr-box">
+                <div class="lr-title">DAILY LOGIN REWARD</div>
+                <div class="lr-streak" id="lrStreak">Day 1</div>
+                <div class="lr-grid" id="lrGrid"></div>
+                <div class="lr-reward" id="lrReward"></div>
+                <button class="sys-btn" id="lrClose">[CLAIM]</button>
+            </div>
+        </div>
+
+        <!-- Decay Report Overlay -->
+        <div id="decayOverlay" class="decay-overlay hidden">
+            <div class="decay-box">
+                <div class="decay-glitch">⚠ SYSTEM PENALTY ⚠</div>
+                <div class="decay-title" id="decayTitle">YOU WERE ABSENT</div>
+                <div class="decay-subtitle" id="decaySubtitle">The System does not forgive. The System does not forget.</div>
+                <div class="decay-losses" id="decayLosses"></div>
+                <div class="decay-quote">"Every day you skip, the shadows grow — but not yours."</div>
+                <button class="sys-btn decay-close-btn" id="decayClose">[ACCEPT PUNISHMENT]</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Reset Confirm Modal (outside mainApp so it always works) -->
+    <div id="resetOverlay" class="reset-overlay hidden">
+        <div class="reset-box">
+            <div class="reset-icon">☠</div>
+            <div class="reset-title">SYSTEM WIPE</div>
+            <div class="reset-msg" id="resetMsg">⚠ WARNING: This will erase ALL progress. Your rank, stats, quests, and history will be permanently destroyed. This cannot be undone.</div>
+            <div class="reset-buttons">
+                <button class="sys-btn reset-btn-danger" id="resetConfirm" onclick="confirmReset()">[DESTROY ALL DATA]</button>
+                <button class="sys-btn reset-btn-cancel" id="resetCancel" onclick="cancelReset()">[CANCEL]</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/engine.js"></script>
+    <script src="js/quests.js"></script>
+    <script src="js/shop.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/features.js"></script>
+    <script src="js/avatar.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- PWA Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => {
+                        console.log('[System] Service Worker registered.', reg.scope);
+                        // Check for updates immediately
+                        reg.update();
+                    })
+                    .catch(err => console.log('[System] SW registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>
