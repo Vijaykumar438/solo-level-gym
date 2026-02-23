@@ -71,6 +71,7 @@ function bootSequence() {
             // Show enter button after messages
             enterBtn.classList.remove('hidden');
             enterBtn.addEventListener('click', () => {
+                if (typeof playSound === 'function') playSound('boot');
                 bootScreen.style.opacity = '0';
                 setTimeout(() => {
                     bootScreen.classList.add('hidden');
@@ -180,6 +181,7 @@ function handleWorkoutSubmit() {
 
     const result = logWorkout(exercise, reps, sets, weight, intensity);
     vibrate([30, 50, 30]);
+    if (typeof playSound === 'function') playSound('workout');
     sysNotify(`[Workout Logged] ${exercise} — +${result.xpGain} XP, -${result.calBurned} cal`, 'green');
     document.getElementById('logExercise').value = '';
     document.getElementById('logReps').value = '';
@@ -203,6 +205,7 @@ function handleFoodSubmit() {
 
     const result = logFood(food, meal, protein, carbs, fats);
     vibrate(20);
+    if (typeof playSound === 'function') playSound('food');
     sysNotify(`[Food Logged] ${food} — ${result.calories} kcal, +${result.xpGain} XP`, 'blue');
     document.getElementById('logFood').value = '';
     document.getElementById('logProtein').value = '';
@@ -247,6 +250,7 @@ function handleStatAllocate(stat) {
     }
     allocateStat(stat);
     vibrate(15);
+    if (typeof playSound === 'function') playSound('statUp');
     sysNotify(`[+1 ${stat.toUpperCase()}] Stat enhanced.`, 'green');
     refreshUI();
 }
@@ -477,4 +481,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Link Google Account button (for guest users)
     const linkGoogleBtn = document.getElementById('linkGoogleBtn');
     if (linkGoogleBtn) linkGoogleBtn.addEventListener('click', () => { if (typeof linkGuestToGoogle === 'function') linkGuestToGoogle(); });
+
+    // Sound toggle button
+    const soundBtn = document.getElementById('soundToggleBtn');
+    if (soundBtn) {
+        soundBtn.addEventListener('click', () => { if (typeof toggleSound === 'function') toggleSound(); });
+        // Set initial icon
+        if (D && D.settings) soundBtn.textContent = D.settings.soundEnabled !== false ? '🔊' : '🔇';
+    }
+
+    // Heatmap navigation
+    if (typeof initHeatmapNav === 'function') initHeatmapNav();
 });

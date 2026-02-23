@@ -73,6 +73,7 @@ function showShadowMission(mission) {
     overlay.classList.remove('hidden');
     overlay.classList.add('sm-entrance');
     setTimeout(() => overlay.classList.remove('sm-entrance'), 600);
+    if (typeof playSound === 'function') playSound('shadowMission');
     
     shadowMissionInterval = setInterval(() => {
         remaining--;
@@ -209,6 +210,7 @@ function dealBossDamage(amount, source) {
         D.shadowArmy = (D.shadowArmy || 0) + 1;
         
         if (typeof vibrate === 'function') vibrate([50, 100, 50, 100, 50, 200]);
+        if (typeof playSound === 'function') playSound('bossDefeat');
         sysNotify(`[BOSS DEFEATED] ${D.boss.icon} ${D.boss.name} has fallen! +${D.boss.reward.xp} XP, +${D.boss.reward.gold} Gold, +1 Shadow Soldier!`, 'gold');
         saveGame();
         refreshUI();
@@ -290,6 +292,7 @@ function showLoginReward(reward, streak, dayIdx) {
     
     overlay.classList.remove('hidden');
     if (typeof vibrate === 'function') vibrate([30, 50, 30]);
+    if (typeof playSound === 'function') playSound('loginReward');
 }
 
 function closeLoginReward() {

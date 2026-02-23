@@ -283,6 +283,7 @@ function clearQuest(questId) {
     D.stats.totalQuestsCompleted++;
     grantXP(quest.xp);
     grantGold(quest.gold);
+    if (typeof playSound === 'function') playSound('questComplete');
     
     // Check if all today's quests are cleared
     const todayQ = getTodayQuests();

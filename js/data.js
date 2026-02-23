@@ -214,7 +214,8 @@ function getDefaultData() {
             history: []  // { date, weight }
         },
         settings: {
-            playerName: 'Hunter'
+            playerName: 'Hunter',
+            soundEnabled: true
         }
     };
 }

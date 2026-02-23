@@ -1,7 +1,7 @@
 /* ==========================================
    FEATURES.CSS — Shadow Missions, Boss Raid,
    Avatar, Login Rewards, Shadow Army,
-   Shop, Decay System
+   Shop, Decay System, Calendar, Sound Toggle
    ========================================== */
 
 /* ========== AVATAR ========== */
@@ -1091,4 +1091,204 @@
     .user-name{max-width:50px;font-size:.65rem}
     .user-avatar{width:22px;height:22px}
     .hq-signout-btn,.hq-link-btn{font-size:.85rem}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SOUND TOGGLE BUTTON
+   ═══════════════════════════════════════════════════════════ */
+
+.hq-sound-btn{
+    background:none;border:none;
+    color:rgba(79,195,247,0.5);
+    font-size:1rem;
+    cursor:pointer;
+    padding:4px 6px;
+    transition:color .3s,transform .2s;
+    line-height:1;
+}
+.hq-sound-btn:hover{
+    color:#4fc3f7;
+    transform:scale(1.15);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DUNGEON CALENDAR HEATMAP
+   ═══════════════════════════════════════════════════════════ */
+
+.heatmap-container{
+    padding:16px 12px;
+    position:relative;
+}
+
+.heatmap-year-nav{
+    display:flex;align-items:center;justify-content:center;gap:16px;
+    margin-bottom:12px;
+}
+.heatmap-year{
+    font-family:'Orbitron',sans-serif;
+    font-size:1.1rem;font-weight:600;
+    color:#4fc3f7;
+    letter-spacing:3px;
+}
+.heatmap-nav-btn{
+    background:none;border:1px solid rgba(79,195,247,0.2);
+    color:#4fc3f7;
+    font-size:.8rem;
+    padding:4px 10px;
+    border-radius:4px;
+    cursor:pointer;
+    transition:all .2s;
+    font-family:'Share Tech Mono',monospace;
+}
+.heatmap-nav-btn:hover{
+    background:rgba(79,195,247,0.1);
+    border-color:rgba(79,195,247,0.4);
+}
+
+.heatmap-stats{
+    display:flex;justify-content:center;gap:20px;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+}
+.heatmap-stat{
+    font-family:'Rajdhani',sans-serif;
+    font-size:.8rem;
+    color:rgba(255,255,255,0.5);
+}
+.heatmap-stat-val{
+    color:#4fc3f7;
+    font-weight:600;
+    font-family:'Share Tech Mono',monospace;
+}
+
+.heatmap-grid-wrap{
+    display:flex;gap:4px;
+    overflow-x:auto;
+    padding-bottom:8px;
+}
+.heatmap-grid-wrap::-webkit-scrollbar{height:4px}
+.heatmap-grid-wrap::-webkit-scrollbar-thumb{background:rgba(79,195,247,0.2);border-radius:2px}
+
+.heatmap-day-labels{
+    display:flex;flex-direction:column;gap:2px;
+    padding-top:0;
+    min-width:28px;
+}
+.heatmap-day-labels span{
+    height:12px;
+    font-family:'Share Tech Mono',monospace;
+    font-size:.55rem;
+    color:rgba(255,255,255,0.25);
+    display:flex;align-items:center;
+    line-height:1;
+}
+
+.heatmap-grid{
+    display:flex;gap:2px;
+}
+
+.heatmap-week{
+    display:flex;flex-direction:column;gap:2px;
+}
+
+.heatmap-cell{
+    width:12px;height:12px;
+    border-radius:2px;
+    cursor:pointer;
+    transition:transform .15s,outline .15s;
+}
+.heatmap-cell:hover{
+    transform:scale(1.6);
+    outline:1px solid rgba(255,255,255,0.3);
+    z-index:10;
+    position:relative;
+}
+
+/* Color levels */
+.hm-lv0{background:rgba(79,195,247,0.06);border:1px solid rgba(79,195,247,0.08)}
+.hm-lv1{background:rgba(79,195,247,0.18);border:1px solid rgba(79,195,247,0.12)}
+.hm-lv2{background:rgba(79,195,247,0.35);border:1px solid rgba(79,195,247,0.2)}
+.hm-lv3{background:rgba(120,100,255,0.5);border:1px solid rgba(120,100,255,0.3)}
+.hm-lv4{background:rgba(255,215,0,0.6);border:1px solid rgba(255,215,0,0.4);box-shadow:0 0 4px rgba(255,215,0,0.3)}
+
+/* Outside current year */
+.hm-outside{background:transparent;border:1px solid transparent;cursor:default}
+.hm-outside:hover{transform:none;outline:none}
+
+/* Future dates */
+.hm-future{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);cursor:default}
+.hm-future:hover{transform:none;outline:none}
+
+/* Today marker */
+.hm-today{
+    outline:2px solid #4fc3f7 !important;
+    outline-offset:1px;
+}
+
+/* Month labels */
+.heatmap-months{
+    display:grid;
+    grid-auto-columns:14px;
+    grid-auto-flow:column;
+    gap:2px;
+    margin-left:32px;
+    margin-bottom:4px;
+    height:14px;
+}
+.heatmap-month-label{
+    font-family:'Share Tech Mono',monospace;
+    font-size:.55rem;
+    color:rgba(255,255,255,0.35);
+    white-space:nowrap;
+}
+
+/* Legend */
+.heatmap-legend{
+    display:flex;align-items:center;justify-content:center;gap:4px;
+    margin-top:12px;
+}
+.heatmap-legend-label{
+    font-family:'Share Tech Mono',monospace;
+    font-size:.6rem;
+    color:rgba(255,255,255,0.25);
+    margin:0 4px;
+}
+.heatmap-cell-legend{
+    width:12px;height:12px;
+    border-radius:2px;
+    display:inline-block;
+}
+
+/* Tooltip */
+.heatmap-tooltip{
+    position:absolute;
+    background:rgba(10,15,30,0.95);
+    border:1px solid rgba(79,195,247,0.3);
+    border-radius:6px;
+    padding:8px 12px;
+    font-family:'Share Tech Mono',monospace;
+    font-size:.72rem;
+    color:#e0e0e0;
+    pointer-events:none;
+    z-index:100;
+    white-space:nowrap;
+    transform:translateX(-50%);
+    box-shadow:0 4px 16px rgba(0,0,0,0.4);
+}
+.heatmap-tooltip strong{
+    color:#4fc3f7;
+    font-size:.75rem;
+}
+
+/* Heatmap responsive */
+@media(max-width:600px){
+    .heatmap-container{padding:12px 6px}
+    .heatmap-cell{width:10px;height:10px}
+    .heatmap-cell-legend{width:10px;height:10px}
+    .heatmap-day-labels span{height:10px;font-size:.5rem}
+    .heatmap-day-labels{min-width:22px}
+    .heatmap-stats{gap:12px}
+    .heatmap-stat{font-size:.72rem}
+    .heatmap-year{font-size:.9rem}
+    .heatmap-months{grid-auto-columns:12px;margin-left:26px}
 }

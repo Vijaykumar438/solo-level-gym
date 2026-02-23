@@ -10,6 +10,8 @@ function sysNotify(msg, type = '') {
     el.textContent = msg;
     container.appendChild(el);
     setTimeout(() => el.remove(), 3200);
+    // Play error buzz for red notifications
+    if (type === 'red' && typeof playSound === 'function') playSound('error');
 }
 
 // ---- Tab switching ----
@@ -22,7 +24,10 @@ function initTabs() {
             tab.classList.add('active');
             document.querySelector(`[data-panel="${target}"]`).classList.add('active');
             
-            if (target === 'analysis') setTimeout(renderAllCharts, 120);
+            if (target === 'analysis') {
+                setTimeout(renderAllCharts, 120);
+                setTimeout(renderCalendar, 50);
+            }
             if (target === 'shop' && typeof renderShop === 'function') setTimeout(renderShop, 50);
         });
     });
@@ -348,6 +353,201 @@ function renderLifetime() {
     if (bossEl) bossEl.textContent = D.stats.bossesDefeated || 0;
 }
 
+// ═══════════════════════════════════════════
+//  DUNGEON CALENDAR HEATMAP
+// ═══════════════════════════════════════════
+
+let _heatmapYear = new Date().getFullYear();
+
+function renderCalendar(year) {
+    if (year !== undefined) _heatmapYear = year;
+    const yr = _heatmapYear;
+
+    const grid = document.getElementById('heatmapGrid');
+    const monthsEl = document.getElementById('heatmapMonths');
+    const yearEl = document.getElementById('heatmapYear');
+    if (!grid) return;
+
+    yearEl.textContent = yr;
+
+    // ---- Build daily XP map ----
+    const dailyXP = {};
+    const dailyCount = {};
+
+    function addDay(dateStr, xp) {
+        const day = dateStr.slice(0, 10); // YYYY-MM-DD
+        dailyXP[day] = (dailyXP[day] || 0) + xp;
+        dailyCount[day] = (dailyCount[day] || 0) + 1;
+    }
+
+    if (D.workouts) D.workouts.forEach(w => addDay(w.date, w.xp || 0));
+    if (D.foods) D.foods.forEach(f => addDay(f.date, f.xp || 0));
+    if (D.quests) D.quests.filter(q => q.cleared).forEach(q => addDay(q.date, q.xp || 0));
+
+    // ---- Determine XP thresholds for color levels ----
+    const xpValues = Object.values(dailyXP).filter(v => v > 0).sort((a, b) => a - b);
+    let t1 = 30, t2 = 80, t3 = 150, t4 = 300;
+    if (xpValues.length > 4) {
+        t1 = xpValues[Math.floor(xpValues.length * 0.2)] || 30;
+        t2 = xpValues[Math.floor(xpValues.length * 0.45)] || 80;
+        t3 = xpValues[Math.floor(xpValues.length * 0.7)] || 150;
+        t4 = xpValues[Math.floor(xpValues.length * 0.9)] || 300;
+    }
+
+    function xpLevel(xp) {
+        if (!xp || xp <= 0) return 0;
+        if (xp < t1) return 1;
+        if (xp < t2) return 2;
+        if (xp < t3) return 3;
+        return 4;
+    }
+
+    // ---- Build grid: weeks as columns, days as rows ----
+    // Start from Jan 1 of the year
+    const jan1 = new Date(yr, 0, 1);
+    const dec31 = new Date(yr, 11, 31);
+    const startDow = (jan1.getDay() + 6) % 7; // Monday=0
+
+    // Pad start
+    const startDate = new Date(jan1);
+    startDate.setDate(startDate.getDate() - startDow);
+
+    // Generate all cells (up to 53 weeks × 7 days)
+    const cells = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const cursor = new Date(startDate);
+
+    let totalActiveDays = 0;
+    let totalXP = 0;
+
+    while (cursor <= dec31 || (cursor.getDay() + 6) % 7 !== 0) {
+        const dateStr = cursor.toISOString().slice(0, 10);
+        const isThisYear = cursor.getFullYear() === yr;
+        const isFuture = cursor > today;
+        const xp = dailyXP[dateStr] || 0;
+        const count = dailyCount[dateStr] || 0;
+        const lv = (isThisYear && !isFuture) ? xpLevel(xp) : -1;
+
+        if (isThisYear && xp > 0) {
+            totalActiveDays++;
+            totalXP += xp;
+        }
+
+        cells.push({
+            date: dateStr,
+            dow: (cursor.getDay() + 6) % 7,
+            month: cursor.getMonth(),
+            year: cursor.getFullYear(),
+            lv, xp, count, isFuture, isThisYear
+        });
+
+        cursor.setDate(cursor.getDate() + 1);
+        // Safety break
+        if (cells.length > 400) break;
+    }
+
+    // ---- Render grid ----
+    // Group by week (columns)
+    const weeks = [];
+    let currentWeek = [];
+    cells.forEach((cell, i) => {
+        currentWeek.push(cell);
+        if (currentWeek.length === 7) {
+            weeks.push(currentWeek);
+            currentWeek = [];
+        }
+    });
+    if (currentWeek.length) weeks.push(currentWeek);
+
+    let html = '';
+    weeks.forEach(week => {
+        html += '<div class="heatmap-week">';
+        week.forEach(cell => {
+            let cls = 'heatmap-cell';
+            if (!cell.isThisYear) cls += ' hm-outside';
+            else if (cell.isFuture) cls += ' hm-future';
+            else cls += ` hm-lv${cell.lv}`;
+
+            // Today marker
+            const todayStr = today.toISOString().slice(0, 10);
+            if (cell.date === todayStr) cls += ' hm-today';
+
+            html += `<div class="${cls}" data-date="${cell.date}" data-xp="${cell.xp}" data-count="${cell.count}"></div>`;
+        });
+        html += '</div>';
+    });
+    grid.innerHTML = html;
+
+    // ---- Month labels ----
+    const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let monthHtml = '';
+    let lastMonth = -1;
+    weeks.forEach((week, wi) => {
+        const firstCell = week.find(c => c.isThisYear && c.dow === 0);
+        if (firstCell && firstCell.month !== lastMonth) {
+            lastMonth = firstCell.month;
+            monthHtml += `<span class="heatmap-month-label" style="grid-column:${wi + 1}">${monthNames[firstCell.month]}</span>`;
+        }
+    });
+    monthsEl.innerHTML = monthHtml;
+
+    // ---- Stats ----
+    document.getElementById('hmTotalDays').textContent = totalActiveDays;
+    document.getElementById('hmTotalXP').textContent = totalXP.toLocaleString();
+    document.getElementById('hmStreak').textContent = D.streak || 0;
+
+    // ---- Tooltip on hover ----
+    grid.querySelectorAll('.heatmap-cell').forEach(cell => {
+        cell.addEventListener('mouseenter', (e) => showHeatmapTooltip(e, cell));
+        cell.addEventListener('mouseleave', hideHeatmapTooltip);
+        cell.addEventListener('touchstart', (e) => { e.preventDefault(); showHeatmapTooltip(e, cell); }, { passive: false });
+    });
+}
+
+function showHeatmapTooltip(e, cell) {
+    const tooltip = document.getElementById('heatmapTooltip');
+    if (!tooltip) return;
+
+    const date = cell.dataset.date;
+    const xp = parseInt(cell.dataset.xp) || 0;
+    const count = parseInt(cell.dataset.count) || 0;
+
+    const d = new Date(date + 'T00:00:00');
+    const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const formatted = `${dayNames[d.getDay()]}, ${monthNames[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+
+    let text = `<strong>${formatted}</strong><br>`;
+    if (xp > 0) {
+        text += `⚡ ${xp} XP · ${count} activities`;
+    } else {
+        text += `<span style="color:#555">No gates opened</span>`;
+    }
+
+    tooltip.innerHTML = text;
+    tooltip.classList.remove('hidden');
+
+    const rect = cell.getBoundingClientRect();
+    const container = cell.closest('.heatmap-container').getBoundingClientRect();
+    tooltip.style.left = (rect.left - container.left + rect.width / 2) + 'px';
+    tooltip.style.top = (rect.top - container.top - 40) + 'px';
+}
+
+function hideHeatmapTooltip() {
+    const tooltip = document.getElementById('heatmapTooltip');
+    if (tooltip) tooltip.classList.add('hidden');
+}
+
+function initHeatmapNav() {
+    const prev = document.getElementById('heatmapPrev');
+    const next = document.getElementById('heatmapNext');
+    if (prev) prev.addEventListener('click', () => { _heatmapYear--; renderCalendar(); });
+    if (next) next.addEventListener('click', () => {
+        if (_heatmapYear < new Date().getFullYear()) { _heatmapYear++; renderCalendar(); }
+    });
+}
+
 // ---- Level Up Overlay ----
 function showLevelUp(level, pts) {
     const overlay = document.getElementById('levelUpOverlay');
@@ -412,6 +612,7 @@ function showDecayReport(report) {
     
     // Vibrate aggressively
     if (typeof vibrate === 'function') vibrate([200, 100, 200, 100, 300]);
+    if (typeof playSound === 'function') playSound('penalty');
     
     overlay.classList.remove('hidden');
 }

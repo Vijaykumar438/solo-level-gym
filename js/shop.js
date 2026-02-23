@@ -111,6 +111,7 @@ function buyItem(itemId) {
     }
     
     saveGame();
+    if (typeof playSound === 'function') playSound('shopBuy');
     return item;
 }
 

@@ -117,6 +117,7 @@
                     <span class="hq-val gold-text" id="hqGold">0</span>
                 </div>
                 <button id="linkGoogleBtn" class="hq-link-btn hidden" title="Link Google Account">🔗</button>
+                <button id="soundToggleBtn" class="hq-sound-btn" title="Toggle Sound">🔊</button>
                 <button id="signOutBtn" class="hq-signout-btn" title="Sign Out">⏻</button>
             </div>
         </header>
@@ -476,7 +477,41 @@
 
         <!-- ===== ANALYSIS TAB ===== -->
         <section class="panel" data-panel="analysis">
+            <!-- Dungeon Calendar Heatmap -->
             <div class="sys-window">
+                <div class="sw-header">[Dungeon Calendar — Gate Activity]</div>
+                <div class="heatmap-container">
+                    <div class="heatmap-year-nav">
+                        <button class="heatmap-nav-btn" id="heatmapPrev">◀</button>
+                        <span class="heatmap-year" id="heatmapYear">2026</span>
+                        <button class="heatmap-nav-btn" id="heatmapNext">▶</button>
+                    </div>
+                    <div class="heatmap-stats">
+                        <span class="heatmap-stat"><span class="heatmap-stat-val" id="hmTotalDays">0</span> days active</span>
+                        <span class="heatmap-stat"><span class="heatmap-stat-val" id="hmTotalXP">0</span> total XP</span>
+                        <span class="heatmap-stat">🔥 <span class="heatmap-stat-val" id="hmStreak">0</span> streak</span>
+                    </div>
+                    <div class="heatmap-months" id="heatmapMonths"></div>
+                    <div class="heatmap-grid-wrap">
+                        <div class="heatmap-day-labels">
+                            <span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span>
+                        </div>
+                        <div class="heatmap-grid" id="heatmapGrid"></div>
+                    </div>
+                    <div class="heatmap-legend">
+                        <span class="heatmap-legend-label">Less</span>
+                        <span class="heatmap-cell-legend hm-lv0"></span>
+                        <span class="heatmap-cell-legend hm-lv1"></span>
+                        <span class="heatmap-cell-legend hm-lv2"></span>
+                        <span class="heatmap-cell-legend hm-lv3"></span>
+                        <span class="heatmap-cell-legend hm-lv4"></span>
+                        <span class="heatmap-legend-label">More</span>
+                    </div>
+                    <div class="heatmap-tooltip hidden" id="heatmapTooltip"></div>
+                </div>
+            </div>
+
+            <div class="sys-window mt">
                 <div class="sw-header">[Progress Analysis — 7 Day]</div>
                 <div class="chart-wrap"><canvas id="chartXP"></canvas></div>
             </div>
@@ -588,6 +623,7 @@
     <script src="js/auth.js"></script>
     <script src="js/db.js"></script>
     <script src="js/data.js"></script>
+    <script src="js/sounds.js"></script>
     <script src="js/engine.js"></script>
     <script src="js/quests.js"></script>
     <script src="js/shop.js"></script>

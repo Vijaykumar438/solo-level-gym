@@ -20,6 +20,10 @@ function loadGame() {
             if (!D.physique) D.physique = def.physique;
             if (!D.settings) D.settings = def.settings;
             if (!D.shop) D.shop = def.shop;
+            // Merge new settings keys
+            for (const k in def.settings) {
+                if (!(k in D.settings)) D.settings[k] = def.settings[k];
+            }
         } catch {
             D = getDefaultData();
         }
@@ -77,6 +81,7 @@ function levelUp() {
     
     // Show level up overlay
     showLevelUp(D.level, pts);
+    if (typeof playSound === 'function') playSound('levelUp');
     
     saveGame();
 }
