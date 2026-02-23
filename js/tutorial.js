@@ -45,12 +45,16 @@ const TUTORIAL_SECTIONS = [
         id: 'quests',
         icon: '⬡',
         title: 'Daily Gate (Quests)',
-        content: `Every day, the System generates <strong>5 daily quests</strong> tailored to your rank:<br><br>
-        • <strong>Workout quests</strong> — Strength and cardio challenges<br>
+        content: `Every day, the System generates <strong>8 daily quests</strong> tailored to your rank:<br><br>
+        • <strong>Workout quests</strong> — Strength and lifting challenges<br>
+        • <strong>Cardio quests</strong> — Running, HIIT, endurance<br>
         • <strong>Nutrition quests</strong> — Protein and meal tracking<br>
         • <strong>Discipline quests</strong> — Sleep, hydration, cold showers<br>
+        • <strong>Mobility quests</strong> — Stretching, yoga, foam rolling, recovery<br>
+        • <strong>Mental quests</strong> — Meditation, journaling, visualization<br>
+        • <strong>Shadow Challenge</strong> — Special themed combat challenges<br>
         • <strong>Bonus quests</strong> — Extra challenges for big rewards<br><br>
-        <span class="tut-highlight">Clear all 5 gates to earn bonus XP and Gold!</span><br><br>
+        <span class="tut-highlight">Clear all 8 gates to earn bonus XP and Gold!</span><br><br>
         ⚠ <strong>Penalty System:</strong> If you skip a day entirely, you'll receive stat decay — the System punishes laziness. Maintain your streak to avoid degradation.`
     },
     {
@@ -149,7 +153,7 @@ const TUTORIAL_SECTIONS = [
         title: 'Pro Hunter Tips',
         content: `<strong>Maximize your progression:</strong><br><br>
         1. <strong>Never break your streak.</strong> Consistency is the #1 factor. Even a light workout counts.<br>
-        2. <strong>Clear all 5 daily gates.</strong> The bonus XP for full completion stacks up fast.<br>
+        2. <strong>Clear all 8 daily gates.</strong> The bonus XP for full completion stacks up fast.<br>
         3. <strong>Log food regularly.</strong> Use the smart search — just type and pick. Track every meal.<br>
         4. <strong>Watch your energy balance.</strong> Bulking? Stay in surplus. Cutting? Stay in deficit.<br>
         5. <strong>Fight the weekly boss.</strong> Boss kills give massive rewards + shadow soldiers.<br>

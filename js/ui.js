@@ -216,8 +216,8 @@ function renderQuests() {
     // Update bonus text with scaled values
     const bonusTextEl = document.getElementById('gateBonusText');
     if (bonusTextEl && typeof qScale === 'function') {
-        const bonusXP = qScale(D.level, 150, 500);
-        const bonusGold = qScale(D.level, 50, 150);
+        const bonusXP = qScale(D.level, 250, 800);
+        const bonusGold = qScale(D.level, 80, 250);
         bonusTextEl.textContent = `+${bonusXP} Bonus XP, +${bonusGold} Gold`;
     }
     

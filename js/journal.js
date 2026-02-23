@@ -39,10 +39,10 @@ const JOURNAL_CHAPTERS = [
         title: "The System's Demand",
         icon: '⬡',
         condition: () => D.stats.totalQuestsCompleted >= 5,
-        condLabel: 'Clear all 5 daily quests in one day',
+        condLabel: 'Clear all daily quests in one day',
         story: () => `
             <p>The System doesn't ask. It demands.</p>
-            <p>Five gates appeared — five challenges that had to be cleared before midnight. Workout. Cardio. Nutrition. Discipline. And one more, just to test the spirit.</p>
+            <p>Eight gates appeared — eight challenges that had to be cleared before midnight. Workout. Cardio. Nutrition. Discipline. Mobility. Mental Fortitude. A Shadow Challenge. And one more, just to test the spirit.</p>
             <p><strong class="jn-highlight">${D.settings.playerName}</strong> cleared them all. Every. Single. One.</p>
             <p>${D.stats.totalQuestsCompleted} total quests completed since that first day. Each one a brick in the fortress you're building.</p>
             <p class="jn-system-msg">[System] All daily gates cleared. Bonus XP granted. The System is... impressed.</p>
