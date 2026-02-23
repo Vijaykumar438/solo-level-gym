@@ -101,7 +101,7 @@ input,select,button{font-family:var(--body)}
 .sc-val{font-family:var(--font);font-size:clamp(1.3rem,4vw,1.8rem);font-weight:700;color:var(--blue);text-shadow:0 0 10px rgba(79,195,247,.3);margin-bottom:8px}
 .sc-bar{width:100%;height:4px;background:var(--dark);border-radius:2px;overflow:hidden}
 .sc-fill{height:100%;background:linear-gradient(90deg,var(--blue3),var(--blue));border-radius:2px;transition:width .5s}
-.phs-card{grid-column:1/-1;background:linear-gradient(135deg,var(--panel),rgba(79,195,247,.05))}
+.phs-card{background:linear-gradient(135deg,var(--panel),rgba(79,195,247,.05))}
 .phs-card .sc-val{font-size:clamp(1.6rem,5vw,2.2rem);color:var(--cyan)}
 .phs-fill{background:linear-gradient(90deg,var(--blue),var(--cyan))!important}
 

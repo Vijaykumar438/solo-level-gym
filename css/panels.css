@@ -116,7 +116,6 @@
 /* ========== RESPONSIVE ========== */
 @media(max-width:768px){
     .stats-grid{grid-template-columns:repeat(2,1fr)}
-    .phs-card{grid-column:1/-1}
     .gate-meta{grid-template-columns:1fr 1fr 1fr}
     .lf-two,.lf-three{grid-template-columns:1fr}
     .lifetime-grid{grid-template-columns:repeat(2,1fr)}

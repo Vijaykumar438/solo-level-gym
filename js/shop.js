@@ -50,7 +50,7 @@ const SHOP_ITEMS = [
 ];
 
 // Rank order for comparison
-const RANK_ORDER = { E: 0, D: 1, C: 2, B: 3, A: 4, S: 5 };
+const RANK_ORDER = { E: 0, D: 1, C: 2, B: 3, A: 4, S: 5, X: 6 };
 
 // ---- Initialize shop data in save ----
 function initShopData() {

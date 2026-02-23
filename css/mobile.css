@@ -150,7 +150,6 @@ select{
 /* ---- 380px small phone breakpoint ---- */
 @media (max-width: 380px){
     .stats-grid{ grid-template-columns: repeat(2, 1fr) }
-    .phs-card{ grid-column: 1 / -1 }
     .sp-grid{ grid-template-columns: repeat(2, 1fr) }
     .header-quick{
         gap: 6px;
