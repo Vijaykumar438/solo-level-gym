@@ -2,7 +2,7 @@
 //  SERVICE WORKER — Offline PWA support
 // ==========================================
 
-const CACHE_NAME = 'solo-leveling-v13';
+const CACHE_NAME = 'solo-leveling-v14';
 const ASSETS = [
     '/',
     '/index.html',
