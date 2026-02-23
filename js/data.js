@@ -132,25 +132,115 @@ const FOOD_DB = [
     { name:'Thali (non-veg)',      serving:500, servingLabel:'1 thali',protein:30, carbs:65, fats:20 },
 ];
 
-const CALORIE_RATES = {
-    'Push-ups':     { low: 4, medium: 6, high: 8 },
-    'Pull-ups':     { low: 5, medium: 8, high: 11 },
-    'Squats':       { low: 4, medium: 6, high: 9 },
-    'Deadlift':     { low: 5, medium: 8, high: 11 },
-    'Bench Press':  { low: 4, medium: 7, high: 10 },
-    'OHP':          { low: 4, medium: 6, high: 9 },
-    'Running':      { low: 6, medium: 8, high: 10 },
-    'Cycling':      { low: 5, medium: 7, high: 9 },
-    'Swimming':     { low: 6, medium: 8, high: 11 },
-    'HIIT':         { low: 8, medium: 10, high: 12 },
-    'Boxing':       { low: 6, medium: 9, high: 12 },
-    'Jump Rope':    { low: 8, medium: 10, high: 13 },
-    'Walking':      { low: 3, medium: 4, high: 5 },
-    'Yoga':         { low: 2, medium: 3, high: 4 },
-    'Rows':         { low: 4, medium: 7, high: 10 },
-    'Plank':        { low: 3, medium: 5, high: 7 },
-    'Other':        { low: 4, medium: 6, high: 8 }
-};
+// ═══════════════════════════════════════════
+//  EXERCISE DATABASE — Full gym catalog with muscle groups & calorie rates
+//  { name, group, isCardio, cal: { low, medium, high } }
+//  Calorie rates = cal/min estimates by intensity
+// ═══════════════════════════════════════════
+const EXERCISE_DB = [
+    // ── CHEST ──
+    { name:'Bench Press',           group:'Chest',     isCardio:false, cal:{ low:4, medium:7, high:10 } },
+    { name:'Incline Bench Press',   group:'Chest',     isCardio:false, cal:{ low:4, medium:7, high:10 } },
+    { name:'Decline Bench Press',   group:'Chest',     isCardio:false, cal:{ low:4, medium:7, high:9 } },
+    { name:'Dumbbell Bench Press',  group:'Chest',     isCardio:false, cal:{ low:4, medium:6, high:9 } },
+    { name:'Dumbbell Fly',          group:'Chest',     isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Cable Crossover',       group:'Chest',     isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Chest Dips',            group:'Chest',     isCardio:false, cal:{ low:5, medium:7, high:10 } },
+    { name:'Push-ups',              group:'Chest',     isCardio:false, cal:{ low:4, medium:6, high:8 } },
+
+    // ── BACK ──
+    { name:'Pull-ups',              group:'Back',      isCardio:false, cal:{ low:5, medium:8, high:11 } },
+    { name:'Chin-ups',              group:'Back',      isCardio:false, cal:{ low:5, medium:8, high:11 } },
+    { name:'Barbell Row',           group:'Back',      isCardio:false, cal:{ low:4, medium:7, high:10 } },
+    { name:'Dumbbell Row',          group:'Back',      isCardio:false, cal:{ low:4, medium:6, high:9 } },
+    { name:'Lat Pulldown',          group:'Back',      isCardio:false, cal:{ low:3, medium:6, high:8 } },
+    { name:'Seated Cable Row',      group:'Back',      isCardio:false, cal:{ low:3, medium:6, high:8 } },
+    { name:'T-Bar Row',             group:'Back',      isCardio:false, cal:{ low:4, medium:7, high:10 } },
+    { name:'Face Pull',             group:'Back',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Back Extension',        group:'Back',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+
+    // ── SHOULDERS ──
+    { name:'OHP',                   group:'Shoulders', isCardio:false, cal:{ low:4, medium:6, high:9 } },
+    { name:'Arnold Press',          group:'Shoulders', isCardio:false, cal:{ low:4, medium:6, high:9 } },
+    { name:'Military Press',        group:'Shoulders', isCardio:false, cal:{ low:4, medium:6, high:9 } },
+    { name:'Lateral Raise',         group:'Shoulders', isCardio:false, cal:{ low:3, medium:4, high:6 } },
+    { name:'Front Raise',           group:'Shoulders', isCardio:false, cal:{ low:3, medium:4, high:6 } },
+    { name:'Rear Delt Fly',         group:'Shoulders', isCardio:false, cal:{ low:3, medium:4, high:6 } },
+    { name:'Upright Row',           group:'Shoulders', isCardio:false, cal:{ low:3, medium:5, high:8 } },
+    { name:'Shrugs',                group:'Shoulders', isCardio:false, cal:{ low:3, medium:5, high:7 } },
+
+    // ── ARMS ──
+    { name:'Barbell Curl',          group:'Arms',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Dumbbell Curl',         group:'Arms',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Hammer Curl',           group:'Arms',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Preacher Curl',         group:'Arms',      isCardio:false, cal:{ low:3, medium:4, high:6 } },
+    { name:'Concentration Curl',    group:'Arms',      isCardio:false, cal:{ low:2, medium:4, high:6 } },
+    { name:'Cable Curl',            group:'Arms',      isCardio:false, cal:{ low:3, medium:5, high:6 } },
+    { name:'Tricep Pushdown',       group:'Arms',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Skull Crushers',        group:'Arms',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Tricep Dips',           group:'Arms',      isCardio:false, cal:{ low:5, medium:7, high:10 } },
+    { name:'Overhead Tricep Ext',   group:'Arms',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+
+    // ── LEGS ──
+    { name:'Squats',                group:'Legs',      isCardio:false, cal:{ low:4, medium:6, high:9 } },
+    { name:'Front Squats',          group:'Legs',      isCardio:false, cal:{ low:4, medium:6, high:9 } },
+    { name:'Goblet Squat',          group:'Legs',      isCardio:false, cal:{ low:4, medium:6, high:8 } },
+    { name:'Hack Squat',            group:'Legs',      isCardio:false, cal:{ low:4, medium:6, high:9 } },
+    { name:'Leg Press',             group:'Legs',      isCardio:false, cal:{ low:4, medium:6, high:8 } },
+    { name:'Lunges',                group:'Legs',      isCardio:false, cal:{ low:4, medium:6, high:8 } },
+    { name:'Bulgarian Split Squat', group:'Legs',      isCardio:false, cal:{ low:4, medium:7, high:9 } },
+    { name:'Leg Curl',              group:'Legs',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Leg Extension',         group:'Legs',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Calf Raise',            group:'Legs',      isCardio:false, cal:{ low:2, medium:4, high:6 } },
+    { name:'Hip Thrust',            group:'Legs',      isCardio:false, cal:{ low:4, medium:6, high:9 } },
+    { name:'Romanian Deadlift',     group:'Legs',      isCardio:false, cal:{ low:5, medium:7, high:10 } },
+    { name:'Deadlift',              group:'Legs',      isCardio:false, cal:{ low:5, medium:8, high:11 } },
+
+    // ── CORE ──
+    { name:'Plank',                 group:'Core',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Crunches',              group:'Core',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Sit-ups',               group:'Core',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Hanging Leg Raise',     group:'Core',      isCardio:false, cal:{ low:4, medium:6, high:8 } },
+    { name:'Cable Crunch',          group:'Core',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Ab Wheel Rollout',      group:'Core',      isCardio:false, cal:{ low:4, medium:6, high:9 } },
+    { name:'Russian Twist',         group:'Core',      isCardio:false, cal:{ low:3, medium:5, high:7 } },
+    { name:'Mountain Climbers',     group:'Core',      isCardio:true,  cal:{ low:6, medium:8, high:11 } },
+    { name:'Dead Bug',              group:'Core',      isCardio:false, cal:{ low:3, medium:4, high:6 } },
+    { name:'Dragon Flag',           group:'Core',      isCardio:false, cal:{ low:5, medium:7, high:10 } },
+
+    // ── CARDIO ──
+    { name:'Running',               group:'Cardio',    isCardio:true,  cal:{ low:6, medium:8, high:10 } },
+    { name:'Cycling',               group:'Cardio',    isCardio:true,  cal:{ low:5, medium:7, high:9 } },
+    { name:'Swimming',              group:'Cardio',    isCardio:true,  cal:{ low:6, medium:8, high:11 } },
+    { name:'Jump Rope',             group:'Cardio',    isCardio:true,  cal:{ low:8, medium:10, high:13 } },
+    { name:'Rowing Machine',        group:'Cardio',    isCardio:true,  cal:{ low:5, medium:7, high:10 } },
+    { name:'Stair Climber',         group:'Cardio',    isCardio:true,  cal:{ low:5, medium:8, high:11 } },
+    { name:'Walking',               group:'Cardio',    isCardio:true,  cal:{ low:3, medium:4, high:5 } },
+    { name:'Elliptical',            group:'Cardio',    isCardio:true,  cal:{ low:5, medium:7, high:9 } },
+    { name:'Sprints',               group:'Cardio',    isCardio:true,  cal:{ low:8, medium:11, high:14 } },
+
+    // ── FULL BODY ──
+    { name:'HIIT',                  group:'Full Body', isCardio:true,  cal:{ low:8, medium:10, high:12 } },
+    { name:'Boxing',                group:'Full Body', isCardio:true,  cal:{ low:6, medium:9, high:12 } },
+    { name:'Burpees',               group:'Full Body', isCardio:true,  cal:{ low:7, medium:9, high:12 } },
+    { name:'Kettlebell Swing',      group:'Full Body', isCardio:false, cal:{ low:6, medium:9, high:12 } },
+    { name:'Clean and Press',       group:'Full Body', isCardio:false, cal:{ low:5, medium:8, high:11 } },
+    { name:'Battle Ropes',          group:'Full Body', isCardio:true,  cal:{ low:8, medium:10, high:13 } },
+    { name:'Yoga',                  group:'Full Body', isCardio:false, cal:{ low:2, medium:3, high:4 } },
+    { name:"Farmer's Walk",        group:'Full Body', isCardio:false, cal:{ low:5, medium:7, high:9 } },
+    { name:'CrossFit WOD',          group:'Full Body', isCardio:true,  cal:{ low:8, medium:10, high:13 } },
+
+    // ── OTHER ──
+    { name:'Other',                 group:'Other',     isCardio:false, cal:{ low:4, medium:6, high:8 } },
+];
+
+// Build CALORIE_RATES from EXERCISE_DB for backward compat
+const CALORIE_RATES = {};
+EXERCISE_DB.forEach(ex => { CALORIE_RATES[ex.name] = ex.cal; });
+
+// Muscle group list (derived)
+const EXERCISE_GROUPS = [...new Set(EXERCISE_DB.map(e => e.group).filter(g => g !== 'Other'))];
+
 
 const SKILLS_DEFS = [
     { id: 'iron_will',     name: 'Iron Will',                 type: 'Passive', icon: '🛡', desc: 'WIL growth +10%. Forged through relentless discipline.', unlock: 3 },

@@ -116,10 +116,11 @@ function logWorkout(exercise, reps, sets, weight, intensity) {
     const rate = CALORIE_RATES[exercise] || CALORIE_RATES['Other'];
     const intensityRate = rate[intensity] || rate.medium;
     
-    // Calorie calc: for rep-based exercises, estimate ~3 sec/rep
+    // Calorie calc: cardio uses duration (minutes), others use rep timing
     let calBurned;
-    const cardioExercises = ['Running', 'Cycling', 'Swimming', 'Walking', 'HIIT', 'Jump Rope', 'Boxing'];
-    if (cardioExercises.includes(exercise)) {
+    const exDef = (typeof EXERCISE_DB !== 'undefined') && EXERCISE_DB.find(e => e.name === exercise);
+    const isCardio = exDef ? exDef.isCardio : ['Running','Cycling','Swimming','Walking','HIIT','Jump Rope','Boxing'].includes(exercise);
+    if (isCardio) {
         // reps = minutes for cardio
         calBurned = Math.round(reps * intensityRate * sets);
     } else {

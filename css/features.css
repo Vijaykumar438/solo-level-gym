@@ -1336,3 +1336,37 @@
     .heatmap-day-labels{min-width:18px}
     .heatmap-months{grid-auto-columns:10px;margin-left:22px}
 }
+
+/* ========== EXERCISE MUSCLE GROUP FILTER ========== */
+.exercise-filter-bar{
+    display:flex;gap:6px;overflow-x:auto;padding:4px 0 6px;
+    scrollbar-width:none;-ms-overflow-style:none;
+    -webkit-overflow-scrolling:touch;
+}
+.exercise-filter-bar::-webkit-scrollbar{display:none}
+
+.ef-pill{
+    flex-shrink:0;
+    font-family:var(--mono);font-size:clamp(.6rem,1.6vw,.72rem);
+    padding:clamp(5px,1.2vw,7px) clamp(10px,2.5vw,14px);
+    background:var(--dark);border:1px solid var(--border);
+    color:var(--dim);border-radius:20px;cursor:pointer;
+    transition:all .25s;white-space:nowrap;
+    letter-spacing:.5px;text-transform:uppercase;
+}
+.ef-pill:hover{
+    border-color:var(--blue);color:var(--text);
+}
+.ef-pill.active{
+    background:var(--blue);color:var(--dark);border-color:var(--blue);
+    font-weight:700;box-shadow:0 0 12px rgba(79,195,247,.3);
+}
+
+/* Optgroup styling inside exercise select */
+#logExercise optgroup{
+    font-family:var(--mono);font-size:.72rem;color:var(--dim);
+    padding:6px 0 2px;letter-spacing:1px;
+}
+#logExercise option{
+    padding:6px 10px;font-size:.9rem;
+}

@@ -387,6 +387,74 @@ function renderEnergyBalance() {
     `;
 }
 
+// ═══════════════════════════════════════════
+//  EXERCISE SELECTOR — Muscle group filter + dynamic dropdown
+// ═══════════════════════════════════════════
+function initExerciseSelector() {
+    const bar = document.getElementById('exerciseFilterBar');
+    const sel = document.getElementById('logExercise');
+    if (!bar || !sel || typeof EXERCISE_DB === 'undefined') return;
+
+    // Build filter pills from groups
+    EXERCISE_GROUPS.forEach(g => {
+        const btn = document.createElement('button');
+        btn.className = 'ef-pill';
+        btn.dataset.group = g;
+        btn.textContent = g;
+        bar.appendChild(btn);
+    });
+
+    // Populate all exercises initially
+    populateExerciseSelect('All');
+
+    // Filter pill click handler
+    bar.addEventListener('click', e => {
+        const pill = e.target.closest('.ef-pill');
+        if (!pill) return;
+        bar.querySelectorAll('.ef-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        populateExerciseSelect(pill.dataset.group);
+        if (typeof playSound === 'function') playSound('click');
+    });
+}
+
+function populateExerciseSelect(group) {
+    const sel = document.getElementById('logExercise');
+    if (!sel) return;
+    const prev = sel.value; // preserve selection if still valid
+
+    // Filter exercises
+    const exercises = group === 'All'
+        ? EXERCISE_DB
+        : EXERCISE_DB.filter(ex => ex.group === group);
+
+    // Clear & repopulate
+    sel.innerHTML = '<option value="">— Select Exercise —</option>';
+    let currentGroup = '';
+    exercises.forEach(ex => {
+        if (group === 'All' && ex.group !== currentGroup && ex.group !== 'Other') {
+            currentGroup = ex.group;
+            const optGroup = document.createElement('optgroup');
+            optGroup.label = `── ${currentGroup} ──`;
+            sel.appendChild(optGroup);
+        }
+        const opt = document.createElement('option');
+        opt.value = ex.name;
+        opt.textContent = ex.isCardio ? `${ex.name} ⏱` : ex.name;
+        if (group === 'All' && currentGroup && ex.group !== 'Other') {
+            sel.querySelector(`optgroup[label="── ${currentGroup} ──"]`).appendChild(opt);
+        } else {
+            sel.appendChild(opt);
+        }
+    });
+
+    // Restore previous if valid
+    if (prev) {
+        const exists = [...sel.options].some(o => o.value === prev);
+        if (exists) sel.value = prev;
+    }
+}
+
 // ---- Form Handlers ----
 function handleWorkoutSubmit() {
     const exercise = document.getElementById('logExercise').value;
@@ -654,6 +722,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Food autocomplete
     initFoodAutocomplete();
+
+    // Exercise selector (muscle group filter + dynamic dropdown)
+    initExerciseSelector();
 
     // Physique button
     document.getElementById('savePhysBtn').addEventListener('click', handlePhysiqueSubmit);

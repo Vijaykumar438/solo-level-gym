@@ -58,7 +58,7 @@ const TUTORIAL_SECTIONS = [
         icon: '⬢',
         title: 'Workout & Food Logging',
         content: `The <strong>Log Tab</strong> is where you report your training:<br><br>
-        <strong>Workout Log:</strong> Select exercise, reps, sets, weight, and intensity. The System calculates calories burned, XP gained, and deals boss damage automatically.<br><br>
+        <strong>Workout Log:</strong> Choose from <strong>75+ exercises</strong> across 8 muscle groups — Chest, Back, Shoulders, Arms, Legs, Core, Cardio, and Full Body. Use the <strong>muscle group filter pills</strong> to narrow the dropdown quickly. Cardio exercises (marked with ⏱) use duration in minutes; others use reps.<br><br>
         <strong>Food Log:</strong> Start typing a food name and the <strong>smart autocomplete</strong> will suggest matching items from a database of 80+ common foods (chicken, rice, eggs, dal, biryani, protein shakes, etc.). Select one and the System auto-fills protein, carbs, and fats for you.<br><br>
         <strong>Servings:</strong> Adjust the servings multiplier (0.5×, 1×, 2× etc.) and all macros scale automatically. You can always override the values manually.<br><br>
         <span class="tut-tip">💡 Tip: Higher intensity = more XP and calories burned. Push yourself.</span>`
