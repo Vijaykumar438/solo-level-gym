@@ -212,6 +212,7 @@ function getDefaultData() {
         quests: [],      // { id, date, title, desc, type, xp, gold, cleared, failed }
         penalties: [],   // { id, date, reason, xpLost }
         shadowArmy: 0,
+        skillTree: { strength: [], endurance: [], shadow: [] },
         boss: null,
         lastShadowMission: 0,
         loginStreak: 0,

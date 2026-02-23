@@ -2,7 +2,7 @@
 //  SERVICE WORKER — Offline PWA support
 // ==========================================
 
-const CACHE_NAME = 'solo-leveling-v11';
+const CACHE_NAME = 'solo-leveling-v13';
 const ASSETS = [
     '/',
     '/index.html',
@@ -10,6 +10,7 @@ const ASSETS = [
     '/css/panels.css',
     '/css/animations.css',
     '/css/features.css',
+    '/css/skill-tree.css',
     '/css/mobile.css',
     '/js/firebase-config.js',
     '/js/auth.js',
@@ -22,6 +23,8 @@ const ASSETS = [
     '/js/ui.js',
     '/js/charts.js',
     '/js/features.js',
+    '/js/skill-tree.js',
+    '/js/tutorial.js',
     '/js/avatar.js',
     '/js/app.js',
     '/manifest.json',

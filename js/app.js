@@ -97,6 +97,12 @@ function bootSequence() {
 
                     // Start shadow mission scheduler
                     if (typeof startShadowMissionScheduler === 'function') startShadowMissionScheduler();
+
+                    // Init skill tree
+                    if (typeof initSkillTree === 'function') initSkillTree();
+
+                    // Init tutorial
+                    if (typeof initTutorial === 'function') initTutorial();
                     
                     // Show decay report if player was absent
                     if (D._pendingDecayReport) {
