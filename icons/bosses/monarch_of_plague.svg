@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#ffa726" stop-opacity=".15"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Plague cloud -->
+  <ellipse cx="60" cy="60" rx="45" ry="40" fill="rgba(76,175,80,.05)" stroke="rgba(76,175,80,.15)" stroke-width="1"/>
+  <!-- Body (robed) -->
+  <path d="M38,42 L32,100 Q60,110 88,100 L82,42 Z" fill="#1b5e20" stroke="#4caf50" stroke-width="1.5"/>
+  <!-- Head (hooded skull) -->
+  <path d="M38,42 Q38,15 60,10 Q82,15 82,42 Q70,46 60,46 Q50,46 38,42" fill="#2e7d32" stroke="#4caf50" stroke-width="2"/>
+  <!-- Face (skeletal) -->
+  <circle cx="52" cy="28" r="4" fill="#000"/>
+  <circle cx="68" cy="28" r="4" fill="#000"/>
+  <circle cx="52" cy="28" r="2" fill="#76ff03"/>
+  <circle cx="68" cy="28" r="2" fill="#76ff03"/>
+  <!-- Nose hole -->
+  <polygon points="58,34 60,38 62,34" fill="#000" opacity=".5"/>
+  <!-- Scythe -->
+  <line x1="88" y1="45" x2="105" y2="12" stroke="#4caf50" stroke-width="2.5"/>
+  <path d="M105,12 Q115,8 112,18 Q108,22 100,20" fill="none" stroke="#76ff03" stroke-width="2"/>
+  <!-- Plague drips -->
+  <circle cx="45" cy="75" r="2" fill="#76ff03" opacity=".4"/>
+  <circle cx="60" cy="85" r="2" fill="#76ff03" opacity=".3"/>
+  <circle cx="75" cy="70" r="2" fill="#76ff03" opacity=".4"/>
+  <circle cx="38" cy="95" r="1.5" fill="#76ff03" opacity=".3"/>
+  <!-- Arms (skeletal) -->
+  <line x1="35" y1="55" x2="20" y2="60" stroke="#4caf50" stroke-width="3" stroke-linecap="round"/>
+  <line x1="85" y1="55" x2="100" y2="48" stroke="#4caf50" stroke-width="3" stroke-linecap="round"/>
+  <!-- Rune circle -->
+  <circle cx="60" cy="60" r="35" fill="none" stroke="#76ff03" stroke-width=".5" opacity=".2" stroke-dasharray="3,3"/>
+</svg>

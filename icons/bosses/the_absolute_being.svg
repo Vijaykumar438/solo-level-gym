@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#ff1744" stop-opacity=".3"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+    <radialGradient id="eye"><stop offset="0%" stop-color="#fff"/><stop offset="40%" stop-color="#ff1744"/><stop offset="100%" stop-color="#d50000"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Cosmic void -->
+  <circle cx="60" cy="55" r="45" fill="rgba(0,0,0,.3)" stroke="#d50000" stroke-width=".5" opacity=".3"/>
+  <!-- Robed form -->
+  <path d="M30,35 L18,110 Q60,120 102,110 L90,35 Z" fill="#0a0a0a" stroke="#d50000" stroke-width="1.5"/>
+  <!-- Head (hooded) -->
+  <path d="M32,38 Q32,10 60,2 Q88,10 88,38 Q74,42 60,42 Q46,42 32,38" fill="#111" stroke="#d50000" stroke-width="2"/>
+  <!-- THE single all-seeing eye -->
+  <circle cx="60" cy="28" r="10" fill="url(#eye)" stroke="#ff1744" stroke-width="1.5"/>
+  <ellipse cx="60" cy="28" rx="4" ry="8" fill="#000"/>
+  <circle cx="60" cy="26" r="1.5" fill="#fff"/>
+  <!-- Halo of power -->
+  <circle cx="60" cy="25" r="18" fill="none" stroke="#ff1744" stroke-width="1" opacity=".3"/>
+  <circle cx="60" cy="25" r="22" fill="none" stroke="#d50000" stroke-width=".5" opacity=".2"/>
+  <!-- Arms (cosmic power) -->
+  <line x1="25" y1="55" x2="8" y2="50" stroke="#d50000" stroke-width="3" stroke-linecap="round"/>
+  <line x1="95" y1="55" x2="112" y2="50" stroke="#d50000" stroke-width="3" stroke-linecap="round"/>
+  <!-- Energy orbs in hands -->
+  <circle cx="6" cy="48" r="4" fill="none" stroke="#ff1744" stroke-width="1.5"/>
+  <circle cx="6" cy="48" r="1.5" fill="#ff1744"/>
+  <circle cx="114" cy="48" r="4" fill="none" stroke="#ff1744" stroke-width="1.5"/>
+  <circle cx="114" cy="48" r="1.5" fill="#ff1744"/>
+  <!-- Rune circle -->
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#d50000" stroke-width=".5" opacity=".15" stroke-dasharray="4,4"/>
+  <!-- Dark energy streams -->
+  <path d="M30,95 Q20,75 30,60" fill="none" stroke="#d50000" stroke-width="1" opacity=".3"/>
+  <path d="M90,95 Q100,75 90,60" fill="none" stroke="#d50000" stroke-width="1" opacity=".3"/>
+</svg>

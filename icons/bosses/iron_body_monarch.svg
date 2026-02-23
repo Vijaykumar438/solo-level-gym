@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#ffa726" stop-opacity=".2"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Body (massive armored) -->
+  <path d="M35,48 L30,95 Q60,105 90,95 L85,48 Z" fill="#37474f" stroke="#90a4ae" stroke-width="2"/>
+  <!-- Armor plates -->
+  <path d="M38,55 L82,55" stroke="#b0bec5" stroke-width="1.5" opacity=".4"/>
+  <path d="M36,70 L84,70" stroke="#b0bec5" stroke-width="1.5" opacity=".4"/>
+  <path d="M34,85 L86,85" stroke="#b0bec5" stroke-width="1.5" opacity=".4"/>
+  <!-- Head (heavy helmet) -->
+  <path d="M38,48 Q38,18 60,12 Q82,18 82,48 Q70,52 60,52 Q50,52 38,48" fill="#455a64" stroke="#90a4ae" stroke-width="2"/>
+  <!-- Visor -->
+  <rect x="44" y="30" width="32" height="8" rx="2" fill="#000" stroke="#ffa726" stroke-width="1.5"/>
+  <!-- Eyes (orange glow) -->
+  <rect x="48" y="32" width="8" height="4" fill="#ffa726" rx="1"/>
+  <rect x="64" y="32" width="8" height="4" fill="#ffa726" rx="1"/>
+  <!-- Shoulder plates -->
+  <path d="M35,48 Q22,42 18,48 Q15,55 25,58" fill="#455a64" stroke="#90a4ae" stroke-width="1.5"/>
+  <path d="M85,48 Q98,42 102,48 Q105,55 95,58" fill="#455a64" stroke="#90a4ae" stroke-width="1.5"/>
+  <!-- Arms -->
+  <line x1="22" y1="56" x2="12" y2="82" stroke="#90a4ae" stroke-width="5" stroke-linecap="round"/>
+  <line x1="98" y1="56" x2="108" y2="82" stroke="#90a4ae" stroke-width="5" stroke-linecap="round"/>
+  <!-- Iron fists -->
+  <circle cx="12" cy="85" r="6" fill="#455a64" stroke="#90a4ae" stroke-width="1.5"/>
+  <circle cx="108" cy="85" r="6" fill="#455a64" stroke="#90a4ae" stroke-width="1.5"/>
+  <!-- Legs -->
+  <rect x="42" y="95" width="12" height="18" rx="3" fill="#455a64" stroke="#90a4ae" stroke-width="1.5"/>
+  <rect x="66" y="95" width="12" height="18" rx="3" fill="#455a64" stroke="#90a4ae" stroke-width="1.5"/>
+  <!-- Iron aura -->
+  <circle cx="60" cy="55" r="42" fill="none" stroke="#ffa726" stroke-width=".5" opacity=".15"/>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#ff1744" stop-opacity=".2"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Geometric body (architect = calculated, precise) -->
+  <polygon points="60,18 88,48 82,95 38,95 32,48" fill="rgba(20,20,30,.8)" stroke="#7c4dff" stroke-width="2"/>
+  <!-- Inner geometry -->
+  <polygon points="60,28 78,48 74,82 46,82 42,48" fill="none" stroke="#7c4dff" stroke-width=".8" opacity=".3"/>
+  <polygon points="60,38 68,50 66,72 54,72 52,50" fill="none" stroke="#b388ff" stroke-width=".5" opacity=".2"/>
+  <!-- Face (mask-like) -->
+  <rect x="44" y="22" width="32" height="22" rx="3" fill="#1a1a2e" stroke="#7c4dff" stroke-width="1.5"/>
+  <!-- Eyes (calculating) -->
+  <rect x="48" y="28" width="8" height="3" fill="#b388ff" rx="1"/>
+  <rect x="64" y="28" width="8" height="3" fill="#b388ff" rx="1"/>
+  <!-- Third eye -->
+  <circle cx="60" cy="24" r="2" fill="#7c4dff"/>
+  <!-- Floating runes -->
+  <circle cx="25" cy="40" r="5" fill="none" stroke="#7c4dff" stroke-width="1" opacity=".4"/>
+  <line x1="25" y1="37" x2="25" y2="43" stroke="#7c4dff" stroke-width=".8" opacity=".3"/>
+  <line x1="22" y1="40" x2="28" y2="40" stroke="#7c4dff" stroke-width=".8" opacity=".3"/>
+  <circle cx="95" cy="40" r="5" fill="none" stroke="#7c4dff" stroke-width="1" opacity=".4"/>
+  <line x1="95" y1="37" x2="95" y2="43" stroke="#7c4dff" stroke-width=".8" opacity=".3"/>
+  <line x1="92" y1="40" x2="98" y2="40" stroke="#7c4dff" stroke-width=".8" opacity=".3"/>
+  <!-- Arms (architectural beams) -->
+  <line x1="32" y1="50" x2="15" y2="55" stroke="#7c4dff" stroke-width="3" stroke-linecap="round"/>
+  <line x1="88" y1="50" x2="105" y2="55" stroke="#7c4dff" stroke-width="3" stroke-linecap="round"/>
+  <!-- Blueprint grid -->
+  <line x1="20" y1="100" x2="100" y2="100" stroke="#7c4dff" stroke-width=".3" opacity=".15"/>
+  <line x1="20" y1="108" x2="100" y2="108" stroke="#7c4dff" stroke-width=".3" opacity=".1"/>
+  <!-- Design matrix -->
+  <circle cx="60" cy="55" r="35" fill="none" stroke="#7c4dff" stroke-width=".3" opacity=".1" stroke-dasharray="3,3"/>
+</svg>

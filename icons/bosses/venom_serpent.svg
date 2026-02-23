@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#66bb6a" stop-opacity=".2"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Coiled body -->
+  <path d="M30,90 Q20,70 35,55 Q50,40 45,30 Q40,20 55,15 Q70,10 75,25" fill="none" stroke="#66bb6a" stroke-width="8" stroke-linecap="round"/>
+  <path d="M30,90 Q50,100 70,90 Q90,80 85,60 Q80,45 75,25" fill="none" stroke="#388e3c" stroke-width="7" stroke-linecap="round"/>
+  <!-- Head -->
+  <ellipse cx="75" cy="22" rx="14" ry="10" fill="#2e7d32" stroke="#66bb6a" stroke-width="2"/>
+  <!-- Eyes -->
+  <circle cx="72" cy="19" r="3" fill="#ffea00"/>
+  <circle cx="82" cy="19" r="3" fill="#ffea00"/>
+  <circle cx="72" cy="19" r="1.5" fill="#000"/>
+  <circle cx="82" cy="19" r="1.5" fill="#000"/>
+  <!-- Fangs -->
+  <line x1="70" y1="28" x2="68" y2="36" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="80" y1="28" x2="82" y2="36" stroke="#e0e0e0" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Tongue -->
+  <path d="M76,30 Q76,38 73,42 M76,38 Q79,42 80,40" fill="none" stroke="#c62828" stroke-width="1.5"/>
+  <!-- Scale pattern -->
+  <circle cx="45" cy="35" r="2" fill="none" stroke="#66bb6a" stroke-width=".8" opacity=".4"/>
+  <circle cx="55" cy="50" r="2" fill="none" stroke="#66bb6a" stroke-width=".8" opacity=".4"/>
+  <circle cx="40" cy="65" r="2" fill="none" stroke="#66bb6a" stroke-width=".8" opacity=".4"/>
+  <!-- Venom drips -->
+  <circle cx="69" cy="39" r="1.5" fill="#76ff03" opacity=".6"/>
+  <circle cx="81" cy="38" r="1.5" fill="#76ff03" opacity=".6"/>
+</svg>

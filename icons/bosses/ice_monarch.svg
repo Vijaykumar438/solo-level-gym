@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#42a5f5" stop-opacity=".2"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Body -->
+  <ellipse cx="60" cy="65" rx="24" ry="30" fill="#1565c0" stroke="#42a5f5" stroke-width="2"/>
+  <!-- Head -->
+  <circle cx="60" cy="32" r="18" fill="#1976d2" stroke="#42a5f5" stroke-width="2"/>
+  <!-- Crown of ice -->
+  <polygon points="42,20 47,8 52,18 57,5 62,18 67,8 72,18 77,5 82,20" fill="none" stroke="#80deea" stroke-width="1.5"/>
+  <!-- Eyes -->
+  <circle cx="52" cy="30" r="4" fill="#e0f7fa"/>
+  <circle cx="68" cy="30" r="4" fill="#e0f7fa"/>
+  <circle cx="52" cy="30" r="2" fill="#006064"/>
+  <circle cx="68" cy="30" r="2" fill="#006064"/>
+  <!-- Ice crystals on body -->
+  <polygon points="38,55 42,45 46,55" fill="#80deea" opacity=".4"/>
+  <polygon points="74,55 78,45 82,55" fill="#80deea" opacity=".4"/>
+  <polygon points="55,80 60,70 65,80" fill="#80deea" opacity=".3"/>
+  <!-- Arms -->
+  <line x1="36" y1="55" x2="18" y2="50" stroke="#42a5f5" stroke-width="4" stroke-linecap="round"/>
+  <line x1="84" y1="55" x2="102" y2="50" stroke="#42a5f5" stroke-width="4" stroke-linecap="round"/>
+  <!-- Cape -->
+  <path d="M38,48 Q20,70 25,105 Q60,95 95,105 Q100,70 82,48" fill="rgba(21,101,192,.3)" stroke="#42a5f5" stroke-width="1" opacity=".5"/>
+</svg>

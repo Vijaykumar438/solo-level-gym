@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#78909c" stop-opacity=".3"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Body -->
+  <ellipse cx="60" cy="65" rx="28" ry="35" fill="#546e7a" stroke="#78909c" stroke-width="2"/>
+  <!-- Head -->
+  <circle cx="60" cy="30" r="18" fill="#607d8b" stroke="#78909c" stroke-width="2"/>
+  <!-- Eyes -->
+  <circle cx="52" cy="27" r="4" fill="#ff6d00"/>
+  <circle cx="68" cy="27" r="4" fill="#ff6d00"/>
+  <circle cx="52" cy="27" r="2" fill="#fff"/>
+  <circle cx="68" cy="27" r="2" fill="#fff"/>
+  <!-- Stone crest -->
+  <polygon points="45,14 60,4 75,14" fill="#455a64" stroke="#78909c" stroke-width="1.5"/>
+  <!-- Shield -->
+  <path d="M38,55 L38,80 Q60,100 82,80 L82,55 Z" fill="none" stroke="#90a4ae" stroke-width="2" opacity=".4"/>
+  <!-- Legs -->
+  <rect x="42" y="90" width="12" height="20" rx="4" fill="#546e7a" stroke="#78909c" stroke-width="1.5"/>
+  <rect x="66" y="90" width="12" height="20" rx="4" fill="#546e7a" stroke="#78909c" stroke-width="1.5"/>
+</svg>

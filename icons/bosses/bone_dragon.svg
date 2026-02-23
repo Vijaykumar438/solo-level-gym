@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#ab47bc" stop-opacity=".15"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Wings (skeletal) -->
+  <path d="M25,50 Q8,25 15,15 Q25,22 35,35" fill="none" stroke="#bcaaa4" stroke-width="2"/>
+  <path d="M15,15 Q20,30 28,35" fill="none" stroke="#bcaaa4" stroke-width="1.5"/>
+  <path d="M15,15 Q22,22 25,30" fill="none" stroke="#bcaaa4" stroke-width="1.5"/>
+  <path d="M95,50 Q112,25 105,15 Q95,22 85,35" fill="none" stroke="#bcaaa4" stroke-width="2"/>
+  <path d="M105,15 Q100,30 92,35" fill="none" stroke="#bcaaa4" stroke-width="1.5"/>
+  <path d="M105,15 Q98,22 95,30" fill="none" stroke="#bcaaa4" stroke-width="1.5"/>
+  <!-- Body (skeletal dragon) -->
+  <ellipse cx="60" cy="58" rx="22" ry="18" fill="rgba(215,204,200,.1)" stroke="#bcaaa4" stroke-width="2"/>
+  <!-- Ribs -->
+  <path d="M45,50 Q60,45 75,50" fill="none" stroke="#bcaaa4" stroke-width="1" opacity=".5"/>
+  <path d="M44,56 Q60,51 76,56" fill="none" stroke="#bcaaa4" stroke-width="1" opacity=".5"/>
+  <path d="M45,62 Q60,57 75,62" fill="none" stroke="#bcaaa4" stroke-width="1" opacity=".5"/>
+  <!-- Head (skull) -->
+  <ellipse cx="60" cy="32" rx="14" ry="11" fill="rgba(215,204,200,.15)" stroke="#bcaaa4" stroke-width="2"/>
+  <!-- Eye sockets -->
+  <circle cx="53" cy="29" r="4" fill="rgba(171,71,188,.6)"/>
+  <circle cx="67" cy="29" r="4" fill="rgba(171,71,188,.6)"/>
+  <circle cx="53" cy="29" r="1.5" fill="#e040fb"/>
+  <circle cx="67" cy="29" r="1.5" fill="#e040fb"/>
+  <!-- Jaw -->
+  <path d="M48,38 L52,44 L56,39 L60,44 L64,39 L68,44 L72,38" fill="none" stroke="#bcaaa4" stroke-width="1.5"/>
+  <!-- Horns -->
+  <path d="M47,24 Q40,12 35,8" fill="none" stroke="#bcaaa4" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M73,24 Q80,12 85,8" fill="none" stroke="#bcaaa4" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Tail -->
+  <path d="M60,76 Q55,88 50,95 Q48,102 55,105" fill="none" stroke="#bcaaa4" stroke-width="3" stroke-linecap="round"/>
+  <!-- Ghost fire -->
+  <circle cx="53" cy="29" r="6" fill="none" stroke="#e040fb" stroke-width=".5" opacity=".4"/>
+  <circle cx="67" cy="29" r="6" fill="none" stroke="#e040fb" stroke-width=".5" opacity=".4"/>
+</svg>

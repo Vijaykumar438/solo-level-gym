@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#78909c" stop-opacity=".3"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Body -->
+  <ellipse cx="60" cy="60" rx="20" ry="15" fill="#37474f" stroke="#78909c" stroke-width="1.5"/>
+  <!-- Legs (8) -->
+  <line x1="42" y1="55" x2="20" y2="40" stroke="#78909c" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="42" y1="60" x2="15" y2="60" stroke="#78909c" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="42" y1="65" x2="20" y2="80" stroke="#78909c" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="45" y1="70" x2="28" y2="90" stroke="#78909c" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="78" y1="55" x2="100" y2="40" stroke="#78909c" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="78" y1="60" x2="105" y2="60" stroke="#78909c" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="78" y1="65" x2="100" y2="80" stroke="#78909c" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="75" y1="70" x2="92" y2="90" stroke="#78909c" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Head -->
+  <circle cx="60" cy="42" r="12" fill="#455a64" stroke="#78909c" stroke-width="1.5"/>
+  <!-- Eyes (multiple) -->
+  <circle cx="53" cy="38" r="3" fill="#ff1744"/>
+  <circle cx="67" cy="38" r="3" fill="#ff1744"/>
+  <circle cx="56" cy="44" r="2" fill="#ff1744" opacity=".7"/>
+  <circle cx="64" cy="44" r="2" fill="#ff1744" opacity=".7"/>
+  <!-- Fangs -->
+  <line x1="55" y1="50" x2="54" y2="56" stroke="#cfd8dc" stroke-width="2" stroke-linecap="round"/>
+  <line x1="65" y1="50" x2="66" y2="56" stroke="#cfd8dc" stroke-width="2" stroke-linecap="round"/>
+</svg>

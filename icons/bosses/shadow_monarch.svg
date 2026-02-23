@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#ffd740" stop-opacity=".2"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Shadow mist -->
+  <ellipse cx="60" cy="90" rx="40" ry="15" fill="rgba(0,0,0,.2)"/>
+  <!-- Body (dark robed monarch) -->
+  <path d="M38,42 L28,105 Q60,115 92,105 L82,42 Z" fill="#0d0d0d" stroke="#ffd740" stroke-width="1.5"/>
+  <!-- Head -->
+  <path d="M40,42 Q40,18 60,12 Q80,18 80,42 Q70,46 60,46 Q50,46 40,42" fill="#1a1a1a" stroke="#ffd740" stroke-width="2"/>
+  <!-- Eyes (golden) -->
+  <circle cx="52" cy="30" r="3" fill="#ffd740"/>
+  <circle cx="68" cy="30" r="3" fill="#ffd740"/>
+  <circle cx="52" cy="30" r="1" fill="#fff"/>
+  <circle cx="68" cy="30" r="1" fill="#fff"/>
+  <!-- Crown -->
+  <polygon points="42,16 48,6 54,14 60,3 66,14 72,6 78,16" fill="none" stroke="#ffd740" stroke-width="1.5"/>
+  <!-- Arms (shadow hands) -->
+  <line x1="32" y1="55" x2="15" y2="65" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+  <line x1="88" y1="55" x2="105" y2="65" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+  <!-- Shadow wisps rising -->
+  <path d="M35,100 Q30,85 35,75" fill="none" stroke="#333" stroke-width="2" opacity=".4"/>
+  <path d="M50,105 Q48,90 52,80" fill="none" stroke="#333" stroke-width="2" opacity=".3"/>
+  <path d="M85,100 Q90,85 85,75" fill="none" stroke="#333" stroke-width="2" opacity=".4"/>
+  <!-- Golden aura -->
+  <circle cx="60" cy="50" r="40" fill="none" stroke="#ffd740" stroke-width=".5" opacity=".15"/>
+  <circle cx="60" cy="50" r="32" fill="none" stroke="#ffd740" stroke-width=".3" opacity=".1"/>
+</svg>

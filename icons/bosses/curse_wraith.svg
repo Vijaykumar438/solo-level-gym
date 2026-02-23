@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#42a5f5" stop-opacity=".15"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Ghost body (flowing) -->
+  <path d="M35,40 Q35,25 60,20 Q85,25 85,40 L88,95 Q80,100 75,90 Q70,100 65,90 Q60,100 55,90 Q50,100 45,90 Q40,100 32,95 Z" fill="rgba(100,100,120,.25)" stroke="#90a4ae" stroke-width="1.5"/>
+  <!-- Inner glow -->
+  <ellipse cx="60" cy="55" rx="18" ry="22" fill="rgba(130,100,180,.15)"/>
+  <!-- Face -->
+  <circle cx="50" cy="42" r="5" fill="none" stroke="#b39ddb" stroke-width="2"/>
+  <circle cx="70" cy="42" r="5" fill="none" stroke="#b39ddb" stroke-width="2"/>
+  <circle cx="50" cy="42" r="2" fill="#b39ddb"/>
+  <circle cx="70" cy="42" r="2" fill="#b39ddb"/>
+  <!-- Mouth (wailing) -->
+  <ellipse cx="60" cy="58" rx="6" ry="8" fill="rgba(0,0,0,.4)" stroke="#b39ddb" stroke-width="1"/>
+  <!-- Arms (spectral) -->
+  <path d="M35,50 Q15,45 10,55 Q8,60 12,62 Q8,65 14,68" fill="none" stroke="#90a4ae" stroke-width="2" opacity=".6"/>
+  <path d="M85,50 Q105,45 110,55 Q112,60 108,62 Q112,65 106,68" fill="none" stroke="#90a4ae" stroke-width="2" opacity=".6"/>
+  <!-- Curse symbols -->
+  <text x="45" y="78" fill="#b39ddb" font-size="8" opacity=".4">⛧</text>
+  <text x="65" y="78" fill="#b39ddb" font-size="8" opacity=".4">⛧</text>
+  <!-- Wisps -->
+  <circle cx="30" cy="70" r="2" fill="#b39ddb" opacity=".3"/>
+  <circle cx="90" cy="65" r="2" fill="#b39ddb" opacity=".3"/>
+  <circle cx="60" cy="15" r="2" fill="#b39ddb" opacity=".4"/>
+</svg>

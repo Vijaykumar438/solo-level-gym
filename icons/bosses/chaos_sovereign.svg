@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#ff1744" stop-opacity=".25"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Chaos vortex -->
+  <circle cx="60" cy="55" r="42" fill="none" stroke="#d50000" stroke-width="1" opacity=".15">
+    <animateTransform attributeName="transform" type="rotate" from="0 60 55" to="360 60 55" dur="20s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="60" cy="55" r="35" fill="none" stroke="#ff1744" stroke-width=".5" opacity=".1" stroke-dasharray="6,4">
+    <animateTransform attributeName="transform" type="rotate" from="360 60 55" to="0 60 55" dur="15s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Body (chaotic mass) -->
+  <path d="M35,35 Q30,55 35,80 Q45,100 60,95 Q75,100 85,80 Q90,55 85,35 Q75,20 60,18 Q45,20 35,35" fill="rgba(100,0,0,.4)" stroke="#d50000" stroke-width="2"/>
+  <!-- Multiple eyes scattered -->
+  <circle cx="48" cy="38" r="4" fill="#ff1744"/>
+  <circle cx="48" cy="38" r="1.5" fill="#fff"/>
+  <circle cx="72" cy="40" r="4" fill="#ff1744"/>
+  <circle cx="72" cy="40" r="1.5" fill="#fff"/>
+  <circle cx="55" cy="50" r="3" fill="#d50000"/>
+  <circle cx="55" cy="50" r="1" fill="#fff"/>
+  <circle cx="68" cy="55" r="3" fill="#d50000"/>
+  <circle cx="68" cy="55" r="1" fill="#fff"/>
+  <circle cx="60" cy="32" r="3" fill="#ff1744"/>
+  <circle cx="60" cy="32" r="1" fill="#fff"/>
+  <!-- Tendrils of chaos -->
+  <path d="M35,50 Q15,40 8,50 Q5,55 10,58" fill="none" stroke="#d50000" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M85,50 Q105,40 112,50 Q115,55 110,58" fill="none" stroke="#d50000" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M40,80 Q25,90 20,100" fill="none" stroke="#d50000" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+  <path d="M80,80 Q95,90 100,100" fill="none" stroke="#d50000" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+  <path d="M55,95 Q50,108 45,115" fill="none" stroke="#d50000" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+  <path d="M65,95 Q70,108 75,115" fill="none" stroke="#d50000" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+  <!-- Mouth (void) -->
+  <ellipse cx="60" cy="68" rx="10" ry="8" fill="#000" stroke="#d50000" stroke-width="1"/>
+  <!-- Chaos particles -->
+  <circle cx="15" cy="45" r="2" fill="#ff1744" opacity=".4"/>
+  <circle cx="105" cy="48" r="2" fill="#ff1744" opacity=".4"/>
+  <circle cx="60" cy="12" r="2" fill="#d50000" opacity=".3"/>
+</svg>

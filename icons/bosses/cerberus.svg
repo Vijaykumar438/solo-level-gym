@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#66bb6a" stop-opacity=".2"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Body -->
+  <ellipse cx="55" cy="65" rx="22" ry="18" fill="#2e7d32" stroke="#66bb6a" stroke-width="2"/>
+  <!-- Head (wolf) -->
+  <path d="M35,45 Q30,20 45,25 Q55,15 65,25 Q80,20 75,45 Q65,55 55,55 Z" fill="#388e3c" stroke="#66bb6a" stroke-width="2"/>
+  <!-- Ears -->
+  <polygon points="38,30 32,10 48,25" fill="#2e7d32" stroke="#66bb6a" stroke-width="1.5"/>
+  <polygon points="72,30 78,10 62,25" fill="#2e7d32" stroke="#66bb6a" stroke-width="1.5"/>
+  <!-- Eyes -->
+  <circle cx="47" cy="35" r="4" fill="#ffea00"/>
+  <circle cx="63" cy="35" r="4" fill="#ffea00"/>
+  <circle cx="47" cy="35" r="2" fill="#000"/>
+  <circle cx="63" cy="35" r="2" fill="#000"/>
+  <!-- Snout -->
+  <ellipse cx="55" cy="45" rx="8" ry="5" fill="#1b5e20" stroke="#66bb6a" stroke-width="1"/>
+  <circle cx="55" cy="43" r="2" fill="#111"/>
+  <!-- Fangs -->
+  <line x1="50" y1="48" x2="49" y2="54" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round"/>
+  <line x1="60" y1="48" x2="61" y2="54" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round"/>
+  <!-- Legs -->
+  <line x1="40" y1="78" x2="35" y2="108" stroke="#66bb6a" stroke-width="4" stroke-linecap="round"/>
+  <line x1="70" y1="78" x2="75" y2="108" stroke="#66bb6a" stroke-width="4" stroke-linecap="round"/>
+  <!-- Tail -->
+  <path d="M75,68 Q95,55 100,40" fill="none" stroke="#66bb6a" stroke-width="3" stroke-linecap="round"/>
+</svg>

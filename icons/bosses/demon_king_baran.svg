@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#ab47bc" stop-opacity=".2"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Body -->
+  <ellipse cx="60" cy="62" rx="22" ry="28" fill="#4a148c" stroke="#ab47bc" stroke-width="2"/>
+  <!-- Head -->
+  <circle cx="60" cy="30" r="16" fill="#6a1b9a" stroke="#ab47bc" stroke-width="2"/>
+  <!-- Horns (large) -->
+  <path d="M44,22 Q32,2 22,8" fill="none" stroke="#ce93d8" stroke-width="3" stroke-linecap="round"/>
+  <path d="M76,22 Q88,2 98,8" fill="none" stroke="#ce93d8" stroke-width="3" stroke-linecap="round"/>
+  <!-- Eyes (demonic) -->
+  <ellipse cx="52" cy="28" rx="5" ry="3" fill="#ff1744"/>
+  <ellipse cx="68" cy="28" rx="5" ry="3" fill="#ff1744"/>
+  <circle cx="52" cy="28" r="1.5" fill="#fff"/>
+  <circle cx="68" cy="28" r="1.5" fill="#fff"/>
+  <!-- Evil grin -->
+  <path d="M48,38 Q60,48 72,38" fill="none" stroke="#ff1744" stroke-width="1.5"/>
+  <!-- Armor -->
+  <path d="M40,50 L42,42 L60,38 L78,42 L80,50" fill="none" stroke="#ab47bc" stroke-width="2"/>
+  <!-- Arms -->
+  <line x1="38" y1="55" x2="15" y2="60" stroke="#ab47bc" stroke-width="5" stroke-linecap="round"/>
+  <line x1="82" y1="55" x2="105" y2="60" stroke="#ab47bc" stroke-width="5" stroke-linecap="round"/>
+  <!-- Sword -->
+  <line x1="105" y1="58" x2="112" y2="20" stroke="#ce93d8" stroke-width="2.5"/>
+  <line x1="108" y1="55" x2="116" y2="60" stroke="#ce93d8" stroke-width="2"/>
+  <!-- Cape -->
+  <path d="M40,45 Q25,70 30,105" fill="none" stroke="#ab47bc" stroke-width="1.5" opacity=".4"/>
+  <path d="M80,45 Q95,70 90,105" fill="none" stroke="#ab47bc" stroke-width="1.5" opacity=".4"/>
+  <!-- Dark energy -->
+  <circle cx="60" cy="60" r="30" fill="none" stroke="#ab47bc" stroke-width=".5" opacity=".2"/>
+</svg>

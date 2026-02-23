@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#ab47bc" stop-opacity=".15"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Body (massive) -->
+  <ellipse cx="60" cy="62" rx="30" ry="35" fill="#bf360c" stroke="#ff6e40" stroke-width="2"/>
+  <!-- Head -->
+  <circle cx="60" cy="25" r="16" fill="#e65100" stroke="#ff6e40" stroke-width="2"/>
+  <!-- Eyes (fire) -->
+  <ellipse cx="52" cy="23" rx="4" ry="3" fill="#ffeb3b"/>
+  <ellipse cx="68" cy="23" rx="4" ry="3" fill="#ffeb3b"/>
+  <circle cx="52" cy="23" r="1.5" fill="#ff6d00"/>
+  <circle cx="68" cy="23" r="1.5" fill="#ff6d00"/>
+  <!-- Mouth (fire breathing) -->
+  <path d="M50,32 Q60,28 70,32" fill="none" stroke="#ff6d00" stroke-width="1.5"/>
+  <!-- Flames from body -->
+  <path d="M35,40 Q28,30 32,20" fill="none" stroke="#ff6e40" stroke-width="2" opacity=".6"/>
+  <path d="M85,40 Q92,30 88,20" fill="none" stroke="#ff6e40" stroke-width="2" opacity=".6"/>
+  <path d="M30,60 Q20,50 25,38" fill="none" stroke="#ffc107" stroke-width="1.5" opacity=".5"/>
+  <path d="M90,60 Q100,50 95,38" fill="none" stroke="#ffc107" stroke-width="1.5" opacity=".5"/>
+  <!-- Arms -->
+  <line x1="30" y1="55" x2="10" y2="60" stroke="#ff6e40" stroke-width="6" stroke-linecap="round"/>
+  <line x1="90" y1="55" x2="110" y2="60" stroke="#ff6e40" stroke-width="6" stroke-linecap="round"/>
+  <!-- Legs -->
+  <line x1="45" y1="92" x2="38" y2="115" stroke="#ff6e40" stroke-width="6" stroke-linecap="round"/>
+  <line x1="75" y1="92" x2="82" y2="115" stroke="#ff6e40" stroke-width="6" stroke-linecap="round"/>
+  <!-- Fire particles -->
+  <circle cx="25" cy="28" r="2" fill="#ffc107" opacity=".6"/>
+  <circle cx="95" cy="30" r="2" fill="#ffc107" opacity=".6"/>
+  <circle cx="60" cy="10" r="2" fill="#ff6e40" opacity=".4"/>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#ffd740" stop-opacity=".15"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Body (insect warrior) -->
+  <ellipse cx="60" cy="62" rx="20" ry="28" fill="#33691e" stroke="#76ff03" stroke-width="2"/>
+  <!-- Exoskeleton segments -->
+  <path d="M42,55 L78,55" stroke="#76ff03" stroke-width=".8" opacity=".3"/>
+  <path d="M43,65 L77,65" stroke="#76ff03" stroke-width=".8" opacity=".3"/>
+  <path d="M44,75 L76,75" stroke="#76ff03" stroke-width=".8" opacity=".3"/>
+  <!-- Head (ant-like) -->
+  <ellipse cx="60" cy="30" rx="14" ry="12" fill="#558b2f" stroke="#76ff03" stroke-width="2"/>
+  <!-- Mandibles -->
+  <path d="M48,38 Q42,45 38,42" fill="none" stroke="#76ff03" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M72,38 Q78,45 82,42" fill="none" stroke="#76ff03" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Eyes (compound - glowing) -->
+  <circle cx="52" cy="26" r="5" fill="#c6ff00"/>
+  <circle cx="68" cy="26" r="5" fill="#c6ff00"/>
+  <circle cx="52" cy="26" r="2.5" fill="#33691e"/>
+  <circle cx="68" cy="26" r="2.5" fill="#33691e"/>
+  <!-- Antennae -->
+  <path d="M50,20 Q42,8 35,5" fill="none" stroke="#76ff03" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M70,20 Q78,8 85,5" fill="none" stroke="#76ff03" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Clawed arms -->
+  <line x1="40" y1="52" x2="18" y2="48" stroke="#76ff03" stroke-width="3" stroke-linecap="round"/>
+  <line x1="80" y1="52" x2="102" y2="48" stroke="#76ff03" stroke-width="3" stroke-linecap="round"/>
+  <line x1="16" y1="47" x2="10" y2="40" stroke="#c6ff00" stroke-width="2" stroke-linecap="round"/>
+  <line x1="104" y1="47" x2="110" y2="40" stroke="#c6ff00" stroke-width="2" stroke-linecap="round"/>
+  <!-- Legs -->
+  <line x1="45" y1="85" x2="35" y2="110" stroke="#76ff03" stroke-width="3" stroke-linecap="round"/>
+  <line x1="75" y1="85" x2="85" y2="110" stroke="#76ff03" stroke-width="3" stroke-linecap="round"/>
+  <!-- Poison drips -->
+  <circle cx="40" cy="46" r="1.5" fill="#c6ff00" opacity=".5"/>
+  <circle cx="80" cy="46" r="1.5" fill="#c6ff00" opacity=".5"/>
+</svg>

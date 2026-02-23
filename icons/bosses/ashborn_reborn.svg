@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#ff1744" stop-opacity=".25"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Shadow form rising -->
+  <path d="M35,105 Q25,70 35,45 Q45,30 60,25 Q75,30 85,45 Q95,70 85,105 Z" fill="rgba(0,0,0,.7)" stroke="#333" stroke-width="1.5"/>
+  <!-- Inner fire -->
+  <ellipse cx="60" cy="60" rx="15" ry="22" fill="rgba(213,0,0,.15)"/>
+  <!-- Skull face -->
+  <circle cx="60" cy="38" r="14" fill="rgba(30,30,30,.9)" stroke="#555" stroke-width="1.5"/>
+  <!-- Eye sockets (burning) -->
+  <circle cx="53" cy="35" r="4" fill="#000"/>
+  <circle cx="67" cy="35" r="4" fill="#000"/>
+  <circle cx="53" cy="35" r="2" fill="#d50000"/>
+  <circle cx="67" cy="35" r="2" fill="#d50000"/>
+  <circle cx="53" cy="34" r=".8" fill="#ff8a80"/>
+  <circle cx="67" cy="34" r=".8" fill="#ff8a80"/>
+  <!-- Nose -->
+  <polygon points="58,40 60,44 62,40" fill="#333"/>
+  <!-- Jaw -->
+  <path d="M48,46 Q60,52 72,46" fill="none" stroke="#555" stroke-width="1.5"/>
+  <!-- Ribcage visible -->
+  <path d="M48,55 Q60,52 72,55" fill="none" stroke="#555" stroke-width="1" opacity=".4"/>
+  <path d="M47,62 Q60,59 73,62" fill="none" stroke="#555" stroke-width="1" opacity=".4"/>
+  <path d="M48,69 Q60,66 72,69" fill="none" stroke="#555" stroke-width="1" opacity=".3"/>
+  <!-- Arms (skeletal reaching) -->
+  <line x1="38" y1="55" x2="12" y2="42" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+  <line x1="82" y1="55" x2="108" y2="42" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+  <!-- Claws -->
+  <line x1="10" y1="41" x2="4" y2="35" stroke="#d50000" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="11" y1="40" x2="4" y2="38" stroke="#d50000" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="110" y1="41" x2="116" y2="35" stroke="#d50000" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="109" y1="40" x2="116" y2="38" stroke="#d50000" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Shadow flames -->
+  <path d="M40,100 Q35,88 40,78" fill="none" stroke="#d50000" stroke-width="1.5" opacity=".4"/>
+  <path d="M80,100 Q85,88 80,78" fill="none" stroke="#d50000" stroke-width="1.5" opacity=".4"/>
+  <path d="M60,105 Q58,92 60,82" fill="none" stroke="#d50000" stroke-width="1" opacity=".3"/>
+</svg>

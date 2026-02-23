@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g"><stop offset="0%" stop-color="#80deea" stop-opacity=".15"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="55" fill="url(#g)"/>
+  <!-- Frost cloak -->
+  <path d="M35,40 L25,105 Q60,115 95,105 L85,40 Z" fill="#0d47a1" stroke="#80deea" stroke-width="1.5"/>
+  <!-- Head (icy crown) -->
+  <path d="M38,40 Q38,15 60,8 Q82,15 82,40 Q70,44 60,44 Q50,44 38,40" fill="#1565c0" stroke="#80deea" stroke-width="2"/>
+  <!-- Ice crown spikes -->
+  <polygon points="40,18 44,2 48,16" fill="#80deea" opacity=".5"/>
+  <polygon points="52,14 56,-2 60,12" fill="#80deea" opacity=".6"/>
+  <polygon points="64,12 68,-2 72,14" fill="#80deea" opacity=".6"/>
+  <polygon points="76,16 80,2 84,18" fill="#80deea" opacity=".5"/>
+  <!-- Eyes -->
+  <circle cx="50" cy="28" r="4" fill="#e0f7fa"/>
+  <circle cx="70" cy="28" r="4" fill="#e0f7fa"/>
+  <circle cx="50" cy="28" r="1.5" fill="#006064"/>
+  <circle cx="70" cy="28" r="1.5" fill="#006064"/>
+  <!-- Frost staff -->
+  <line x1="95" y1="42" x2="108" y2="10" stroke="#80deea" stroke-width="2.5"/>
+  <circle cx="108" cy="8" r="5" fill="none" stroke="#e0f7fa" stroke-width="1.5"/>
+  <circle cx="108" cy="8" r="2" fill="#e0f7fa"/>
+  <!-- Ice trail -->
+  <circle cx="35" cy="108" r="3" fill="#80deea" opacity=".2"/>
+  <circle cx="50" cy="112" r="2" fill="#80deea" opacity=".15"/>
+  <circle cx="70" cy="112" r="2" fill="#80deea" opacity=".15"/>
+  <circle cx="85" cy="108" r="3" fill="#80deea" opacity=".2"/>
+  <!-- Frost aura -->
+  <circle cx="60" cy="50" r="38" fill="none" stroke="#80deea" stroke-width=".5" opacity=".15"/>
+</svg>
