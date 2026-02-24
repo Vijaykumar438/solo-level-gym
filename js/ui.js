@@ -2,6 +2,65 @@
 //  UI.JS — All DOM rendering
 // ==========================================
 
+// ---- Quest click handler (event delegation — set up once) ----
+document.addEventListener('click', function(e) {
+    const el = e.target.closest('.quest-item:not(.cleared):not(.failed)');
+    if (!el) return;
+    const qid = el.dataset.qid;
+    if (!qid) return;
+
+    // Find quest by string ID or float proximity
+    let quest = null;
+    if (typeof D !== 'undefined' && D && D.quests) {
+        quest = D.quests.find(function(q) { return String(q.id) === String(qid); });
+        if (!quest) {
+            var num = parseFloat(qid);
+            if (!isNaN(num)) {
+                quest = D.quests.find(function(q) { return !q.cleared && !q.failed && Math.abs(Number(q.id) - num) < 1; });
+            }
+        }
+    }
+    if (!quest || quest.cleared || quest.failed) return;
+
+    // Mark cleared
+    quest.cleared = true;
+
+    // Stats guard
+    if (!D.stats) D.stats = {};
+    if (typeof D.stats.totalQuestsCompleted !== 'number') D.stats.totalQuestsCompleted = 0;
+    D.stats.totalQuestsCompleted++;
+
+    // Rewards
+    if (typeof grantXP === 'function') grantXP(quest.xp || 0);
+    if (typeof grantGold === 'function') grantGold(quest.gold || 0);
+    if (typeof playSound === 'function') playSound('questComplete');
+
+    // Check all-clear bonus
+    var todayQ = (typeof getTodayQuests === 'function') ? getTodayQuests() : [];
+    var allCleared = todayQ.length > 0 && todayQ.every(function(q) { return q.cleared; });
+
+    if (allCleared) {
+        var bonusXP = (typeof qScale === 'function') ? qScale(D.level, 250, 800) : 200;
+        var bonusGold = (typeof qScale === 'function') ? qScale(D.level, 80, 250) : 80;
+        if (typeof grantXP === 'function') grantXP(bonusXP);
+        if (typeof grantGold === 'function') grantGold(bonusGold);
+        if (typeof D.streak === 'number') D.streak++;
+        sysNotify('[All 8 Gates Cleared] +' + bonusXP + ' Bonus XP, +' + bonusGold + ' Gold. The shadows bow to your discipline.', 'gold');
+    }
+
+    if (typeof checkAchievements === 'function') checkAchievements();
+    if (typeof saveGame === 'function') saveGame();
+
+    // Visual feedback
+    if (typeof vibrate === 'function') vibrate([40, 30, 40]);
+    el.classList.add('cleared', 'just-cleared');
+    var checkEl = el.querySelector('.qi-check');
+    if (checkEl) checkEl.textContent = '✓';
+    sysNotify('[Quest Cleared] "' + quest.title + '" — +' + quest.xp + ' XP, +' + quest.gold + ' Gold', 'green');
+
+    if (typeof refreshUI === 'function') refreshUI();
+});
+
 // ---- Notification system ----
 function sysNotify(msg, type = '') {
     const container = document.getElementById('sysNotif');
@@ -245,30 +304,6 @@ function renderQuests() {
             </div>
         `;
     }).join('');
-    
-    // Click to clear
-    container.querySelectorAll('.quest-item:not(.cleared):not(.failed)').forEach(el => {
-        el.addEventListener('click', () => {
-            const qid = el.dataset.qid;
-            let result = null;
-            try {
-                result = clearQuest(qid);
-            } catch(e) {
-                console.error('[Quest] clearQuest error:', e);
-                sysNotify('[Quest Error] ' + (e && e.message ? e.message : String(e)), 'red');
-                return;
-            }
-            if (result) {
-                if (typeof vibrate === 'function') vibrate([40, 30, 40]);
-                el.classList.add('cleared', 'just-cleared');
-                el.querySelector('.qi-check').textContent = '✓';
-                sysNotify(`[Quest Cleared] "${result.quest.title}" — +${result.quest.xp} XP, +${result.quest.gold} Gold`, 'green');
-                refreshUI();
-            } else {
-                console.warn('[Quest] clearQuest returned null for id:', qid, '| D.quests ids:', D.quests.map(q => String(q.id)));
-            }
-        });
-    });
     
     // Penalties
     renderPenalties(recentPen);
