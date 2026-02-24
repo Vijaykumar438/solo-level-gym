@@ -293,8 +293,8 @@ function getWeeklyBoss() {
     
     if (!D.boss) D.boss = {};
     
-    if (D.boss.weekKey !== weekKey || !D.boss.img) {
-        // New week or missing img (upgrade from old data) — pick from rank pool
+    if (D.boss.weekKey !== weekKey || !D.boss.img || !D.boss.img.includes('Mbosses')) {
+        // New week, missing img, or old icon path — pick from rank pool
         const rank = getRank(D.level);
         const pool = BOSS_POOL[rank.name] || BOSS_POOL.E;
         const bossIdx = weekNum % pool.length;
