@@ -116,18 +116,7 @@ const TUTORIAL_SECTIONS = [
         icon: '◇',
         title: 'Skills & Achievements',
         content: `<strong>Skills:</strong> Passive and active abilities that unlock at certain levels. They boost stat growth rates. Check the Skills tab to see what you've unlocked and what's coming next.<br><br>
-        <strong>Achievements:</strong> Milestone rewards for hitting targets like "10 workouts", "7-day streak", "10,000 calories burned". Track your collection and aim for 100% completion.<br><br>
-        <strong>Skill Tree:</strong> Earn 1 skill point every 5 levels. Choose between 3 branches — Strength, Endurance, or Shadow — to customize your build with permanent bonuses.`
-    },
-    {
-        id: 'skilltree',
-        icon: '🌳',
-        title: 'Skill Tree Branches',
-        content: `The Skill Tree has <strong>3 branching paths</strong>, each with 5 tiers:<br><br>
-        <strong style="color:#ff4444">⚔ Path of Destruction</strong> — Raw STR power and boss damage<br>
-        <strong style="color:#44ff44">◉ Path of Resilience</strong> — END/VIT growth and decay protection<br>
-        <strong style="color:#aa44ff">☬ Path of Shadows</strong> — WIL, gold bonuses, and shadow army growth<br><br>
-        Each node costs 1-3 SP and requires the previous node in the branch. Plan your build wisely — every point matters.`
+        <strong>Achievements:</strong> Milestone rewards for hitting targets like "10 workouts", "7-day streak", "10,000 calories burned". Track your collection and aim for 100% completion.`
     },
     {
         id: 'analysis',
@@ -158,10 +147,9 @@ const TUTORIAL_SECTIONS = [
         4. <strong>Watch your energy balance.</strong> Bulking? Stay in surplus. Cutting? Stay in deficit.<br>
         5. <strong>Fight the weekly boss.</strong> Boss kills give massive rewards + shadow soldiers.<br>
         6. <strong>Accept shadow missions.</strong> They're free XP bursts disguised as quick challenges.<br>
-        7. <strong>Invest skill points wisely.</strong> Pick a branch that matches your training style.<br>
-        8. <strong>Check the shop often.</strong> Relics give permanent growth bonuses.<br>
-        9. <strong>High intensity = more XP.</strong> Push harder when you can, rest when you must.<br>
-        10. <strong>Set your weight.</strong> Physique Tracker gives accurate BMR for energy balance.<br><br>
+        7. <strong>Check the shop often.</strong> Relics give permanent growth bonuses.<br>
+        8. <strong>High intensity = more XP.</strong> Push harder when you can, rest when you must.<br>
+        9. <strong>Set your weight.</strong> Physique Tracker gives accurate BMR for energy balance.<br><br>
         <span class="tut-highlight">"Arise. The System is watching."</span>`
     }
 ];

@@ -29,7 +29,6 @@ function initTabs() {
                 setTimeout(renderCalendar, 50);
             }
             if (target === 'shop' && typeof renderShop === 'function') setTimeout(renderShop, 50);
-            if (target === 'skilltree' && typeof renderSkillTree === 'function') setTimeout(renderSkillTree, 50);
             if (target === 'tutorial' && typeof renderTutorial === 'function') setTimeout(renderTutorial, 50);
             if (target === 'journal' && typeof renderJournal === 'function') setTimeout(renderJournal, 50);
             if (target === 'log' && typeof renderTemplates === 'function') setTimeout(renderTemplates, 50);

@@ -30,7 +30,6 @@
     <link rel="stylesheet" href="css/panels.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/features.css">
-    <link rel="stylesheet" href="css/skill-tree.css">
     <link rel="stylesheet" href="css/mobile.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -142,7 +141,6 @@
             <button class="tab" data-tab="log"><span class="tab-icon">⬢</span> Log</button>
             <button class="tab" data-tab="shop"><span class="tab-icon">⬟</span> Shop</button>
             <button class="tab" data-tab="skills"><span class="tab-icon">◇</span> Skills</button>
-            <button class="tab" data-tab="skilltree"><span class="tab-icon">🌳</span> Tree</button>
             <button class="tab" data-tab="analysis"><span class="tab-icon">△</span> Analysis</button>
             <button class="tab" data-tab="journal"><span class="tab-icon">📖</span> Journal</button>
             <button class="tab" data-tab="tutorial"><span class="tab-icon">�</span> Guide</button>
@@ -491,35 +489,6 @@
             </div>
         </section>
 
-        <!-- ===== SKILL TREE TAB ===== -->
-        <section class="panel" data-panel="skilltree">
-            <div class="st-header">
-                <h2>⬡ SKILL TREE</h2>
-                <p>Choose your path. Shape your destiny.</p>
-            </div>
-
-            <div class="st-points">
-                <span class="st-points-count" id="stPointsCount">0</span>
-                <span class="st-points-label">Skill Points Available</span>
-                <span class="st-points-sub" id="stPointsTotal">0 spent · 0 earned</span>
-            </div>
-
-            <div class="st-branch-tabs">
-                <button class="st-branch-tab active" data-branch="strength">⚔ Destruction</button>
-                <button class="st-branch-tab" data-branch="endurance">◉ Resilience</button>
-                <button class="st-branch-tab" data-branch="shadow">☬ Shadows</button>
-            </div>
-
-            <div class="sys-window">
-                <div class="st-branch-header">
-                    <h3 class="st-branch-name" id="stBranchName">Path of Destruction</h3>
-                    <p class="st-branch-desc" id="stBranchDesc">Raw power. Crush everything.</p>
-                    <span class="st-branch-prog" id="stBranchProgress">0 / 5</span>
-                </div>
-                <div class="st-nodes" id="stNodes"></div>
-            </div>
-        </section>
-
         <!-- ===== ANALYSIS TAB ===== -->
         <section class="panel" data-panel="analysis">
             <!-- Dungeon Calendar Heatmap -->
@@ -710,7 +679,6 @@
     <script src="js/ui.js"></script>
     <script src="js/charts.js"></script>
     <script src="js/features.js"></script>
-    <script src="js/skill-tree.js"></script>
     <script src="js/tutorial.js"></script>
     <script src="js/journal.js"></script>
     <script src="js/templates.js"></script>
