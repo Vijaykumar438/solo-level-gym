@@ -4,31 +4,58 @@
 // ==========================================
 
 const SHOP_ITEMS = [
-    // ===== WEAPONS — Cosmetic trophies of your evolution =====
-    { id: 'w_rusty_dagger',      cat: 'weapon',  name: 'Rusty Dagger',             icon: '🗡️',  desc: "A broken blade you started with. Every legend begins here.",                       cost: 50,   rankReq: 'E', tier: 1 },
-    { id: 'w_wooden_shield',     cat: 'weapon',  name: 'Wooden Shield',            icon: '🛡️',  desc: "Barely holds. But you held on. That is what matters.",                              cost: 80,   rankReq: 'E', tier: 1 },
-    { id: 'w_iron_sword',        cat: 'weapon',  name: 'Iron Sword',               icon: '⚔️',  desc: "Forged from your first real grind. It cuts deeper than doubt.",                     cost: 200,  rankReq: 'D', tier: 2 },
-    { id: 'w_hunters_bow',       cat: 'weapon',  name: "Hunter's Bow",             icon: '🏹',  desc: "Precision. Patience. You learned to aim at goals, not people.",                    cost: 300,  rankReq: 'D', tier: 2 },
-    { id: 'w_shadow_blade',      cat: 'weapon',  name: 'Shadow Blade',             icon: '🔪',  desc: "Born from the darkness you walked through. Lethal and silent.",                    cost: 600,  rankReq: 'C', tier: 3 },
-    { id: 'w_demon_fang',        cat: 'weapon',  name: 'Demon Fang',               icon: '🦷',  desc: "Ripped from a demon you defeated. The demon was your old self.",                   cost: 800,  rankReq: 'C', tier: 3 },
-    { id: 'w_crimson_greatsword', cat: 'weapon', name: 'Crimson Greatsword',       icon: '⚔️',  desc: "Stained red from battles that almost broke you. Still standing.",                  cost: 1500, rankReq: 'B', tier: 4 },
-    { id: 'w_dragon_slayer',     cat: 'weapon',  name: 'Dragon Slayer',            icon: '🐉',  desc: "For slaying the dragon of self-pity. No one is coming to save you.",               cost: 2500, rankReq: 'B', tier: 4 },
-    { id: 'w_monarchs_katana',   cat: 'weapon',  name: "Monarch's Katana",         icon: '⚔️',  desc: "One clean cut. One purpose. Zero hesitation.",                                     cost: 5000, rankReq: 'A', tier: 5 },
-    { id: 'w_divine_spear',      cat: 'weapon',  name: 'Divine Spear',             icon: '🔱',  desc: "It pierces through every excuse, every lie you told yourself.",                    cost: 7000, rankReq: 'A', tier: 5 },
-    { id: 'w_shadow_monarch',    cat: 'weapon',  name: "Shadow Sovereign's Blade", icon: '🌑',  desc: "The final weapon. Forged from every tear, every sleepless night, every rep.",       cost: 15000, rankReq: 'S', tier: 6 },
-    { id: 'w_extinction_blade',  cat: 'weapon',  name: "Extinction Blade",         icon: '💀',  desc: "A weapon that should not exist. Neither should you — at this level.",               cost: 30000, rankReq: 'X', tier: 7 },
-    { id: 'w_national_scythe',   cat: 'weapon',  name: "National Level Scythe",    icon: '⚰️',  desc: "You don't fight anymore. You end things. This is the proof.",                      cost: 50000, rankReq: 'X', tier: 7 },
+    // ===== WEAPONS — Equippable, affect boss damage + stat bonuses =====
+    { id: 'w_rusty_dagger',      cat: 'weapon',  name: 'Rusty Dagger',             icon: '🗡️',  desc: "A broken blade you started with. Every legend begins here.",                       cost: 50,   rankReq: 'E', tier: 1, bossDmg: 0.05, xpBonus: 0, statBonus: { str: 1 } },
+    { id: 'w_wooden_shield',     cat: 'weapon',  name: 'Wooden Shield',            icon: '🛡️',  desc: "Barely holds. But you held on. That is what matters.",                              cost: 80,   rankReq: 'E', tier: 1, bossDmg: 0.05, xpBonus: 0, statBonus: { end: 1 } },
+    { id: 'w_iron_sword',        cat: 'weapon',  name: 'Iron Sword',               icon: '⚔️',  desc: "Forged from your first real grind. It cuts deeper than doubt.",                     cost: 200,  rankReq: 'D', tier: 2, bossDmg: 0.10, xpBonus: 0.03, statBonus: { str: 2 } },
+    { id: 'w_hunters_bow',       cat: 'weapon',  name: "Hunter's Bow",             icon: '🏹',  desc: "Precision. Patience. You learned to aim at goals, not people.",                    cost: 300,  rankReq: 'D', tier: 2, bossDmg: 0.10, xpBonus: 0.03, statBonus: { agi: 2 } },
+    { id: 'w_shadow_blade',      cat: 'weapon',  name: 'Shadow Blade',             icon: '🔪',  desc: "Born from the darkness you walked through. Lethal and silent.",                    cost: 600,  rankReq: 'C', tier: 3, bossDmg: 0.15, xpBonus: 0.05, statBonus: { str: 3, agi: 2 } },
+    { id: 'w_demon_fang',        cat: 'weapon',  name: 'Demon Fang',               icon: '🦷',  desc: "Ripped from a demon you defeated. The demon was your old self.",                   cost: 800,  rankReq: 'C', tier: 3, bossDmg: 0.20, xpBonus: 0.05, statBonus: { str: 4, vit: 2 } },
+    { id: 'w_crimson_greatsword', cat: 'weapon', name: 'Crimson Greatsword',       icon: '⚔️',  desc: "Stained red from battles that almost broke you. Still standing.",                  cost: 1500, rankReq: 'B', tier: 4, bossDmg: 0.30, xpBonus: 0.08, statBonus: { str: 6, end: 3 } },
+    { id: 'w_dragon_slayer',     cat: 'weapon',  name: 'Dragon Slayer',            icon: '🐉',  desc: "For slaying the dragon of self-pity. No one is coming to save you.",               cost: 2500, rankReq: 'B', tier: 4, bossDmg: 0.35, xpBonus: 0.08, statBonus: { str: 7, agi: 4, vit: 3 } },
+    { id: 'w_monarchs_katana',   cat: 'weapon',  name: "Monarch's Katana",         icon: '⚔️',  desc: "One clean cut. One purpose. Zero hesitation.",                                     cost: 5000, rankReq: 'A', tier: 5, bossDmg: 0.50, xpBonus: 0.10, statBonus: { str: 10, agi: 8, vit: 5 } },
+    { id: 'w_divine_spear',      cat: 'weapon',  name: 'Divine Spear',             icon: '🔱',  desc: "It pierces through every excuse, every lie you told yourself.",                    cost: 7000, rankReq: 'A', tier: 5, bossDmg: 0.60, xpBonus: 0.12, statBonus: { str: 12, agi: 6, wil: 5 } },
+    { id: 'w_shadow_monarch',    cat: 'weapon',  name: "Shadow Sovereign's Blade", icon: '🌑',  desc: "The final weapon. Forged from every tear, every sleepless night, every rep.",       cost: 15000, rankReq: 'S', tier: 6, bossDmg: 0.80, xpBonus: 0.15, statBonus: { str: 18, agi: 12, vit: 10 } },
+    { id: 'w_extinction_blade',  cat: 'weapon',  name: "Extinction Blade",         icon: '💀',  desc: "A weapon that should not exist. Neither should you — at this level.",               cost: 30000, rankReq: 'X', tier: 7, bossDmg: 1.00, xpBonus: 0.18, statBonus: { str: 25, agi: 18, vit: 15, end: 10 } },
+    { id: 'w_national_scythe',   cat: 'weapon',  name: "National Level Scythe",    icon: '⚰️',  desc: "You don't fight anymore. You end things. This is the proof.",                      cost: 50000, rankReq: 'X', tier: 7, bossDmg: 1.50, xpBonus: 0.20, statBonus: { str: 30, agi: 25, vit: 20, end: 15, wil: 10 } },
 
-    // ===== POTIONS — Consumable buffs =====
+    // ===== ARMOR — Equippable, reduce decay + stat bonuses =====
+    { id: 'a_cloth_wrap',        cat: 'armor',   name: 'Cloth Wrappings',          icon: '🩹',  desc: "Threadbare protection. But you chose to armor up, and that matters.",               cost: 60,   rankReq: 'E', tier: 1, decayReduction: 0.05, statBonus: { end: 1 } },
+    { id: 'a_leather_vest',      cat: 'armor',   name: 'Leather Vest',             icon: '🦺',  desc: "Toughened by your own sweat. Worn proudly.",                                       cost: 120,  rankReq: 'E', tier: 1, decayReduction: 0.10, statBonus: { vit: 1, end: 1 } },
+    { id: 'a_iron_guard',        cat: 'armor',   name: 'Iron Guard Plate',         icon: '🛡️',  desc: "Heavy iron. Heavier commitment. You carry both.",                                  cost: 350,  rankReq: 'D', tier: 2, decayReduction: 0.15, statBonus: { end: 2, vit: 2 } },
+    { id: 'a_shadow_weave',      cat: 'armor',   name: 'Shadow Weave',             icon: '🕸️',  desc: "Woven from the darkness you conquered. It protects what you built.",               cost: 700,  rankReq: 'C', tier: 3, decayReduction: 0.20, statBonus: { vit: 3, end: 3, agi: 2 } },
+    { id: 'a_demon_plate',       cat: 'armor',   name: "Demon King's Plate",       icon: '⬛',  desc: "Forged from a demon king's bones. Your discipline is your armor.",                 cost: 1200, rankReq: 'C', tier: 3, decayReduction: 0.25, statBonus: { end: 5, vit: 4, str: 2 } },
+    { id: 'a_dragon_scale',      cat: 'armor',   name: 'Dragon Scale Mail',        icon: '🐲',  desc: "Each scale earned through fire. You are fireproof now.",                           cost: 2800, rankReq: 'B', tier: 4, decayReduction: 0.30, statBonus: { end: 8, vit: 6, str: 4 } },
+    { id: 'a_titan_guard',       cat: 'armor',   name: "Titan's Bulwark",          icon: '🏔️',  desc: "Immovable. Unshakeable. Like the habits you've built.",                            cost: 5500, rankReq: 'A', tier: 5, decayReduction: 0.40, statBonus: { end: 12, vit: 10, wil: 8, str: 5 } },
+    { id: 'a_monarch_regalia',   cat: 'armor',   name: "Monarch's Regalia",        icon: '👑',  desc: "Not just armor. A statement. The king needs no protection — he IS protection.",    cost: 12000, rankReq: 'S', tier: 6, decayReduction: 0.50, statBonus: { end: 18, vit: 15, wil: 12, str: 8 } },
+    { id: 'a_absolute_defense',  cat: 'armor',   name: 'Absolute Defense',         icon: '💠',  desc: "Nothing can decay what you have built. Your body is a fortress.",                  cost: 35000, rankReq: 'X', tier: 7, decayReduction: 0.70, statBonus: { end: 25, vit: 20, wil: 15, str: 12, agi: 10 } },
+
+    // ===== POTIONS — Consumable buffs (instant + timed) =====
     { id: 'p_xp_minor',         cat: 'potion',  name: 'XP Elixir (Minor)',        icon: '🧪',  desc: "Grants +50 XP instantly. Small steps compound.",                                  cost: 30,   rankReq: 'E', tier: 1, consumable: true, effect: { type: 'xp', value: 50 } },
     { id: 'p_xp_major',         cat: 'potion',  name: 'XP Elixir (Major)',        icon: '⚗️',  desc: "Grants +200 XP instantly. Growth accelerator.",                                   cost: 100,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'xp', value: 200 } },
     { id: 'p_xp_supreme',       cat: 'potion',  name: 'XP Elixir (Supreme)',      icon: '🔮',  desc: "Grants +500 XP instantly. Raw power in a bottle.",                                cost: 250,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'xp', value: 500 } },
     { id: 'p_gold_boost',       cat: 'potion',  name: 'Gold Multiplier',          icon: '💰',  desc: "Grants +100 Gold. Fortune favors the disciplined.",                               cost: 40,   rankReq: 'E', tier: 1, consumable: true, effect: { type: 'gold', value: 100 } },
+    { id: 'p_xp_boost_30',      cat: 'potion',  name: 'XP Boost Scroll',          icon: '📈',  desc: "All XP earned is DOUBLED for 30 minutes. Train hard, earn harder.",               cost: 150,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'xp_boost_timed', duration: 1800000, multiplier: 2 } },
+    { id: 'p_gold_boost_30',    cat: 'potion',  name: 'Gold Boost Scroll',        icon: '💎',  desc: "All Gold earned is DOUBLED for 30 minutes. Fortune smiles on you.",               cost: 150,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'gold_boost_timed', duration: 1800000, multiplier: 2 } },
+    { id: 'p_boss_boost_30',    cat: 'potion',  name: 'Double Strike Elixir',     icon: '⚡',  desc: "Boss damage DOUBLED for 30 minutes. Unleash destruction.",                        cost: 200,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'boss_boost_timed', duration: 1800000, multiplier: 2 } },
+    { id: 'p_monarch_blessing', cat: 'potion',  name: "Monarch's Blessing",       icon: '✨',  desc: "+50% ALL XP for 1 hour. The Monarch favors your dedication.",                     cost: 500,  rankReq: 'B', tier: 4, consumable: true, effect: { type: 'xp_boost_timed', duration: 3600000, multiplier: 1.5 } },
+    { id: 'p_shadow_extract',   cat: 'potion',  name: 'Shadow Extract',           icon: '🌑',  desc: "Instantly adds +1 Shadow Soldier to your army. Arise.",                           cost: 400,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'shadow_soldier' } },
     { id: 'p_stat_reset',       cat: 'potion',  name: 'Stat Reset Crystal',       icon: '💎',  desc: "Refund ALL allocated stat points. Rebuild from zero.",                            cost: 500,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'stat_reset' } },
-    { id: 'p_streak_restore',   cat: 'potion',  name: 'Streak Shield',            icon: '🔰',  desc: "Restores your streak to your highest-ever. Never truly fall.",                   cost: 300,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'streak_restore' } },
+    { id: 'p_streak_shield',    cat: 'potion',  name: 'Streak Shield',            icon: '🔰',  desc: "Protects your streak from 1 missed day. Insurance for the disciplined.",          cost: 300,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'streak_shield' } },
+    { id: 'p_streak_restore',   cat: 'potion',  name: 'Streak Restorer',          icon: '🔄',  desc: "Restores your streak to your highest-ever. Never truly fall.",                    cost: 600,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'streak_restore' } },
     { id: 'p_heal',             cat: 'potion',  name: 'Recovery Potion',          icon: '💚',  desc: "Clears all penalties from this week. A second chance.",                           cost: 200,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'clear_penalties' } },
+    { id: 'p_full_restore',     cat: 'potion',  name: 'Full Restore',             icon: '🌟',  desc: "+1000 XP + clear all penalties + restore streak. The ultimate reset.",            cost: 1500, rankReq: 'A', tier: 5, consumable: true, effect: { type: 'full_restore' } },
 
-    // ===== RELICS — Permanent passive trophies =====
+    // ===== ARTIFACTS — Permanent passive multiplier bonuses =====
+    { id: 'art_hunters_emblem',  cat: 'artifact', name: "Hunter's Emblem",         icon: '🏅',  desc: "Proof of your commitment. Permanently boosts XP earned by 5%.",                   cost: 800,  rankReq: 'D', tier: 2, artifact: { xpMult: 0.05, goldMult: 0 } },
+    { id: 'art_shadow_crystal',  cat: 'artifact', name: "Shadow Crystal",          icon: '🔮',  desc: "Condensed shadow energy. Permanently boosts Gold earned by 10%.",                 cost: 1000, rankReq: 'C', tier: 3, artifact: { xpMult: 0, goldMult: 0.10 } },
+    { id: 'art_demon_core',      cat: 'artifact', name: "Demon Core",              icon: '♦️',  desc: "Raw demonic energy. +5% XP, +5% Gold permanently.",                              cost: 2000, rankReq: 'C', tier: 3, artifact: { xpMult: 0.05, goldMult: 0.05 } },
+    { id: 'art_monarchs_heart',  cat: 'artifact', name: "Monarch's Heart",         icon: '❤️‍🔥', desc: "The beating heart of a king. +10% XP, +10% Gold permanently.",                    cost: 6000, rankReq: 'B', tier: 4, artifact: { xpMult: 0.10, goldMult: 0.10 } },
+    { id: 'art_rulers_domain',   cat: 'artifact', name: "Ruler's Domain",          icon: '🌐',  desc: "Expands your dominion. +15% XP, +10% Gold, +5 all stats permanently.",            cost: 15000, rankReq: 'A', tier: 5, artifact: { xpMult: 0.15, goldMult: 0.10, statBonus: { str: 5, agi: 5, vit: 5, end: 5, wil: 5 } } },
+    { id: 'art_vessel_of_light', cat: 'artifact', name: "Vessel of Light",         icon: '🌌',  desc: "Contains the power of creation itself. +20% XP, +15% Gold, +10 all stats.",       cost: 40000, rankReq: 'S', tier: 6, artifact: { xpMult: 0.20, goldMult: 0.15, statBonus: { str: 10, agi: 10, vit: 10, end: 10, wil: 10 } } },
+    { id: 'art_origin_fragment', cat: 'artifact', name: "Fragment of Origin",      icon: '💫',  desc: "A shard from the beginning of all things. +25% XP, +20% Gold, +15 all stats.",   cost: 100000, rankReq: 'X', tier: 7, artifact: { xpMult: 0.25, goldMult: 0.20, statBonus: { str: 15, agi: 15, vit: 15, end: 15, wil: 15 } } },
+
+    // ===== RELICS — Permanent passive stat bonuses =====
     { id: 'r_iron_ring',        cat: 'relic',   name: 'Ring of Iron Will',        icon: '💍',  desc: "You chose discipline over comfort. Permanent +2 WIL.",                            cost: 150,  rankReq: 'D', tier: 2, passive: { stat: 'wil', value: 2 } },
     { id: 'r_shadow_amulet',    cat: 'relic',   name: 'Shadow Amulet',            icon: '📿',  desc: "The darkness made you stronger. Permanent +2 END.",                               cost: 400,  rankReq: 'C', tier: 3, passive: { stat: 'end', value: 2 } },
     { id: 'r_phoenix_feather',  cat: 'relic',   name: 'Phoenix Feather',          icon: '🪶',  desc: "You burned and came back. Permanent +3 VIT.",                                    cost: 800,  rankReq: 'C', tier: 3, passive: { stat: 'vit', value: 3 } },
@@ -148,14 +175,16 @@ function initShopData() {
             purchased: [],  // ids of bought items (weapons/relics/scrolls are one-time)
             inventory: [],  // { id, qty } for consumables
             equipped: null, // currently equipped weapon id
+            equippedArmor: null, // currently equipped armor id
+            activeBoosts: {}, // { xp: { expires, multiplier }, gold: {...}, boss: {...} }
             scrollsRead: [] // ids of scrolls that have been read
         };
         saveGame();
     }
-    // Ensure scrollsRead exists for existing saves
-    if (!D.shop.scrollsRead) {
-        D.shop.scrollsRead = [];
-    }
+    // Ensure new fields exist for existing saves
+    if (!D.shop.scrollsRead) D.shop.scrollsRead = [];
+    if (!D.shop.equippedArmor) D.shop.equippedArmor = null;
+    if (!D.shop.activeBoosts) D.shop.activeBoosts = {};
 }
 
 // ---- Check if player can buy ----
@@ -203,10 +232,20 @@ function buyItem(itemId) {
         if (item.passive) {
             applyRelicBonus(item);
         }
+
+        // Apply artifact stat bonuses immediately (if any)
+        if (item.artifact && item.artifact.statBonus) {
+            applyArtifactStatBonus(item);
+        }
         
         // Auto-equip weapon if none equipped
         if (item.cat === 'weapon' && !D.shop.equipped) {
             D.shop.equipped = item.id;
+        }
+
+        // Auto-equip armor if none equipped
+        if (item.cat === 'armor' && !D.shop.equippedArmor) {
+            D.shop.equippedArmor = item.id;
         }
     }
     
@@ -237,6 +276,29 @@ function useConsumable(itemId) {
             grantGold(effect.value);
             sysNotify(`[Potion Used] +${effect.value} Gold acquired. Fortune favors you.`, 'gold');
             break;
+        case 'xp_boost_timed':
+            if (!D.shop.activeBoosts) D.shop.activeBoosts = {};
+            D.shop.activeBoosts.xp = { expires: Date.now() + effect.duration, multiplier: effect.multiplier };
+            sysNotify(`[Boost Active] XP ×${effect.multiplier} for ${Math.round(effect.duration / 60000)} minutes!`, 'green');
+            break;
+        case 'gold_boost_timed':
+            if (!D.shop.activeBoosts) D.shop.activeBoosts = {};
+            D.shop.activeBoosts.gold = { expires: Date.now() + effect.duration, multiplier: effect.multiplier };
+            sysNotify(`[Boost Active] Gold ×${effect.multiplier} for ${Math.round(effect.duration / 60000)} minutes!`, 'gold');
+            break;
+        case 'boss_boost_timed':
+            if (!D.shop.activeBoosts) D.shop.activeBoosts = {};
+            D.shop.activeBoosts.boss = { expires: Date.now() + effect.duration, multiplier: effect.multiplier };
+            sysNotify(`[Boost Active] Boss DMG ×${effect.multiplier} for ${Math.round(effect.duration / 60000)} minutes!`, 'red');
+            break;
+        case 'shadow_soldier':
+            D.shadowArmy = (D.shadowArmy || 0) + 1;
+            sysNotify(`[Shadow Extraction] A new shadow soldier has joined your army! (${D.shadowArmy} total)`, 'gold');
+            break;
+        case 'streak_shield':
+            D.streakShield = (D.streakShield || 0) + 1;
+            sysNotify(`[Shield Acquired] Streak Shield active (${D.streakShield} charges). Your streak is protected.`, 'blue');
+            break;
         case 'stat_reset':
             const totalAllocated = calcAllocatedPoints();
             D.freePoints += totalAllocated;
@@ -246,13 +308,19 @@ function useConsumable(itemId) {
         case 'streak_restore':
             const highest = D.stats.highestStreak || D.streak;
             D.streak = highest;
-            sysNotify(`[Shield Used] Streak restored to ${highest}. You never truly fell.`, 'green');
+            sysNotify(`[Restored] Streak restored to ${highest}. You never truly fell.`, 'green');
             break;
         case 'clear_penalties':
             const week = new Date();
             week.setDate(week.getDate() - 7);
             D.penalties = D.penalties.filter(p => new Date(p.date) < week);
             sysNotify("[Potion Used] This week's penalties cleared. A fresh start.", 'green');
+            break;
+        case 'full_restore':
+            grantXP(1000);
+            D.penalties = [];
+            D.streak = Math.max(D.streak, D.stats.highestStreak || 0);
+            sysNotify('[Full Restore] +1000 XP, all penalties cleared, streak restored. Complete renewal.', 'gold');
             break;
         default:
             return false;
@@ -305,22 +373,27 @@ function calcAllocatedPoints() {
     const base = def.stats;
     // Points from levels: each level gives +1 to all 5 stats
     const levelBonus = (D.level - 1);
-    // Relic bonuses
-    let relicBonuses = { str: 0, agi: 0, vit: 0, end: 0, wil: 0 };
+    // Relic + artifact stat bonuses
+    let bonuses = { str: 0, agi: 0, vit: 0, end: 0, wil: 0 };
     D.shop.purchased.forEach(pid => {
         const item = SHOP_ITEMS.find(i => i.id === pid);
         if (item && item.passive) {
             if (item.passive.stat === 'all') {
-                for (const s in relicBonuses) relicBonuses[s] += item.passive.value;
-            } else if (item.passive.stat in relicBonuses) {
-                relicBonuses[item.passive.stat] += item.passive.value;
+                for (const s in bonuses) bonuses[s] += item.passive.value;
+            } else if (item.passive.stat in bonuses) {
+                bonuses[item.passive.stat] += item.passive.value;
+            }
+        }
+        if (item && item.artifact && item.artifact.statBonus) {
+            for (const s in item.artifact.statBonus) {
+                if (s in bonuses) bonuses[s] += item.artifact.statBonus[s];
             }
         }
     });
     
     let allocated = 0;
     ['str', 'agi', 'vit', 'end', 'wil'].forEach(s => {
-        allocated += D.stats[s] - base[s] - levelBonus - relicBonuses[s];
+        allocated += D.stats[s] - base[s] - levelBonus - bonuses[s];
     });
     return Math.max(0, allocated);
 }
@@ -330,31 +403,180 @@ function resetAllocatedStats() {
     const base = def.stats;
     const levelBonus = (D.level - 1);
     
-    // Recalculate with relic bonuses
-    let relicBonuses = { str: 0, agi: 0, vit: 0, end: 0, wil: 0, phs: 0 };
+    // Recalculate with relic + artifact bonuses
+    let bonuses = { str: 0, agi: 0, vit: 0, end: 0, wil: 0, phs: 0 };
     D.shop.purchased.forEach(pid => {
         const item = SHOP_ITEMS.find(i => i.id === pid);
         if (item && item.passive) {
             if (item.passive.stat === 'all') {
-                for (const s in relicBonuses) relicBonuses[s] += item.passive.value;
-            } else if (item.passive.stat in relicBonuses) {
-                relicBonuses[item.passive.stat] += item.passive.value;
+                for (const s in bonuses) bonuses[s] += item.passive.value;
+            } else if (item.passive.stat in bonuses) {
+                bonuses[item.passive.stat] += item.passive.value;
+            }
+        }
+        if (item && item.artifact && item.artifact.statBonus) {
+            for (const s in item.artifact.statBonus) {
+                if (s in bonuses) bonuses[s] += item.artifact.statBonus[s];
             }
         }
     });
     
-    D.stats.str = base.str + levelBonus + relicBonuses.str;
-    D.stats.agi = base.agi + levelBonus + relicBonuses.agi;
-    D.stats.vit = base.vit + levelBonus + relicBonuses.vit;
-    D.stats.end = base.end + levelBonus + relicBonuses.end;
-    D.stats.wil = base.wil + levelBonus + relicBonuses.wil;
-    D.stats.phs = Math.round((base.phs + (D.level - 1) * 0.5 + relicBonuses.phs) * 10) / 10;
+    D.stats.str = base.str + levelBonus + bonuses.str;
+    D.stats.agi = base.agi + levelBonus + bonuses.agi;
+    D.stats.vit = base.vit + levelBonus + bonuses.vit;
+    D.stats.end = base.end + levelBonus + bonuses.end;
+    D.stats.wil = base.wil + levelBonus + bonuses.wil;
+    D.stats.phs = Math.round((base.phs + (D.level - 1) * 0.5 + bonuses.phs) * 10) / 10;
 }
 
 // ---- Get equipped weapon info ----
 function getEquippedWeapon() {
     if (!D.shop || !D.shop.equipped) return null;
     return SHOP_ITEMS.find(i => i.id === D.shop.equipped);
+}
+
+// ---- Get equipped armor info ----
+function getEquippedArmor() {
+    if (!D.shop || !D.shop.equippedArmor) return null;
+    return SHOP_ITEMS.find(i => i.id === D.shop.equippedArmor);
+}
+
+// ---- Equip armor ----
+function equipArmor(itemId) {
+    if (!D.shop.purchased.includes(itemId)) return;
+    const item = SHOP_ITEMS.find(i => i.id === itemId && i.cat === 'armor');
+    if (!item) return;
+    D.shop.equippedArmor = itemId;
+    saveGame();
+    sysNotify(`[Equipped] ${item.icon} ${item.name} — Decay reduction: ${Math.round(item.decayReduction * 100)}%`, 'blue');
+    renderShop();
+    refreshUI();
+}
+
+// ---- Apply artifact stat bonus on purchase ----
+function applyArtifactStatBonus(item) {
+    if (!item.artifact || !item.artifact.statBonus) return;
+    const bonus = item.artifact.statBonus;
+    for (const stat in bonus) {
+        if (stat === 'all') continue; // should not happen in current design
+        if (D.stats[stat] !== undefined) {
+            D.stats[stat] += bonus[stat];
+        }
+    }
+}
+
+// ============================
+//  BONUS CALCULATION HELPERS
+//  Called by engine.js functions
+// ============================
+
+// Get total XP multiplier from all sources (weapon, artifacts, active boost)
+function getShopXPMultiplier() {
+    if (!D || !D.shop) return 1;
+    let mult = 1;
+
+    // Equipped weapon XP bonus
+    const weapon = getEquippedWeapon();
+    if (weapon && weapon.xpBonus) mult += weapon.xpBonus;
+
+    // Artifact passive XP multipliers
+    if (D.shop.purchased) {
+        D.shop.purchased.forEach(pid => {
+            const item = SHOP_ITEMS.find(i => i.id === pid);
+            if (item && item.artifact && item.artifact.xpMult) {
+                mult += item.artifact.xpMult;
+            }
+        });
+    }
+
+    // Active timed XP boost
+    if (D.shop.activeBoosts && D.shop.activeBoosts.xp) {
+        if (Date.now() < D.shop.activeBoosts.xp.expires) {
+            mult *= D.shop.activeBoosts.xp.multiplier;
+        } else {
+            delete D.shop.activeBoosts.xp; // expired
+        }
+    }
+
+    return mult;
+}
+
+// Get total Gold multiplier from all sources
+function getShopGoldMultiplier() {
+    if (!D || !D.shop) return 1;
+    let mult = 1;
+
+    // Artifact passive Gold multipliers
+    if (D.shop.purchased) {
+        D.shop.purchased.forEach(pid => {
+            const item = SHOP_ITEMS.find(i => i.id === pid);
+            if (item && item.artifact && item.artifact.goldMult) {
+                mult += item.artifact.goldMult;
+            }
+        });
+    }
+
+    // Active timed Gold boost
+    if (D.shop.activeBoosts && D.shop.activeBoosts.gold) {
+        if (Date.now() < D.shop.activeBoosts.gold.expires) {
+            mult *= D.shop.activeBoosts.gold.multiplier;
+        } else {
+            delete D.shop.activeBoosts.gold;
+        }
+    }
+
+    return mult;
+}
+
+// Get total boss damage multiplier from weapon + active boost
+function getShopBossDmgMultiplier() {
+    if (!D || !D.shop) return 1;
+    let mult = 1;
+
+    // Equipped weapon boss damage bonus
+    const weapon = getEquippedWeapon();
+    if (weapon && weapon.bossDmg) mult += weapon.bossDmg;
+
+    // Active timed boss boost
+    if (D.shop.activeBoosts && D.shop.activeBoosts.boss) {
+        if (Date.now() < D.shop.activeBoosts.boss.expires) {
+            mult *= D.shop.activeBoosts.boss.multiplier;
+        } else {
+            delete D.shop.activeBoosts.boss;
+        }
+    }
+
+    return mult;
+}
+
+// Get decay reduction from equipped armor (0 to 0.7)
+function getShopDecayReduction() {
+    if (!D || !D.shop) return 0;
+    const armor = getEquippedArmor();
+    if (armor && armor.decayReduction) return armor.decayReduction;
+    return 0;
+}
+
+// Get active boosts info for UI display
+function getActiveBoostsInfo() {
+    if (!D || !D.shop || !D.shop.activeBoosts) return [];
+    const boosts = [];
+    const now = Date.now();
+
+    if (D.shop.activeBoosts.xp && now < D.shop.activeBoosts.xp.expires) {
+        const remaining = Math.ceil((D.shop.activeBoosts.xp.expires - now) / 60000);
+        boosts.push({ type: 'XP', mult: D.shop.activeBoosts.xp.multiplier, mins: remaining, icon: '📈' });
+    }
+    if (D.shop.activeBoosts.gold && now < D.shop.activeBoosts.gold.expires) {
+        const remaining = Math.ceil((D.shop.activeBoosts.gold.expires - now) / 60000);
+        boosts.push({ type: 'Gold', mult: D.shop.activeBoosts.gold.multiplier, mins: remaining, icon: '💎' });
+    }
+    if (D.shop.activeBoosts.boss && now < D.shop.activeBoosts.boss.expires) {
+        const remaining = Math.ceil((D.shop.activeBoosts.boss.expires - now) / 60000);
+        boosts.push({ type: 'Boss DMG', mult: D.shop.activeBoosts.boss.multiplier, mins: remaining, icon: '⚡' });
+    }
+
+    return boosts;
 }
 
 // ---- Render the shop ----
@@ -394,10 +616,46 @@ function renderShop() {
         const rankLocked = (RANK_ORDER[item.rankReq] || 0) > playerRankIdx;
         const cantAfford = D.gold < item.cost;
         const equipped = D.shop.equipped === item.id;
+        const equippedArmor = D.shop.equippedArmor === item.id;
         
         let statusClass = '';
         let statusText = '';
         let actionBtn = '';
+        
+        // Build bonus tags for weapons/armor/artifacts
+        let bonusTags = '';
+        if (item.cat === 'weapon') {
+            const parts = [];
+            if (item.bossDmg) parts.push(`+${Math.round(item.bossDmg * 100)}% Boss DMG`);
+            if (item.xpBonus) parts.push(`+${Math.round(item.xpBonus * 100)}% XP`);
+            if (item.statBonus) {
+                const stats = Object.entries(item.statBonus).map(([s, v]) => `+${v} ${s.toUpperCase()}`).join(', ');
+                parts.push(stats);
+            }
+            if (parts.length) bonusTags = `<div class="shop-item-bonuses">${parts.join(' · ')}</div>`;
+        } else if (item.cat === 'armor') {
+            const parts = [];
+            if (item.decayReduction) parts.push(`-${Math.round(item.decayReduction * 100)}% Decay`);
+            if (item.statBonus) {
+                const stats = Object.entries(item.statBonus).map(([s, v]) => `+${v} ${s.toUpperCase()}`).join(', ');
+                parts.push(stats);
+            }
+            if (parts.length) bonusTags = `<div class="shop-item-bonuses">${parts.join(' · ')}</div>`;
+        } else if (item.artifact) {
+            const parts = [];
+            if (item.artifact.xpMult) parts.push(`+${Math.round(item.artifact.xpMult * 100)}% XP`);
+            if (item.artifact.goldMult) parts.push(`+${Math.round(item.artifact.goldMult * 100)}% Gold`);
+            if (item.artifact.statBonus) {
+                const stats = Object.entries(item.artifact.statBonus).map(([s, v]) => `+${v} ${s.toUpperCase()}`).join(', ');
+                parts.push(stats);
+            }
+            if (parts.length) bonusTags = `<div class="shop-item-bonuses">${parts.join(' · ')}</div>`;
+        } else if (item.consumable && item.effect) {
+            const e = item.effect;
+            if (e.type === 'xp_boost_timed') bonusTags = `<div class="shop-item-bonuses">×${e.multiplier} XP for ${Math.round(e.duration / 60000)}min</div>`;
+            else if (e.type === 'gold_boost_timed') bonusTags = `<div class="shop-item-bonuses">×${e.multiplier} Gold for ${Math.round(e.duration / 60000)}min</div>`;
+            else if (e.type === 'boss_boost_timed') bonusTags = `<div class="shop-item-bonuses">×${e.multiplier} Boss DMG for ${Math.round(e.duration / 60000)}min</div>`;
+        }
         
         if (owned) {
             statusClass = 'shop-owned';
@@ -407,6 +665,12 @@ function renderShop() {
                     actionBtn = '<span class="shop-equipped-badge">⚔ EQUIPPED</span>';
                 } else {
                     actionBtn = `<button class="shop-equip-btn" data-item="${item.id}">[EQUIP]</button>`;
+                }
+            } else if (item.cat === 'armor') {
+                if (equippedArmor) {
+                    actionBtn = '<span class="shop-equipped-badge">🛡 EQUIPPED</span>';
+                } else {
+                    actionBtn = `<button class="shop-equip-armor-btn" data-item="${item.id}">[EQUIP]</button>`;
                 }
             } else if (item.cat === 'scroll' && SCROLL_STORIES[item.id]) {
                 const isRead = D.shop.scrollsRead && D.shop.scrollsRead.includes(item.id);
@@ -426,7 +690,7 @@ function renderShop() {
             actionBtn = `<button class="shop-buy-btn ${cantAfford ? 'disabled' : ''}" data-item="${item.id}">[BUY — ${item.cost} G]</button>`;
         }
         
-        const tierStars = '★'.repeat(item.tier) + '☆'.repeat(Math.max(0, 6 - item.tier));
+        const tierStars = '★'.repeat(item.tier) + '☆'.repeat(Math.max(0, 7 - item.tier));
         
         html += `
             <div class="shop-item ${statusClass}" data-tier="${item.tier}">
@@ -437,6 +701,7 @@ function renderShop() {
                         <span class="shop-item-tier">${tierStars}</span>
                     </div>
                     <div class="shop-item-desc">${item.desc}</div>
+                    ${bonusTags}
                     <div class="shop-item-meta">
                         <span class="shop-item-cat">${item.cat.toUpperCase()}</span>
                         <span class="shop-item-rank rank-tag-${item.rankReq.toLowerCase()}">${item.rankReq}-Rank</span>
@@ -468,11 +733,19 @@ function renderShop() {
         });
     });
     
-    // Bind equip buttons
+    // Bind equip buttons (weapons)
     container.querySelectorAll('.shop-equip-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             equipWeapon(btn.dataset.item);
+        });
+    });
+
+    // Bind equip buttons (armor)
+    container.querySelectorAll('.shop-equip-armor-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            equipArmor(btn.dataset.item);
         });
     });
     
@@ -512,24 +785,57 @@ function renderShop() {
     if (collEl) collEl.textContent = `${collected}/${total}`;
 }
 
-// ---- Show equipped weapon in status ----
+// ---- Show equipped gear + active boosts in shop header ----
 function renderEquippedWeapon() {
     const el = document.getElementById('equippedWeaponDisplay');
     if (!el) return;
     
+    let html = '';
+    
+    // Equipped weapon
     const weapon = getEquippedWeapon();
     if (weapon) {
-        el.innerHTML = `
-            <div class="equipped-icon">${weapon.icon}</div>
-            <div class="equipped-info">
-                <div class="equipped-name">${weapon.name}</div>
-                <div class="equipped-tier">${'★'.repeat(weapon.tier)}${'☆'.repeat(6 - weapon.tier)}</div>
+        html += `
+            <div class="equipped-slot">
+                <div class="equipped-icon">${weapon.icon}</div>
+                <div class="equipped-info">
+                    <div class="equipped-name">${weapon.name}</div>
+                    <div class="equipped-bonuses">+${Math.round(weapon.bossDmg * 100)}% Boss DMG${weapon.xpBonus ? ' · +' + Math.round(weapon.xpBonus * 100) + '% XP' : ''}</div>
+                </div>
             </div>
         `;
-        el.classList.remove('hidden');
-    } else {
-        el.innerHTML = '<div class="equipped-empty">No weapon equipped</div>';
     }
+    
+    // Equipped armor
+    const armor = getEquippedArmor();
+    if (armor) {
+        html += `
+            <div class="equipped-slot">
+                <div class="equipped-icon">${armor.icon}</div>
+                <div class="equipped-info">
+                    <div class="equipped-name">${armor.name}</div>
+                    <div class="equipped-bonuses">-${Math.round(armor.decayReduction * 100)}% Decay</div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Active boosts
+    const boosts = getActiveBoostsInfo();
+    if (boosts.length > 0) {
+        html += '<div class="active-boosts-row">';
+        boosts.forEach(b => {
+            html += `<span class="active-boost-tag">${b.icon} ×${b.mult} ${b.type} (${b.mins}m)</span>`;
+        });
+        html += '</div>';
+    }
+    
+    if (!html) {
+        html = '<div class="equipped-empty">No gear equipped</div>';
+    }
+    
+    el.innerHTML = html;
+    el.classList.remove('hidden');
 }
 
 // ---- Open Scroll Reader Overlay ----

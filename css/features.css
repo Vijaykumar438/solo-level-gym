@@ -583,6 +583,7 @@
 .shop-item[data-tier="4"]{border-color:rgba(179,136,255,.3)}
 .shop-item[data-tier="5"]{border-color:rgba(255,215,64,.3)}
 .shop-item[data-tier="6"]{border-color:rgba(255,215,64,.5);box-shadow:0 0 15px rgba(255,215,64,.1)}
+.shop-item[data-tier="7"]{border-color:rgba(255,23,68,.5);box-shadow:0 0 20px rgba(255,23,68,.15)}
 
 .shop-item.shop-owned{opacity:.6;border-color:var(--green)}
 .shop-item.shop-owned:hover{opacity:.8}
@@ -676,12 +677,59 @@
     border-radius:4px;background:rgba(255,215,64,.08);
 }
 
+/* Armor equip button */
+.shop-equip-armor-btn{
+    font-family:var(--mono);font-size:.72rem;
+    padding:7px 14px;background:transparent;
+    border:1px solid var(--cyan);color:var(--cyan);
+    border-radius:4px;cursor:pointer;
+    transition:all .3s;letter-spacing:1px;
+}
+.shop-equip-armor-btn:hover{background:var(--cyan);color:var(--dark)}
+
+/* Shop item bonus tags */
+.shop-item-bonuses{
+    font-family:var(--mono);font-size:clamp(.6rem,1.4vw,.7rem);
+    color:var(--cyan);margin-top:4px;letter-spacing:.5px;
+    line-height:1.4;
+}
+
+/* Equipped gear slots */
+.equipped-display{display:flex;flex-direction:column;gap:10px}
+.equipped-slot{
+    display:flex;align-items:center;gap:clamp(8px,2vw,14px);
+    padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);
+}
+.equipped-slot:last-child{border-bottom:none}
+.equipped-icon{font-size:clamp(1.6rem,4vw,2.2rem);filter:drop-shadow(0 0 8px rgba(255,215,64,.3));flex-shrink:0}
+.equipped-info{flex:1;min-width:0}
+.equipped-name{font-family:var(--font);font-size:clamp(.9rem,2.5vw,1.1rem);color:var(--gold);font-weight:700;letter-spacing:1px}
+.equipped-bonuses{font-family:var(--mono);font-size:clamp(.6rem,1.4vw,.7rem);color:var(--cyan);letter-spacing:.5px;margin-top:2px}
+
+/* Active boost tags */
+.active-boosts-row{
+    display:flex;gap:6px;flex-wrap:wrap;
+    padding-top:8px;margin-top:4px;
+    border-top:1px solid rgba(255,255,255,.05);
+}
+.active-boost-tag{
+    font-family:var(--mono);font-size:clamp(.58rem,1.3vw,.68rem);
+    padding:3px 10px;border-radius:3px;letter-spacing:.5px;
+    background:rgba(79,195,247,.1);border:1px solid rgba(79,195,247,.3);
+    color:var(--cyan);
+    animation:boostPulse 2s ease-in-out infinite;
+}
+@keyframes boostPulse{0%,100%{opacity:.8}50%{opacity:1;text-shadow:0 0 6px var(--cyan)}}
+
 /* Shop glow animation for legendary items */
-.shop-item[data-tier="6"]::before{
+.shop-item[data-tier="6"]::before,.shop-item[data-tier="7"]::before{
     content:'';position:absolute;inset:-2px;
     background:linear-gradient(45deg,transparent,rgba(255,215,64,.1),transparent);
     animation:shopGlow 3s ease infinite;
     pointer-events:none;
+}
+.shop-item[data-tier="7"]::before{
+    background:linear-gradient(45deg,transparent,rgba(255,23,68,.15),transparent);
 }
 @keyframes shopGlow{
     0%,100%{opacity:0}
@@ -699,7 +747,7 @@
     .shop-banner{padding:12px}
     .shop-banner-title{font-size:.9rem;letter-spacing:2px}
     .shop-banner-icon{font-size:1.6rem}
-    .shop-buy-btn,.shop-equip-btn,.shop-use-btn{
+    .shop-buy-btn,.shop-equip-btn,.shop-use-btn,.shop-equip-armor-btn{
         min-height:40px;
         padding:8px 12px;
     }

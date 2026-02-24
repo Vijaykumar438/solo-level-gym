@@ -360,8 +360,11 @@ const _originalLogWorkout = logWorkout;
 logWorkout = function(exercise, reps, sets, weight, intensity) {
     const result = _originalLogWorkout(exercise, reps, sets, weight, intensity);
     
-    // Deal boss damage based on calories burned
-    const damage = Math.round(result.calBurned * 1.5 + result.xpGain * 0.5);
+    // Deal boss damage based on calories burned — apply weapon + boost multiplier
+    let damage = Math.round(result.calBurned * 1.5 + result.xpGain * 0.5);
+    if (typeof getShopBossDmgMultiplier === 'function') {
+        damage = Math.round(damage * getShopBossDmgMultiplier());
+    }
     const boss = getWeeklyBoss();
     if (boss && !boss.defeated) {
         dealBossDamage(damage, exercise);

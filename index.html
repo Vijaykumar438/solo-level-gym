@@ -8,7 +8,7 @@
     <!-- Force clear old service worker cache (one-time purge) -->
     <script>
         (function(){
-            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v28')) {
+            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v29')) {
                 navigator.serviceWorker.getRegistrations().then(function(regs) {
                     var hadOld = false;
                     regs.forEach(function(r) { r.unregister(); hadOld = true; });
@@ -17,7 +17,7 @@
                             names.forEach(function(n) { caches.delete(n); });
                         });
                     }
-                    sessionStorage.setItem('sw_purged_v28', '1');
+                    sessionStorage.setItem('sw_purged_v29', '1');
                     if (hadOld) { setTimeout(function(){ location.reload(true); }, 500); }
                 });
             }
@@ -45,11 +45,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css?v=28">
-    <link rel="stylesheet" href="css/panels.css?v=28">
-    <link rel="stylesheet" href="css/animations.css?v=28">
-    <link rel="stylesheet" href="css/features.css?v=28">
-    <link rel="stylesheet" href="css/mobile.css?v=28">
+    <link rel="stylesheet" href="css/main.css?v=29">
+    <link rel="stylesheet" href="css/panels.css?v=29">
+    <link rel="stylesheet" href="css/animations.css?v=29">
+    <link rel="stylesheet" href="css/features.css?v=29">
+    <link rel="stylesheet" href="css/mobile.css?v=29">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Firebase SDKs (compat mode for vanilla JS) -->
@@ -491,12 +491,12 @@
 
         <!-- ===== SHOP TAB ===== -->
         <section class="panel" data-panel="shop">
-            <!-- Equipped Weapon Display -->
+            <!-- Equipped Gear Display -->
             <div class="sys-window shop-equipped-window">
-                <div class="sw-header">[Equipped Weapon]</div>
+                <div class="sw-header">[Equipped Gear]</div>
                 <div class="sw-body">
                     <div id="equippedWeaponDisplay" class="equipped-display">
-                        <div class="equipped-empty">No weapon equipped</div>
+                        <div class="equipped-empty">No gear equipped</div>
                     </div>
                 </div>
             </div>
@@ -528,7 +528,9 @@
             <div class="shop-filters mt">
                 <button class="shop-filter-btn active" data-filter="all">ALL</button>
                 <button class="shop-filter-btn" data-filter="weapon">⚔ Weapons</button>
+                <button class="shop-filter-btn" data-filter="armor">🛡 Armor</button>
                 <button class="shop-filter-btn" data-filter="potion">🧪 Potions</button>
+                <button class="shop-filter-btn" data-filter="artifact">💎 Artifacts</button>
                 <button class="shop-filter-btn" data-filter="relic">💍 Relics</button>
                 <button class="shop-filter-btn" data-filter="scroll">📜 Scrolls</button>
             </div>
@@ -729,22 +731,22 @@
         </div>
     </div>
 
-    <script src="js/firebase-config.js?v=28"></script>
-    <script src="js/auth.js?v=28"></script>
-    <script src="js/db.js?v=28"></script>
-    <script src="js/data.js?v=28"></script>
-    <script src="js/sounds.js?v=28"></script>
-    <script src="js/engine.js?v=28"></script>
-    <script src="js/quests.js?v=28"></script>
-    <script src="js/shop.js?v=28"></script>
-    <script src="js/ui.js?v=28"></script>
-    <script src="js/charts.js?v=28"></script>
-    <script src="js/features.js?v=28"></script>
-    <script src="js/tutorial.js?v=28"></script>
-    <script src="js/journal.js?v=28"></script>
-    <script src="js/templates.js?v=28"></script>
-    <script src="js/avatar.js?v=28"></script>
-    <script src="js/app.js?v=28"></script>
+    <script src="js/firebase-config.js?v=29"></script>
+    <script src="js/auth.js?v=29"></script>
+    <script src="js/db.js?v=29"></script>
+    <script src="js/data.js?v=29"></script>
+    <script src="js/sounds.js?v=29"></script>
+    <script src="js/engine.js?v=29"></script>
+    <script src="js/quests.js?v=29"></script>
+    <script src="js/shop.js?v=29"></script>
+    <script src="js/ui.js?v=29"></script>
+    <script src="js/charts.js?v=29"></script>
+    <script src="js/features.js?v=29"></script>
+    <script src="js/tutorial.js?v=29"></script>
+    <script src="js/journal.js?v=29"></script>
+    <script src="js/templates.js?v=29"></script>
+    <script src="js/avatar.js?v=29"></script>
+    <script src="js/app.js?v=29"></script>
 
     <!-- PWA Service Worker -->
     <script>

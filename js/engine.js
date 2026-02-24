@@ -43,6 +43,11 @@ function saveGame() {
 // ---- XP & Leveling ----
 function grantXP(amount) {
     if (amount <= 0) return;
+    // Apply shop XP multiplier (weapon bonus + artifacts + timed boost)
+    if (typeof getShopXPMultiplier === 'function') {
+        const mult = getShopXPMultiplier();
+        if (mult > 1) amount = Math.round(amount * mult);
+    }
     D.xp += amount;
     while (D.xp >= xpForLevel(D.level)) {
         levelUp();
@@ -88,6 +93,11 @@ function levelUp() {
 }
 
 function grantGold(amount) {
+    // Apply shop Gold multiplier (artifacts + timed boost)
+    if (typeof getShopGoldMultiplier === 'function') {
+        const mult = getShopGoldMultiplier();
+        if (mult > 1) amount = Math.round(amount * mult);
+    }
     D.gold += amount;
     saveGame();
 }
@@ -222,13 +232,22 @@ function checkNewDay() {
         const diff = Math.floor((now - last) / 86400000);
         
         if (diff > 1) {
-            // Missed day(s) — DEGRADATION SYSTEM
+            // Missed day(s) — check streak shield first
             const missed = diff - 1;
-            const report = applyDegradation(missed);
-            D.streak = 0;
             
-            // Show decay report on boot
-            D._pendingDecayReport = report;
+            if (missed === 1 && D.streakShield && D.streakShield > 0) {
+                // Streak Shield absorbs 1 missed day
+                D.streakShield--;
+                sysNotify(`[Streak Shield] Protected your ${D.streak}-day streak! (${D.streakShield} shields remaining)`, 'blue');
+                // Still apply mild penalty but no streak break
+            } else {
+                // Full degradation
+                const report = applyDegradation(missed);
+                D.streak = 0;
+                
+                // Show decay report on boot
+                D._pendingDecayReport = report;
+            }
         }
         
         // Check if yesterday's quests had failures
@@ -263,6 +282,11 @@ function applyDegradation(missed) {
     for (let i = 1; i <= missed; i++) {
         // Each consecutive day hurts 30% more than the last
         totalXpLost += Math.floor(baseXpPerDay * Math.pow(1.3, i - 1));
+    }
+    // Apply armor decay reduction
+    if (typeof getShopDecayReduction === 'function') {
+        const reduction = getShopDecayReduction();
+        if (reduction > 0) totalXpLost = Math.round(totalXpLost * (1 - reduction));
     }
     report.xpLost = totalXpLost;
     loseXP(totalXpLost);

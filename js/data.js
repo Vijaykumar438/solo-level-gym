@@ -407,7 +407,9 @@ function getDefaultData() {
         shop: {
             purchased: [],
             inventory: [],
-            equipped: null
+            equipped: null,
+            equippedArmor: null,
+            activeBoosts: {}
         },
         physique: {
             currentWeight: null,
