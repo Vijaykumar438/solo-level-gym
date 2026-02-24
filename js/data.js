@@ -277,98 +277,213 @@ const ACHIEVEMENTS_DEFS = [
     { id: 'streak90',     name: 'The Monster',        icon: '👹', desc: 'Maintain 90-day streak',           cond: d => d.streak >= 90 }
 ];
 
+// ═══════════════════════════════════════════
+//  WISDOM QUOTES — 120+ quotes, tagged by rank tier & streak
+//  tier: 'E'|'D'|'C'|'B'|'A'|'S'|'X'|'*' (* = any rank)
+//  streak: minimum streak to unlock (0 = always available)
+// ═══════════════════════════════════════════
 const WISDOM = [
-    // ===== Original System Quotes =====
-    "The body breaks before the will — forge the latter in fire.",
-    "Only shadows remain when light fades; become the shadow.",
-    "A hunter who rests too long becomes the hunted.",
-    "Pain is the currency of growth. Pay willingly.",
-    "The dungeon does not care about your excuses.",
-    "Between the man you are and the man you could be — there lies only action.",
-    "Every rep is a spell. Every set, an incantation. The body transforms through ritual.",
-    "Weakness is a choice. Strength is earned, one day at a time.",
-    "The gates do not open for the hesitant.",
-    "You were not born strong. You were born with the potential to become unbreakable.",
-    "Discipline is the shadow that never leaves, even in the darkest dungeon.",
-    "The Monarchs did not ascend by comfort — they ascended through fire.",
-    "Sleep is the potion. Food is the mana. Training is the battle. Recover, refuel, return.",
-    "Your reflection is your final boss. Defeat it daily.",
-    "The System rewards those who show up — even broken, even bleeding.",
-    "A single push-up done today echoes louder than a thousand planned for tomorrow.",
-    "Arise — not because it is easy, but because you refuse to stay fallen.",
-    "Every missed day feeds the weakness within. Every completed gate starves it.",
-    "The strongest hunters were once the weakest. They simply refused to stop.",
-    "Iron sharpens iron. Your body is the blade; the gym is the forge.",
+    // ===== System Core — All Ranks =====
+    { text: "The body breaks before the will — forge the latter in fire.", tier: '*', streak: 0 },
+    { text: "Only shadows remain when light fades; become the shadow.", tier: '*', streak: 0 },
+    { text: "A hunter who rests too long becomes the hunted.", tier: '*', streak: 0 },
+    { text: "Pain is the currency of growth. Pay willingly.", tier: '*', streak: 0 },
+    { text: "The dungeon does not care about your excuses.", tier: '*', streak: 0 },
+    { text: "Between the man you are and the man you could be — there lies only action.", tier: '*', streak: 0 },
+    { text: "Every rep is a spell. Every set, an incantation. The body transforms through ritual.", tier: '*', streak: 0 },
+    { text: "Weakness is a choice. Strength is earned, one day at a time.", tier: '*', streak: 0 },
+    { text: "The gates do not open for the hesitant.", tier: '*', streak: 0 },
+    { text: "You were not born strong. You were born with the potential to become unbreakable.", tier: '*', streak: 0 },
+    { text: "Discipline is the shadow that never leaves, even in the darkest dungeon.", tier: '*', streak: 0 },
+    { text: "The Monarchs did not ascend by comfort — they ascended through fire.", tier: '*', streak: 0 },
+    { text: "Sleep is the potion. Food is the mana. Training is the battle. Recover, refuel, return.", tier: '*', streak: 0 },
+    { text: "Your reflection is your final boss. Defeat it daily.", tier: '*', streak: 0 },
+    { text: "The System rewards those who show up — even broken, even bleeding.", tier: '*', streak: 0 },
+    { text: "A single push-up done today echoes louder than a thousand planned for tomorrow.", tier: '*', streak: 0 },
+    { text: "Arise — not because it is easy, but because you refuse to stay fallen.", tier: '*', streak: 0 },
+    { text: "Every missed day feeds the weakness within. Every completed gate starves it.", tier: '*', streak: 0 },
+    { text: "The strongest hunters were once the weakest. They simply refused to stop.", tier: '*', streak: 0 },
+    { text: "Iron sharpens iron. Your body is the blade; the gym is the forge.", tier: '*', streak: 0 },
 
-    // ===== Broken Heart / Rebuild Yourself =====
-    "She left. The weight stayed. Pick it up.",
-    "The best revenge is a version of yourself they can't even recognize.",
-    "They broke your heart. Let the gym break your limits.",
-    "You lost someone. Don't lose yourself too.",
-    "Heartbreak is just another dungeon. Clear it.",
-    "Love didn't kill you. So nothing in this gym can.",
-    "The person who left missed the version you're about to become.",
-    "You don't need closure. You need a barbell and a purpose.",
-    "Cry if you must. Then wipe your face and lift.",
-    "The pain in your chest? Replace it with the burn in your muscles.",
-    "They chose someone else. Choose yourself. Every. Single. Day.",
-    "You weren't abandoned. You were set free to become dangerous.",
-    "Turn your 'why wasn't I enough' into 'watch me become too much.'",
-    "Broken hearts heal. Weak bodies don't — unless you train them.",
-    "Fall apart in private. Rebuild in public. Let the results speak.",
-    "One day they'll see you and realize the mistake. You won't even notice.",
-    "Stop rereading old texts. Start rewriting your body.",
-    "They left you empty. Fill yourself with iron.",
-    "Your heart got shattered? Good. Build a chest so strong nothing gets through again.",
-    "Missing someone? Miss your old PRs instead. Go beat them.",
+    // ===== Broken Heart / Rebuild =====
+    { text: "She left. The weight stayed. Pick it up.", tier: '*', streak: 0 },
+    { text: "The best revenge is a version of yourself they can't even recognize.", tier: '*', streak: 0 },
+    { text: "They broke your heart. Let the gym break your limits.", tier: '*', streak: 0 },
+    { text: "You lost someone. Don't lose yourself too.", tier: '*', streak: 0 },
+    { text: "Heartbreak is just another dungeon. Clear it.", tier: '*', streak: 0 },
+    { text: "Love didn't kill you. So nothing in this gym can.", tier: '*', streak: 0 },
+    { text: "The person who left missed the version you're about to become.", tier: '*', streak: 0 },
+    { text: "You don't need closure. You need a barbell and a purpose.", tier: '*', streak: 0 },
+    { text: "Cry if you must. Then wipe your face and lift.", tier: '*', streak: 0 },
+    { text: "The pain in your chest? Replace it with the burn in your muscles.", tier: '*', streak: 0 },
+    { text: "They chose someone else. Choose yourself. Every. Single. Day.", tier: '*', streak: 0 },
+    { text: "You weren't abandoned. You were set free to become dangerous.", tier: '*', streak: 0 },
+    { text: "Turn your 'why wasn't I enough' into 'watch me become too much.'", tier: '*', streak: 0 },
+    { text: "Broken hearts heal. Weak bodies don't — unless you train them.", tier: '*', streak: 0 },
+    { text: "Fall apart in private. Rebuild in public. Let the results speak.", tier: '*', streak: 0 },
+    { text: "One day they'll see you and realize the mistake. You won't even notice.", tier: '*', streak: 0 },
+    { text: "Stop rereading old texts. Start rewriting your body.", tier: '*', streak: 0 },
+    { text: "They left you empty. Fill yourself with iron.", tier: '*', streak: 0 },
+    { text: "Your heart got shattered? Good. Build a chest so strong nothing gets through again.", tier: '*', streak: 0 },
+    { text: "Missing someone? Miss your old PRs instead. Go beat them.", tier: '*', streak: 0 },
 
     // ===== Loneliness & Inner Darkness =====
-    "The gym doesn't judge you. The weights don't ask why you're sad. Just show up.",
-    "Loneliness is just a dungeon with no party. Solo it.",
-    "You feel alone? Good. Legends are forged in solitude.",
-    "Nobody's coming to save you. That's the best news you'll ever hear.",
-    "The darkness you feel? Channel it. Darkness is where shadows are born.",
-    "You don't need anyone to believe in you. The System already does.",
-    "While they're out living easy, you're in here becoming unbreakable.",
-    "Silence the noise. Silence the memories. Let the iron do the talking.",
-    "The loneliest road leads to the strongest version of you.",
-    "Your pain is fuel. Your anger is pre-workout. Use everything.",
+    { text: "The gym doesn't judge you. The weights don't ask why you're sad. Just show up.", tier: '*', streak: 0 },
+    { text: "Loneliness is just a dungeon with no party. Solo it.", tier: '*', streak: 0 },
+    { text: "You feel alone? Good. Legends are forged in solitude.", tier: '*', streak: 0 },
+    { text: "Nobody's coming to save you. That's the best news you'll ever hear.", tier: '*', streak: 0 },
+    { text: "The darkness you feel? Channel it. Darkness is where shadows are born.", tier: '*', streak: 0 },
+    { text: "You don't need anyone to believe in you. The System already does.", tier: '*', streak: 0 },
+    { text: "While they're out living easy, you're in here becoming unbreakable.", tier: '*', streak: 0 },
+    { text: "Silence the noise. Silence the memories. Let the iron do the talking.", tier: '*', streak: 0 },
+    { text: "The loneliest road leads to the strongest version of you.", tier: '*', streak: 0 },
+    { text: "Your pain is fuel. Your anger is pre-workout. Use everything.", tier: '*', streak: 0 },
 
-    // ===== Getting Back Up / Resilience =====
-    "You've survived 100% of your worst days. This set is nothing.",
-    "Rock bottom is just a solid foundation to build a monster on.",
-    "They told you you're nothing. Prove them wrong in silence.",
-    "The world broke you? Congratulations — broken things get rebuilt stronger.",
-    "Stop waiting for motivation. Discipline doesn't need your feelings.",
-    "You are not your past. You are what you do next.",
-    "The version of you that gave up doesn't exist here. Move.",
-    "Scars mean you survived. Muscles mean you chose to fight back.",
-    "Every scar is an upgrade. Every failure is XP. Keep grinding.",
-    "They counted you out. Let your body be the proof they were wrong.",
+    // ===== Resilience =====
+    { text: "You've survived 100% of your worst days. This set is nothing.", tier: '*', streak: 0 },
+    { text: "Rock bottom is just a solid foundation to build a monster on.", tier: '*', streak: 0 },
+    { text: "They told you you're nothing. Prove them wrong in silence.", tier: '*', streak: 0 },
+    { text: "The world broke you? Congratulations — broken things get rebuilt stronger.", tier: '*', streak: 0 },
+    { text: "Stop waiting for motivation. Discipline doesn't need your feelings.", tier: '*', streak: 0 },
+    { text: "You are not your past. You are what you do next.", tier: '*', streak: 0 },
+    { text: "The version of you that gave up doesn't exist here. Move.", tier: '*', streak: 0 },
+    { text: "Scars mean you survived. Muscles mean you chose to fight back.", tier: '*', streak: 0 },
+    { text: "Every scar is an upgrade. Every failure is XP. Keep grinding.", tier: '*', streak: 0 },
+    { text: "They counted you out. Let your body be the proof they were wrong.", tier: '*', streak: 0 },
 
     // ===== Self-Worth & Transformation =====
-    "You are the project. The gym is the lab. Get to work.",
-    "Stop begging people to stay. Become someone people are afraid to lose.",
-    "Your value doesn't decrease because someone failed to see it.",
-    "Build a body that matches the strength you've been hiding inside.",
-    "The glow-up isn't for them. It's for the person in the mirror.",
-    "You don't owe anyone an explanation. You owe yourself a transformation.",
-    "Invest the energy you wasted on them — into yourself.",
-    "They'll miss you eventually. Make sure the person they miss no longer exists.",
-    "The old you died in that heartbreak. Let the new one be terrifying.",
-    "You can't control who stays. You can control how strong you become.",
+    { text: "You are the project. The gym is the lab. Get to work.", tier: '*', streak: 0 },
+    { text: "Stop begging people to stay. Become someone people are afraid to lose.", tier: '*', streak: 0 },
+    { text: "Your value doesn't decrease because someone failed to see it.", tier: '*', streak: 0 },
+    { text: "Build a body that matches the strength you've been hiding inside.", tier: '*', streak: 0 },
+    { text: "The glow-up isn't for them. It's for the person in the mirror.", tier: '*', streak: 0 },
+    { text: "You don't owe anyone an explanation. You owe yourself a transformation.", tier: '*', streak: 0 },
+    { text: "Invest the energy you wasted on them — into yourself.", tier: '*', streak: 0 },
+    { text: "They'll miss you eventually. Make sure the person they miss no longer exists.", tier: '*', streak: 0 },
+    { text: "The old you died in that heartbreak. Let the new one be terrifying.", tier: '*', streak: 0 },
+    { text: "You can't control who stays. You can control how strong you become.", tier: '*', streak: 0 },
 
     // ===== Late Night / Raw Truth =====
-    "3 AM and you can't sleep? Tomorrow you train harder than today. That's the only plan.",
-    "The nights are long when you're healing. But the mornings belong to hunters.",
-    "You're hurting. I know. But pain shared with iron becomes power.",
-    "Some nights you'll want to quit everything. Survive the night. Train at dawn.",
-    "The tears you shed in silence water the strength growing inside you.",
-    "Tonight you grieve. Tomorrow you conquer. The System never closes.",
-    "You're not broken. You're mid-transformation. Caterpillar to something lethal.",
-    "That empty feeling? It's just making room for something greater.",
-    "The heaviest weight you'll ever lift is your broken self off the floor. Do it anyway.",
-    "They forgot about you. Make sure history doesn't."
+    { text: "3 AM and you can't sleep? Tomorrow you train harder than today. That's the only plan.", tier: '*', streak: 0 },
+    { text: "The nights are long when you're healing. But the mornings belong to hunters.", tier: '*', streak: 0 },
+    { text: "You're hurting. I know. But pain shared with iron becomes power.", tier: '*', streak: 0 },
+    { text: "Some nights you'll want to quit everything. Survive the night. Train at dawn.", tier: '*', streak: 0 },
+    { text: "The tears you shed in silence water the strength growing inside you.", tier: '*', streak: 0 },
+    { text: "Tonight you grieve. Tomorrow you conquer. The System never closes.", tier: '*', streak: 0 },
+    { text: "You're not broken. You're mid-transformation. Caterpillar to something lethal.", tier: '*', streak: 0 },
+    { text: "That empty feeling? It's just making room for something greater.", tier: '*', streak: 0 },
+    { text: "The heaviest weight you'll ever lift is your broken self off the floor. Do it anyway.", tier: '*', streak: 0 },
+    { text: "They forgot about you. Make sure history doesn't.", tier: '*', streak: 0 },
+
+    // ===== E-Rank Awakening (Lv 1–10) =====
+    { text: "You are E-Rank. The weakest. But every sovereign started here.", tier: 'E', streak: 0 },
+    { text: "The System chose you for a reason. Don't waste the Awakening.", tier: 'E', streak: 0 },
+    { text: "E-Rank hunters die in the first gate. Prove the statistics wrong.", tier: 'E', streak: 0 },
+    { text: "Your stats are pathetic. Good. There's nowhere to go but up.", tier: 'E', streak: 0 },
+    { text: "Even the weakest hunter can clear the first gate. Begin.", tier: 'E', streak: 0 },
+
+    // ===== D-Rank Growth (Lv 11–30) =====
+    { text: "D-Rank. You survived the beginning. Now the real grind starts.", tier: 'D', streak: 0 },
+    { text: "Most hunters plateau at D-Rank. Will you be most hunters?", tier: 'D', streak: 0 },
+    { text: "The gates get harder. So must you.", tier: 'D', streak: 0 },
+    { text: "D-Rank is where discipline separates the hunter from the prey.", tier: 'D', streak: 0 },
+    { text: "You've tasted progress. Now develop an addiction to it.", tier: 'D', streak: 0 },
+
+    // ===== C-Rank Mid-Tier (Lv 31–60) =====
+    { text: "C-Rank. The masses can't touch you now. Keep climbing.", tier: 'C', streak: 0 },
+    { text: "Half the hunters who started with you have quit. You didn't. Remember that.", tier: 'C', streak: 0 },
+    { text: "The mid-ranks are a graveyard of 'almost.' Don't join them.", tier: 'C', streak: 0 },
+    { text: "Your body is adapting. Push past the adaptation. Shock the System.", tier: 'C', streak: 0 },
+    { text: "C-Rank gates are lethal. Your training sessions should match.", tier: 'C', streak: 0 },
+
+    // ===== B-Rank Elite (Lv 61–100) =====
+    { text: "B-Rank. The world starts to notice. Don't let the attention slow you.", tier: 'B', streak: 0 },
+    { text: "Elite hunters don't train for aesthetics. They train for survival.", tier: 'B', streak: 0 },
+    { text: "The gates you clear now would have killed E-Rank you. Respect the journey.", tier: 'B', streak: 0 },
+    { text: "B-Rank is where talent hits a wall and only discipline breaks through.", tier: 'B', streak: 0 },
+    { text: "You're no longer fighting to survive. You're fighting to dominate.", tier: 'B', streak: 0 },
+
+    // ===== A-Rank Sovereign (Lv 101–200) =====
+    { text: "A-Rank. Nations could call on you. But you answer only to the grind.", tier: 'A', streak: 0 },
+    { text: "The distance between A-Rank and S-Rank is measured in years, not days.", tier: 'A', streak: 0 },
+    { text: "You've surpassed 99% of hunters. The remaining 1% are your real competition.", tier: 'A', streak: 0 },
+    { text: "A-Rank gates tremble when you approach. Make them right to tremble.", tier: 'A', streak: 0 },
+    { text: "At this rank, every session is a statement. Every rep is a declaration.", tier: 'A', streak: 0 },
+
+    // ===== S-Rank Legend (Lv 201–350) =====
+    { text: "S-Rank. You are no longer a person. You are a weapon.", tier: 'S', streak: 0 },
+    { text: "The Monarchs are watching. Give them something to fear.", tier: 'S', streak: 0 },
+    { text: "S-Rank hunters bend reality. Your presence alone changes the room.", tier: 'S', streak: 0 },
+    { text: "The gap between you and ordinary humans is no longer measurable.", tier: 'S', streak: 0 },
+    { text: "Only the Shadow Monarch stands above. And even he respects the grind.", tier: 'S', streak: 0 },
+
+    // ===== X-Rank / National Level (Lv 351+) =====
+    { text: "National Level. You are no longer bound by human limits.", tier: 'X', streak: 0 },
+    { text: "The System has nothing left to teach you. You ARE the System now.", tier: 'X', streak: 0 },
+    { text: "Extinction-class. The dungeons fear you more than you ever feared them.", tier: 'X', streak: 0 },
+    { text: "You've transcended. But transcendence is not a destination — it's a daily choice.", tier: 'X', streak: 0 },
+    { text: "The Absolute Being created the System. You conquered it.", tier: 'X', streak: 0 },
+
+    // ===== Streak Milestones =====
+    { text: "3 days straight. The System sees you. Keep going.", tier: '*', streak: 3 },
+    { text: "A week of iron. Your body is beginning to remember what it's for.", tier: '*', streak: 7 },
+    { text: "7 days. Most hunters break here. You're still standing. Respect.", tier: '*', streak: 7 },
+    { text: "Two weeks of war. The habit is forming. The shadow grows.", tier: '*', streak: 14 },
+    { text: "14 days. Your muscles are no longer asking 'why.' They're asking 'what's next.'", tier: '*', streak: 14 },
+    { text: "21 days. Science says it's a habit now. The System says it's an identity.", tier: '*', streak: 21 },
+    { text: "A full month. 30 days of choosing hard over easy. You're different now.", tier: '*', streak: 30 },
+    { text: "30 days. A lesser hunter would have broken. You forged a chain of iron.", tier: '*', streak: 30 },
+    { text: "60 days. Two months of relentless execution. The old you is a stranger.", tier: '*', streak: 60 },
+    { text: "90 days. A quarter year of daily war. You are the definition of consistency.", tier: '*', streak: 90 },
+    { text: "100+ day streak. At this point, the System doesn't track you. You track it.", tier: '*', streak: 100 },
+    { text: "Half a year of unbroken discipline. You are no longer human. You are protocol.", tier: '*', streak: 180 },
+    { text: "365 days. One full year. The shadows don't follow you anymore — they ARE you.", tier: '*', streak: 365 },
+
+    // ===== Training Philosophy =====
+    { text: "Progressive overload isn't just a principle. It's a philosophy of life.", tier: '*', streak: 0 },
+    { text: "The last rep is where the magic happens. Everything before is just the warmup.", tier: '*', streak: 0 },
+    { text: "Rest days are not days off. They're days your body catches up to your ambition.", tier: '*', streak: 0 },
+    { text: "Form over ego. The barbell doesn't care about your pride.", tier: '*', streak: 0 },
+    { text: "Compound movements build compound character.", tier: '*', streak: 0 },
+    { text: "The pump fades. The discipline stays. Train for the latter.", tier: '*', streak: 0 },
+    { text: "Cardio doesn't kill gains. Laziness does.", tier: '*', streak: 0 },
+    { text: "Mind-muscle connection isn't bro science. It's the System's neural link.", tier: '*', streak: 0 },
+
+    // ===== Nutrition & Recovery =====
+    { text: "You can't out-train a bad diet. The kitchen is the second dungeon.", tier: '*', streak: 0 },
+    { text: "Protein is the building block. Discipline is the architect.", tier: '*', streak: 0 },
+    { text: "8 hours of sleep is the most underrated performance enhancer in existence.", tier: '*', streak: 0 },
+    { text: "Water is mana. Dehydration is a debuff. Stay topped off.", tier: '*', streak: 0 },
+    { text: "Your muscles don't grow in the gym. They grow in recovery. Respect the process.", tier: '*', streak: 0 },
+
+    // ===== Competition with Self =====
+    { text: "The only PR that matters is the one you haven't hit yet.", tier: '*', streak: 0 },
+    { text: "Compare yourself to who you were yesterday. That's your only rival.", tier: '*', streak: 0 },
+    { text: "The mirror is your arena. The scale is just a number. Performance is truth.", tier: '*', streak: 0 },
+    { text: "Someone stronger than you is training right now. Will you let them stay ahead?", tier: '*', streak: 0 },
+    { text: "Genetics load the gun. Work ethic pulls the trigger.", tier: '*', streak: 0 },
+    { text: "Your body whispers 'stop.' Your mind screams 'one more.' Listen to the mind.", tier: '*', streak: 0 },
+    { text: "Every set is a vote for the person you want to become.", tier: '*', streak: 0 },
+    { text: "The weight doesn't lie. It's either heavy or you're strong enough. Get strong enough.", tier: '*', streak: 0 },
+];
+
+// Notification reminder messages — themed for PWA push notifications
+const NOTIF_MESSAGES = [
+    { title: "⚠ SYSTEM WARNING", body: "The System is watching. Train today or face degradation." },
+    { title: "⬡ DAILY GATE OPEN", body: "Your daily quests are waiting. Enter the gate, Hunter." },
+    { title: "☠ PENALTY INCOMING", body: "Inactivity detected. The System does not forgive." },
+    { title: "🔥 STREAK AT RISK", body: "Your streak is in danger. One session keeps it alive." },
+    { title: "⚔ ARISE, HUNTER", body: "The shadows grow restless. Feed them with your training." },
+    { title: "👁 SYSTEM ALERT", body: "A hunter who rests too long becomes the hunted." },
+    { title: "💀 DEGRADATION IMMINENT", body: "Skip today and watch your stats decay. The choice is yours." },
+    { title: "🌑 SHADOW PROTOCOL", body: "The Shadow Monarch doesn't take rest days. Neither should you." },
+    { title: "⚡ GATE DETECTED", body: "An uncompleted gate has been detected. Clear it before midnight." },
+    { title: "🛡 DISCIPLINE CHECK", body: "Your future self is watching. Make them proud, Hunter." },
+    { title: "🔷 SYSTEM NOTICE", body: "Every missed day feeds the weakness within. Show up." },
+    { title: "👑 MONARCH'S ORDER", body: "The iron is waiting. The System demands your presence." },
+    { title: "⬛ SHADOW REALM", body: "The dungeon doesn't close. Your excuses do. Enter." },
+    { title: "💎 RANK PRESERVATION", body: "Your rank was earned through sweat. Don't let it decay." },
+    { title: "🏔 THE GRIND CALLS", body: "Mountains aren't climbed by those who sleep at the base." },
 ];
 
 function getDefaultData() {
@@ -421,7 +536,9 @@ function getDefaultData() {
         },
         settings: {
             playerName: 'Hunter',
-            soundEnabled: true
+            soundEnabled: true,
+            notificationsEnabled: false,
+            notifReminderHour: 18  // default 6 PM
         }
     };
 }
@@ -446,6 +563,39 @@ function getTitle(level) {
     return title;
 }
 
-function getRandomWisdom() {
-    return WISDOM[Math.floor(Math.random() * WISDOM.length)];
+function getRandomWisdom(level, streak) {
+    level = level || (typeof D !== 'undefined' && D ? D.level : 1);
+    streak = streak || (typeof D !== 'undefined' && D ? D.streak : 0);
+    const rank = getRank(level);
+    const rankName = rank ? rank.name : 'E';
+
+    // Filter: quotes matching player's rank OR universal (*), AND streak ≤ player's streak
+    const pool = WISDOM.filter(q => {
+        if (q.streak > streak) return false;
+        if (q.tier === '*' || q.tier === rankName) return true;
+        return false;
+    });
+
+    // If streak quotes available, 40% chance to show a streak quote for extra impact
+    const streakQuotes = pool.filter(q => q.streak > 0);
+    if (streakQuotes.length > 0 && Math.random() < 0.4) {
+        // Pick highest matching streak quote
+        const best = streakQuotes.reduce((a, b) => b.streak > a.streak ? b : a);
+        return best.text;
+    }
+
+    // 30% chance to show rank-specific quote if available
+    const rankQuotes = pool.filter(q => q.tier === rankName);
+    if (rankQuotes.length > 0 && Math.random() < 0.3) {
+        return rankQuotes[Math.floor(Math.random() * rankQuotes.length)].text;
+    }
+
+    // Default: random from full eligible pool
+    const pick = pool.length > 0 ? pool : WISDOM;
+    return pick[Math.floor(Math.random() * pick.length)].text;
+}
+
+// Get a notification message (for PWA push)
+function getNotifMessage() {
+    return NOTIF_MESSAGES[Math.floor(Math.random() * NOTIF_MESSAGES.length)];
 }

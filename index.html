@@ -8,7 +8,7 @@
     <!-- Force clear old service worker cache (one-time purge) -->
     <script>
         (function(){
-            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v30')) {
+            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v31')) {
                 navigator.serviceWorker.getRegistrations().then(function(regs) {
                     var hadOld = false;
                     regs.forEach(function(r) { r.unregister(); hadOld = true; });
@@ -17,7 +17,7 @@
                             names.forEach(function(n) { caches.delete(n); });
                         });
                     }
-                    sessionStorage.setItem('sw_purged_v30', '1');
+                    sessionStorage.setItem('sw_purged_v31', '1');
                     if (hadOld) { setTimeout(function(){ location.reload(true); }, 500); }
                 });
             }
@@ -45,11 +45,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css?v=30">
-    <link rel="stylesheet" href="css/panels.css?v=30">
-    <link rel="stylesheet" href="css/animations.css?v=30">
-    <link rel="stylesheet" href="css/features.css?v=30">
-    <link rel="stylesheet" href="css/mobile.css?v=30">
+    <link rel="stylesheet" href="css/main.css?v=31">
+    <link rel="stylesheet" href="css/panels.css?v=31">
+    <link rel="stylesheet" href="css/animations.css?v=31">
+    <link rel="stylesheet" href="css/features.css?v=31">
+    <link rel="stylesheet" href="css/mobile.css?v=31">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Firebase SDKs (compat mode for vanilla JS) -->
@@ -627,6 +627,36 @@
                     <button class="sys-btn dm-btn dm-danger" id="btnReset" onclick="handleResetData()">☠ Reset All Data</button>
                 </div>
             </div>
+
+            <!-- Notification Settings -->
+            <div class="sys-window mt">
+                <div class="sw-header">[System Notifications]</div>
+                <div class="notif-settings">
+                    <div class="notif-row">
+                        <span class="notif-label">🔔 Training Reminders</span>
+                        <button class="notif-toggle-btn" id="notifToggleBtn" onclick="toggleNotifications()">
+                            <span class="notif-toggle-status" id="notifToggleStatus">OFF</span>
+                        </button>
+                    </div>
+                    <div class="notif-row" id="notifTimeRow" style="display:none">
+                        <span class="notif-label">⏰ Reminder Time</span>
+                        <select class="notif-time-select" id="notifTimeSelect" onchange="setNotifTime(this.value)">
+                            <option value="7">7:00 AM</option>
+                            <option value="8">8:00 AM</option>
+                            <option value="9">9:00 AM</option>
+                            <option value="10">10:00 AM</option>
+                            <option value="12">12:00 PM</option>
+                            <option value="14">2:00 PM</option>
+                            <option value="16">4:00 PM</option>
+                            <option value="18" selected>6:00 PM</option>
+                            <option value="19">7:00 PM</option>
+                            <option value="20">8:00 PM</option>
+                            <option value="21">9:00 PM</option>
+                        </select>
+                    </div>
+                    <div class="notif-hint" id="notifHint">Enable to receive daily "System" reminders to train</div>
+                </div>
+            </div>
         </section>
 
         <!-- ===== JOURNAL TAB ===== -->
@@ -735,22 +765,22 @@
         </div>
     </div>
 
-    <script src="js/firebase-config.js?v=30"></script>
-    <script src="js/auth.js?v=30"></script>
-    <script src="js/db.js?v=30"></script>
-    <script src="js/data.js?v=30"></script>
-    <script src="js/sounds.js?v=30"></script>
-    <script src="js/engine.js?v=30"></script>
-    <script src="js/quests.js?v=30"></script>
-    <script src="js/shop.js?v=30"></script>
-    <script src="js/ui.js?v=30"></script>
-    <script src="js/charts.js?v=30"></script>
-    <script src="js/features.js?v=30"></script>
-    <script src="js/tutorial.js?v=30"></script>
-    <script src="js/journal.js?v=30"></script>
-    <script src="js/templates.js?v=30"></script>
-    <script src="js/avatar.js?v=30"></script>
-    <script src="js/app.js?v=30"></script>
+    <script src="js/firebase-config.js?v=31"></script>
+    <script src="js/auth.js?v=31"></script>
+    <script src="js/db.js?v=31"></script>
+    <script src="js/data.js?v=31"></script>
+    <script src="js/sounds.js?v=31"></script>
+    <script src="js/engine.js?v=31"></script>
+    <script src="js/quests.js?v=31"></script>
+    <script src="js/shop.js?v=31"></script>
+    <script src="js/ui.js?v=31"></script>
+    <script src="js/charts.js?v=31"></script>
+    <script src="js/features.js?v=31"></script>
+    <script src="js/tutorial.js?v=31"></script>
+    <script src="js/journal.js?v=31"></script>
+    <script src="js/templates.js?v=31"></script>
+    <script src="js/avatar.js?v=31"></script>
+    <script src="js/app.js?v=31"></script>
 
     <!-- PWA Service Worker -->
     <script>

@@ -2,7 +2,7 @@
 //  SERVICE WORKER — Offline PWA support
 // ==========================================
 
-const CACHE_NAME = 'solo-leveling-v30';
+const CACHE_NAME = 'solo-leveling-v31';
 const ASSETS = [
     '/',
     '/index.html',
@@ -89,6 +89,25 @@ self.addEventListener('message', event => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
         self.skipWaiting();
     }
+});
+
+// Handle notification click — open the app
+self.addEventListener('notificationclick', event => {
+    event.notification.close();
+    if (event.action === 'dismiss') return;
+
+    event.waitUntil(
+        clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
+            // Focus existing window if open
+            for (const client of windowClients) {
+                if (client.url.includes('/index.html') || client.url.endsWith('/')) {
+                    return client.focus();
+                }
+            }
+            // Otherwise open a new window
+            return clients.openWindow('/');
+        })
+    );
 });
 
 self.addEventListener('fetch', event => {

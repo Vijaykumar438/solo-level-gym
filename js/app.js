@@ -54,6 +54,167 @@ function vibrate(pattern) {
     }
 }
 
+// ═══════════════════════════════════════════
+//  PWA NOTIFICATION SYSTEM
+// ═══════════════════════════════════════════
+let _notifTimer = null;
+
+function notifSupported() {
+    return 'Notification' in window && 'serviceWorker' in navigator;
+}
+
+async function toggleNotifications() {
+    if (!notifSupported()) {
+        sysNotify('[System] Notifications not supported on this device.', 'red');
+        return;
+    }
+
+    // Currently enabled → disable
+    if (D.settings.notificationsEnabled) {
+        D.settings.notificationsEnabled = false;
+        saveGame();
+        updateNotifUI();
+        clearScheduledNotif();
+        sysNotify('[System] Training reminders disabled.', 'red');
+        return;
+    }
+
+    // Request permission
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') {
+        sysNotify('[System] Notification permission denied. Enable in browser settings.', 'red');
+        return;
+    }
+
+    D.settings.notificationsEnabled = true;
+    saveGame();
+    updateNotifUI();
+    scheduleNotif();
+    sysNotify('[System] Training reminders activated. The System is watching.', 'green');
+}
+
+function setNotifTime(hour) {
+    D.settings.notifReminderHour = parseInt(hour, 10);
+    saveGame();
+    scheduleNotif();
+    sysNotify(`[System] Reminder set for ${formatHour(D.settings.notifReminderHour)}.`, 'blue');
+}
+
+function formatHour(h) {
+    if (h === 0) return '12:00 AM';
+    if (h === 12) return '12:00 PM';
+    return h > 12 ? `${h - 12}:00 PM` : `${h}:00 AM`;
+}
+
+function updateNotifUI() {
+    const btn = document.getElementById('notifToggleBtn');
+    const status = document.getElementById('notifToggleStatus');
+    const timeRow = document.getElementById('notifTimeRow');
+    const timeSelect = document.getElementById('notifTimeSelect');
+    const hint = document.getElementById('notifHint');
+    if (!btn) return;
+
+    const on = D.settings.notificationsEnabled;
+    btn.classList.toggle('active', on);
+    status.textContent = on ? 'ON' : 'OFF';
+    timeRow.style.display = on ? 'flex' : 'none';
+    if (timeSelect) timeSelect.value = D.settings.notifReminderHour || 18;
+    if (hint) {
+        hint.textContent = on
+            ? `Reminders active — ${formatHour(D.settings.notifReminderHour || 18)} daily`
+            : 'Enable to receive daily "System" reminders to train';
+    }
+}
+
+function scheduleNotif() {
+    clearScheduledNotif();
+    if (!D.settings.notificationsEnabled) return;
+
+    const now = new Date();
+    const target = new Date();
+    target.setHours(D.settings.notifReminderHour || 18, 0, 0, 0);
+
+    // If target time already passed today, schedule for tomorrow
+    if (target <= now) {
+        target.setDate(target.getDate() + 1);
+    }
+
+    const ms = target - now;
+    _notifTimer = setTimeout(() => {
+        fireTrainingReminder();
+        // Reschedule for next day
+        scheduleNotif();
+    }, ms);
+}
+
+function clearScheduledNotif() {
+    if (_notifTimer) {
+        clearTimeout(_notifTimer);
+        _notifTimer = null;
+    }
+}
+
+async function fireTrainingReminder() {
+    if (!D.settings.notificationsEnabled) return;
+    if (Notification.permission !== 'granted') return;
+
+    // Don't notify if user already trained today
+    const today = new Date().toDateString();
+    const trainedToday = D.workouts && D.workouts.some(w => new Date(w.date).toDateString() === today);
+    if (trainedToday) return;
+
+    const msg = getNotifMessage();
+
+    // Try service worker notification (works in background on mobile)
+    try {
+        const reg = await navigator.serviceWorker.ready;
+        await reg.showNotification(msg.title, {
+            body: msg.body,
+            icon: 'icons/icon-192.png',
+            badge: 'icons/icon-96.png',
+            tag: 'training-reminder',
+            renotify: true,
+            vibrate: [200, 100, 200, 100, 200],
+            data: { url: '/' },
+            actions: [
+                { action: 'open', title: '⬡ Enter Gate' },
+                { action: 'dismiss', title: '✕ Later' }
+            ]
+        });
+    } catch (e) {
+        // Fallback: basic notification
+        new Notification(msg.title, {
+            body: msg.body,
+            icon: 'icons/icon-192.png',
+            tag: 'training-reminder'
+        });
+    }
+}
+
+// Fire a "no training yet" nudge on app open
+function checkOpenNotification() {
+    if (!notifSupported()) return;
+    if (!D.settings.notificationsEnabled) return;
+    if (Notification.permission !== 'granted') return;
+
+    const today = new Date().toDateString();
+    const trainedToday = D.workouts && D.workouts.some(w => new Date(w.date).toDateString() === today);
+    const hour = new Date().getHours();
+
+    // If it's past noon and haven't trained, show an in-app nudge
+    if (!trainedToday && hour >= 12) {
+        const msgs = [
+            "⚠ You haven't trained today. The System is watching.",
+            "⬡ Daily gate remains uncompleted. The shadows grow.",
+            "☠ No workout detected. Degradation approaches.",
+            "🔥 Your streak depends on today. Enter the gate.",
+            "🌑 The System demands action. Train or face consequences."
+        ];
+        const pick = msgs[Math.floor(Math.random() * msgs.length)];
+        setTimeout(() => sysNotify(pick, 'red'), 2000);
+    }
+}
+
 // ---- Boot Sequence ----
 function bootSequence() {
     const lines = document.querySelectorAll('.boot-msg');
@@ -100,6 +261,11 @@ function bootSequence() {
 
                     // Init tutorial
                     if (typeof initTutorial === 'function') initTutorial();
+
+                    // Init notification system
+                    updateNotifUI();
+                    if (D.settings.notificationsEnabled) scheduleNotif();
+                    checkOpenNotification();
                     
                     // Show decay report if player was absent
                     if (D._pendingDecayReport) {
