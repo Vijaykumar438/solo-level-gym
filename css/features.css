@@ -556,6 +556,18 @@
 .shop-stat-val{font-family:var(--font);font-size:clamp(1.1rem,3vw,1.4rem);font-weight:700}
 .shop-stat-label{font-family:var(--mono);font-size:clamp(.55rem,1.3vw,.65rem);color:var(--dim);text-transform:uppercase;letter-spacing:2px}
 
+/* Daily limits bar */
+.shop-daily-limits{
+    display:flex;justify-content:center;gap:clamp(12px,3vw,20px);
+    padding:8px 12px;border-top:1px solid var(--border);
+    background:rgba(0,0,0,.2);
+}
+.shop-limit-tag{
+    font-family:var(--mono);font-size:clamp(.62rem,1.4vw,.72rem);
+    color:var(--dim);letter-spacing:1px;
+}
+.shop-limit-tag.limit-hit{color:var(--red);opacity:.8}
+
 /* Shop filters */
 .shop-filters{display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
 .shop-filters::-webkit-scrollbar{display:none}

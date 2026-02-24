@@ -409,7 +409,8 @@ function getDefaultData() {
             inventory: [],
             equipped: null,
             equippedArmor: null,
-            activeBoosts: {}
+            activeBoosts: {},
+            potionLog: { date: '', used: 0, bought: 0 }
         },
         physique: {
             currentWeight: null,

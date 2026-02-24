@@ -8,7 +8,7 @@
     <!-- Force clear old service worker cache (one-time purge) -->
     <script>
         (function(){
-            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v29')) {
+            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v30')) {
                 navigator.serviceWorker.getRegistrations().then(function(regs) {
                     var hadOld = false;
                     regs.forEach(function(r) { r.unregister(); hadOld = true; });
@@ -17,7 +17,7 @@
                             names.forEach(function(n) { caches.delete(n); });
                         });
                     }
-                    sessionStorage.setItem('sw_purged_v29', '1');
+                    sessionStorage.setItem('sw_purged_v30', '1');
                     if (hadOld) { setTimeout(function(){ location.reload(true); }, 500); }
                 });
             }
@@ -45,11 +45,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css?v=29">
-    <link rel="stylesheet" href="css/panels.css?v=29">
-    <link rel="stylesheet" href="css/animations.css?v=29">
-    <link rel="stylesheet" href="css/features.css?v=29">
-    <link rel="stylesheet" href="css/mobile.css?v=29">
+    <link rel="stylesheet" href="css/main.css?v=30">
+    <link rel="stylesheet" href="css/panels.css?v=30">
+    <link rel="stylesheet" href="css/animations.css?v=30">
+    <link rel="stylesheet" href="css/features.css?v=30">
+    <link rel="stylesheet" href="css/mobile.css?v=30">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Firebase SDKs (compat mode for vanilla JS) -->
@@ -522,6 +522,10 @@
                         <span class="shop-stat-label">Collected</span>
                     </div>
                 </div>
+                <div class="shop-daily-limits" id="shopDailyLimits">
+                    <span class="shop-limit-tag" id="shopLimitBuy">🛒 Buy: 5/5</span>
+                    <span class="shop-limit-tag" id="shopLimitUse">🧪 Use: 3/3</span>
+                </div>
             </div>
 
             <!-- Shop Filters -->
@@ -731,22 +735,22 @@
         </div>
     </div>
 
-    <script src="js/firebase-config.js?v=29"></script>
-    <script src="js/auth.js?v=29"></script>
-    <script src="js/db.js?v=29"></script>
-    <script src="js/data.js?v=29"></script>
-    <script src="js/sounds.js?v=29"></script>
-    <script src="js/engine.js?v=29"></script>
-    <script src="js/quests.js?v=29"></script>
-    <script src="js/shop.js?v=29"></script>
-    <script src="js/ui.js?v=29"></script>
-    <script src="js/charts.js?v=29"></script>
-    <script src="js/features.js?v=29"></script>
-    <script src="js/tutorial.js?v=29"></script>
-    <script src="js/journal.js?v=29"></script>
-    <script src="js/templates.js?v=29"></script>
-    <script src="js/avatar.js?v=29"></script>
-    <script src="js/app.js?v=29"></script>
+    <script src="js/firebase-config.js?v=30"></script>
+    <script src="js/auth.js?v=30"></script>
+    <script src="js/db.js?v=30"></script>
+    <script src="js/data.js?v=30"></script>
+    <script src="js/sounds.js?v=30"></script>
+    <script src="js/engine.js?v=30"></script>
+    <script src="js/quests.js?v=30"></script>
+    <script src="js/shop.js?v=30"></script>
+    <script src="js/ui.js?v=30"></script>
+    <script src="js/charts.js?v=30"></script>
+    <script src="js/features.js?v=30"></script>
+    <script src="js/tutorial.js?v=30"></script>
+    <script src="js/journal.js?v=30"></script>
+    <script src="js/templates.js?v=30"></script>
+    <script src="js/avatar.js?v=30"></script>
+    <script src="js/app.js?v=30"></script>
 
     <!-- PWA Service Worker -->
     <script>

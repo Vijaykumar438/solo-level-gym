@@ -30,21 +30,21 @@ const SHOP_ITEMS = [
     { id: 'a_monarch_regalia',   cat: 'armor',   name: "Monarch's Regalia",        icon: '👑',  desc: "Not just armor. A statement. The king needs no protection — he IS protection.",    cost: 12000, rankReq: 'S', tier: 6, decayReduction: 0.50, statBonus: { end: 18, vit: 15, wil: 12, str: 8 } },
     { id: 'a_absolute_defense',  cat: 'armor',   name: 'Absolute Defense',         icon: '💠',  desc: "Nothing can decay what you have built. Your body is a fortress.",                  cost: 35000, rankReq: 'X', tier: 7, decayReduction: 0.70, statBonus: { end: 25, vit: 20, wil: 15, str: 12, agi: 10 } },
 
-    // ===== POTIONS — Consumable buffs (instant + timed) =====
-    { id: 'p_xp_minor',         cat: 'potion',  name: 'XP Elixir (Minor)',        icon: '🧪',  desc: "Grants +50 XP instantly. Small steps compound.",                                  cost: 30,   rankReq: 'E', tier: 1, consumable: true, effect: { type: 'xp', value: 50 } },
-    { id: 'p_xp_major',         cat: 'potion',  name: 'XP Elixir (Major)',        icon: '⚗️',  desc: "Grants +200 XP instantly. Growth accelerator.",                                   cost: 100,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'xp', value: 200 } },
-    { id: 'p_xp_supreme',       cat: 'potion',  name: 'XP Elixir (Supreme)',      icon: '🔮',  desc: "Grants +500 XP instantly. Raw power in a bottle.",                                cost: 250,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'xp', value: 500 } },
-    { id: 'p_gold_boost',       cat: 'potion',  name: 'Gold Multiplier',          icon: '💰',  desc: "Grants +100 Gold. Fortune favors the disciplined.",                               cost: 40,   rankReq: 'E', tier: 1, consumable: true, effect: { type: 'gold', value: 100 } },
-    { id: 'p_xp_boost_30',      cat: 'potion',  name: 'XP Boost Scroll',          icon: '📈',  desc: "All XP earned is DOUBLED for 30 minutes. Train hard, earn harder.",               cost: 150,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'xp_boost_timed', duration: 1800000, multiplier: 2 } },
-    { id: 'p_gold_boost_30',    cat: 'potion',  name: 'Gold Boost Scroll',        icon: '💎',  desc: "All Gold earned is DOUBLED for 30 minutes. Fortune smiles on you.",               cost: 150,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'gold_boost_timed', duration: 1800000, multiplier: 2 } },
-    { id: 'p_boss_boost_30',    cat: 'potion',  name: 'Double Strike Elixir',     icon: '⚡',  desc: "Boss damage DOUBLED for 30 minutes. Unleash destruction.",                        cost: 200,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'boss_boost_timed', duration: 1800000, multiplier: 2 } },
-    { id: 'p_monarch_blessing', cat: 'potion',  name: "Monarch's Blessing",       icon: '✨',  desc: "+50% ALL XP for 1 hour. The Monarch favors your dedication.",                     cost: 500,  rankReq: 'B', tier: 4, consumable: true, effect: { type: 'xp_boost_timed', duration: 3600000, multiplier: 1.5 } },
-    { id: 'p_shadow_extract',   cat: 'potion',  name: 'Shadow Extract',           icon: '🌑',  desc: "Instantly adds +1 Shadow Soldier to your army. Arise.",                           cost: 400,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'shadow_soldier' } },
+    // ===== POTIONS — Consumable buffs (instant + timed) | Max 3 potions/day =====
+    { id: 'p_xp_minor',         cat: 'potion',  name: 'XP Elixir (Minor)',        icon: '🧪',  desc: "Grants +50 XP instantly. Small steps compound.",                                  cost: 50,   rankReq: 'E', tier: 1, consumable: true, effect: { type: 'xp', value: 50 } },
+    { id: 'p_xp_major',         cat: 'potion',  name: 'XP Elixir (Major)',        icon: '⚗️',  desc: "Grants +200 XP instantly. Growth accelerator.",                                   cost: 200,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'xp', value: 200 } },
+    { id: 'p_xp_supreme',       cat: 'potion',  name: 'XP Elixir (Supreme)',      icon: '🔮',  desc: "Grants +500 XP instantly. Raw power in a bottle.",                                cost: 500,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'xp', value: 500 } },
+    { id: 'p_gold_boost',       cat: 'potion',  name: 'Gold Multiplier',          icon: '💰',  desc: "Grants +100 Gold. Fortune favors the disciplined.",                               cost: 80,   rankReq: 'E', tier: 1, consumable: true, effect: { type: 'gold', value: 100 } },
+    { id: 'p_xp_boost_30',      cat: 'potion',  name: 'XP Boost Scroll',          icon: '📈',  desc: "All XP earned is DOUBLED for 30 minutes. Train hard, earn harder.",               cost: 300,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'xp_boost_timed', duration: 1800000, multiplier: 2 } },
+    { id: 'p_gold_boost_30',    cat: 'potion',  name: 'Gold Boost Scroll',        icon: '💎',  desc: "All Gold earned is DOUBLED for 30 minutes. Fortune smiles on you.",               cost: 300,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'gold_boost_timed', duration: 1800000, multiplier: 2 } },
+    { id: 'p_boss_boost_30',    cat: 'potion',  name: 'Double Strike Elixir',     icon: '⚡',  desc: "Boss damage DOUBLED for 30 minutes. Unleash destruction.",                        cost: 400,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'boss_boost_timed', duration: 1800000, multiplier: 2 } },
+    { id: 'p_monarch_blessing', cat: 'potion',  name: "Monarch's Blessing",       icon: '✨',  desc: "+50% ALL XP for 1 hour. The Monarch favors your dedication.",                     cost: 800,  rankReq: 'B', tier: 4, consumable: true, effect: { type: 'xp_boost_timed', duration: 3600000, multiplier: 1.5 } },
+    { id: 'p_shadow_extract',   cat: 'potion',  name: 'Shadow Extract',           icon: '🌑',  desc: "Instantly adds +1 Shadow Soldier to your army. Arise.",                           cost: 600,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'shadow_soldier' } },
     { id: 'p_stat_reset',       cat: 'potion',  name: 'Stat Reset Crystal',       icon: '💎',  desc: "Refund ALL allocated stat points. Rebuild from zero.",                            cost: 500,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'stat_reset' } },
-    { id: 'p_streak_shield',    cat: 'potion',  name: 'Streak Shield',            icon: '🔰',  desc: "Protects your streak from 1 missed day. Insurance for the disciplined.",          cost: 300,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'streak_shield' } },
-    { id: 'p_streak_restore',   cat: 'potion',  name: 'Streak Restorer',          icon: '🔄',  desc: "Restores your streak to your highest-ever. Never truly fall.",                    cost: 600,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'streak_restore' } },
-    { id: 'p_heal',             cat: 'potion',  name: 'Recovery Potion',          icon: '💚',  desc: "Clears all penalties from this week. A second chance.",                           cost: 200,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'clear_penalties' } },
-    { id: 'p_full_restore',     cat: 'potion',  name: 'Full Restore',             icon: '🌟',  desc: "+1000 XP + clear all penalties + restore streak. The ultimate reset.",            cost: 1500, rankReq: 'A', tier: 5, consumable: true, effect: { type: 'full_restore' } },
+    { id: 'p_streak_shield',    cat: 'potion',  name: 'Streak Shield',            icon: '🔰',  desc: "Protects your streak from 1 missed day. Insurance for the disciplined.",          cost: 500,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'streak_shield' } },
+    { id: 'p_streak_restore',   cat: 'potion',  name: 'Streak Restorer',          icon: '🔄',  desc: "Restores your streak to your highest-ever. Never truly fall.",                    cost: 1000, rankReq: 'C', tier: 3, consumable: true, effect: { type: 'streak_restore' } },
+    { id: 'p_heal',             cat: 'potion',  name: 'Recovery Potion',          icon: '💚',  desc: "Clears all penalties from this week. A second chance.",                           cost: 350,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'clear_penalties' } },
+    { id: 'p_full_restore',     cat: 'potion',  name: 'Full Restore',             icon: '🌟',  desc: "+1000 XP + clear all penalties + restore streak. The ultimate reset.",            cost: 2500, rankReq: 'A', tier: 5, consumable: true, effect: { type: 'full_restore' } },
 
     // ===== ARTIFACTS — Permanent passive multiplier bonuses =====
     { id: 'art_hunters_emblem',  cat: 'artifact', name: "Hunter's Emblem",         icon: '🏅',  desc: "Proof of your commitment. Permanently boosts XP earned by 5%.",                   cost: 800,  rankReq: 'D', tier: 2, artifact: { xpMult: 0.05, goldMult: 0 } },
@@ -185,6 +185,7 @@ function initShopData() {
     if (!D.shop.scrollsRead) D.shop.scrollsRead = [];
     if (!D.shop.equippedArmor) D.shop.equippedArmor = null;
     if (!D.shop.activeBoosts) D.shop.activeBoosts = {};
+    if (!D.shop.potionLog) D.shop.potionLog = { date: '', used: 0, bought: 0 };
 }
 
 // ---- Check if player can buy ----
@@ -203,6 +204,8 @@ function canBuyItem(item) {
 }
 
 // ---- Buy an item ----
+const DAILY_BUY_LIMIT = 5; // Max consumable purchases per day
+
 function buyItem(itemId) {
     const item = SHOP_ITEMS.find(i => i.id === itemId);
     if (!item) return null;
@@ -212,14 +215,33 @@ function buyItem(itemId) {
         sysNotify(`[Shop] ${check.reason}`, 'red');
         return null;
     }
+
+    // ── Daily buy limit for consumables ──
+    if (item.consumable) {
+        const today = new Date().toDateString();
+        if (!D.shop.potionLog) D.shop.potionLog = { date: '', used: 0, bought: 0 };
+        if (D.shop.potionLog.date !== today) {
+            D.shop.potionLog = { date: today, used: 0, bought: 0 };
+        }
+        if (D.shop.potionLog.bought >= DAILY_BUY_LIMIT) {
+            sysNotify(`[System] Daily purchase limit reached (${DAILY_BUY_LIMIT}/${DAILY_BUY_LIMIT}). The merchant rests.`, 'red');
+            return null;
+        }
+        D.shop.potionLog.bought++;
+    }
     
     // Deduct gold
     D.gold -= item.cost;
     
     if (item.consumable) {
-        // Add to inventory
+        // Add to inventory (max 5 of each type)
         const existing = D.shop.inventory.find(i => i.id === item.id);
         if (existing) {
+            if (existing.qty >= 5) {
+                sysNotify('[System] Max stack reached (5). Use before buying more.', 'red');
+                D.gold += item.cost; // refund
+                return null;
+            }
             existing.qty++;
         } else {
             D.shop.inventory.push({ id: item.id, qty: 1 });
@@ -255,6 +277,8 @@ function buyItem(itemId) {
 }
 
 // ---- Use a consumable ----
+const DAILY_POTION_LIMIT = 3;
+
 function useConsumable(itemId) {
     const invItem = D.shop.inventory.find(i => i.id === itemId);
     if (!invItem || invItem.qty <= 0) {
@@ -264,6 +288,18 @@ function useConsumable(itemId) {
     
     const item = SHOP_ITEMS.find(i => i.id === itemId);
     if (!item || !item.effect) return false;
+
+    // ── Daily potion use limit ──
+    const today = new Date().toDateString();
+    if (!D.shop.potionLog) D.shop.potionLog = { date: '', used: 0, bought: 0 };
+    if (D.shop.potionLog.date !== today) {
+        D.shop.potionLog = { date: today, used: 0, bought: 0 };
+    }
+    if (D.shop.potionLog.used >= DAILY_POTION_LIMIT) {
+        sysNotify(`[System] Daily potion limit reached (${DAILY_POTION_LIMIT}/${DAILY_POTION_LIMIT}). Your body needs rest.`, 'red');
+        return false;
+    }
+    D.shop.potionLog.used++;
     
     const effect = item.effect;
     
@@ -774,6 +810,22 @@ function renderShop() {
     
     // Update equipped weapon display
     renderEquippedWeapon();
+    
+    // Update daily limits display
+    const today = new Date().toDateString();
+    const log = D.shop.potionLog && D.shop.potionLog.date === today ? D.shop.potionLog : { used: 0, bought: 0 };
+    const buyEl = document.getElementById('shopLimitBuy');
+    const useEl = document.getElementById('shopLimitUse');
+    if (buyEl) {
+        const remaining = DAILY_BUY_LIMIT - log.bought;
+        buyEl.textContent = `🛒 Buy: ${remaining}/${DAILY_BUY_LIMIT}`;
+        buyEl.classList.toggle('limit-hit', remaining <= 0);
+    }
+    if (useEl) {
+        const remaining = DAILY_POTION_LIMIT - log.used;
+        useEl.textContent = `🧪 Use: ${remaining}/${DAILY_POTION_LIMIT}`;
+        useEl.classList.toggle('limit-hit', remaining <= 0);
+    }
     
     // Update collection counter
     const collected = D.shop.purchased.filter(id => {
