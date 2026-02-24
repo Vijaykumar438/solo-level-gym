@@ -155,6 +155,10 @@ function logWorkout(exercise, reps, sets, weight, intensity) {
     checkAchievements();
     
     saveGame();
+
+    // Auto-complete matching quests
+    if (typeof checkAutoCompleteQuests === 'function') checkAutoCompleteQuests();
+
     return { entry, xpGain, goldGain, calBurned };
 }
 
@@ -179,6 +183,10 @@ function logFood(food, meal, protein, carbs, fats) {
     checkAchievements();
     
     saveGame();
+
+    // Auto-complete matching quests
+    if (typeof checkAutoCompleteQuests === 'function') checkAutoCompleteQuests();
+
     return { entry, xpGain, goldGain, calories };
 }
 
