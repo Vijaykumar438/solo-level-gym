@@ -29,6 +29,7 @@ function initTabs() {
                 setTimeout(renderCalendar, 50);
             }
             if (target === 'shop' && typeof renderShop === 'function') setTimeout(renderShop, 50);
+            if (target === 'gates') setTimeout(renderQuests, 50);
             if (target === 'tutorial' && typeof renderTutorial === 'function') setTimeout(renderTutorial, 50);
             if (target === 'journal' && typeof renderJournal === 'function') setTimeout(renderJournal, 50);
             if (target === 'log' && typeof renderTemplates === 'function') setTimeout(renderTemplates, 50);
@@ -249,13 +250,22 @@ function renderQuests() {
     container.querySelectorAll('.quest-item:not(.cleared):not(.failed)').forEach(el => {
         el.addEventListener('click', () => {
             const qid = el.dataset.qid;
-            const result = clearQuest(qid);
+            let result = null;
+            try {
+                result = clearQuest(qid);
+            } catch(e) {
+                console.error('[Quest] clearQuest error:', e);
+                sysNotify('[System] Error clearing quest. Try again.', 'red');
+                return;
+            }
             if (result) {
                 if (typeof vibrate === 'function') vibrate([40, 30, 40]);
                 el.classList.add('cleared', 'just-cleared');
                 el.querySelector('.qi-check').textContent = '✓';
                 sysNotify(`[Quest Cleared] "${result.quest.title}" — +${result.quest.xp} XP, +${result.quest.gold} Gold`, 'green');
                 refreshUI();
+            } else {
+                console.warn('[Quest] clearQuest returned null for id:', qid, '| D.quests ids:', D.quests.map(q => String(q.id)));
             }
         });
     });
