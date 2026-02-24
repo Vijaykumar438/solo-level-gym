@@ -693,21 +693,14 @@ function handleFoodSubmit() {
 }
 
 function handlePhysiqueSubmit() {
-    const cur = parseFloat(document.getElementById('pCurWeight').value);
-    const tar = parseFloat(document.getElementById('pTarWeight').value);
-
-    if (!cur || !tar) {
-        sysNotify('[System] Provide both weights.', 'red');
-        return;
-    }
-
-    updatePhysique(cur, tar);
-    sysNotify('[Physique Updated] The System tracks your form.', 'blue');
-    refreshUI();
+    /* Legacy alias — redirect to unified handler */
+    handleBodyFatCalc();
 }
 
-// ---- Body Fat Calculator Handler ----
+// ---- Unified Body Analysis Handler (Physique + Composition merged) ----
 function handleBodyFatCalc() {
+    const cur = parseFloat(document.getElementById('pCurWeight').value);
+    const tar = parseFloat(document.getElementById('pTarWeight').value);
     const gender = document.getElementById('bfGender').value;
     const height = parseFloat(document.getElementById('bfHeight').value);
     const neck = parseFloat(document.getElementById('bfNeck').value);
@@ -716,27 +709,36 @@ function handleBodyFatCalc() {
     const age = parseInt(document.getElementById('bfAge').value, 10) || 0;
     const activityLevel = parseFloat(document.getElementById('bfActivity').value) || 1.55;
 
-    if (!height || !neck || !waist) {
-        sysNotify('[System] Fill in height, neck, and waist measurements.', 'red');
+    /* At minimum need current weight + height */
+    if (!cur || !height) {
+        sysNotify('[System] Fill in at least current weight and height.', 'red');
         return;
     }
-    if (gender === 'female' && !hip) {
-        sysNotify('[System] Hip measurement required for female calculation.', 'red');
+    if (gender === 'female' && neck && waist && !hip) {
+        sysNotify('[System] Hip measurement required for female BF%.', 'red');
         return;
     }
-    if (waist <= neck) {
-        sysNotify('[System] Waist must be larger than neck measurement.', 'red');
+    if (neck && waist && waist <= neck) {
+        sysNotify('[System] Waist must be larger than neck.', 'red');
         return;
     }
 
-    const weight = D.physique.currentWeight || parseFloat(document.getElementById('pCurWeight').value) || 0;
-    const bf = calcBodyFat(gender, height, neck, waist, hip);
-    const bmi = weight > 0 ? calcBMI(weight, height) : 0;
+    /* 1. Update physique weights */
+    if (cur) updatePhysique(cur, tar || cur);
+
+    /* 2. Body comp (optional — only if measurements provided) */
+    let bf = 0, bmi = 0;
+    const hasMeasurements = neck && waist;
+    if (hasMeasurements) {
+        bf = calcBodyFat(gender, height, neck, waist, hip);
+    }
+    bmi = cur > 0 ? calcBMI(cur, height) : 0;
 
     saveBodyComp(gender, height, neck, waist, hip, bf, bmi, age, activityLevel);
+    renderPhysiqueTracker();
     renderBodyFatResults();
     if (typeof playSound === 'function') playSound('questClear');
-    sysNotify(`[Body Analysis Complete] Body Fat: ${bf.toFixed(1)}% — BMR/TDEE updated.`, 'blue');
+    sysNotify(`[Body Analysis Saved] ${hasMeasurements ? 'BF ' + bf.toFixed(1) + '% · ' : ''}Weight ${cur}kg · BMR/TDEE updated.`, 'blue');
 }
 
 // ---- Delete Handlers ----
@@ -947,10 +949,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Exercise selector (muscle group filter + dynamic dropdown)
     initExerciseSelector();
 
-    // Physique button
-    document.getElementById('savePhysBtn').addEventListener('click', handlePhysiqueSubmit);
-
-    // Body Fat Calculator
+    // Body Analysis (unified button)
     document.getElementById('calcBfBtn').addEventListener('click', handleBodyFatCalc);
     document.getElementById('bfGender').addEventListener('change', function() {
         document.getElementById('bfHipRow').style.display = this.value === 'female' ? '' : 'none';

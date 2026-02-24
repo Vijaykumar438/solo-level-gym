@@ -8,7 +8,7 @@
     <!-- Force clear old service worker cache (one-time purge) -->
     <script>
         (function(){
-            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v32')) {
+            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v33')) {
                 navigator.serviceWorker.getRegistrations().then(function(regs) {
                     var hadOld = false;
                     regs.forEach(function(r) { r.unregister(); hadOld = true; });
@@ -17,7 +17,7 @@
                             names.forEach(function(n) { caches.delete(n); });
                         });
                     }
-                    sessionStorage.setItem('sw_purged_v32', '1');
+                    sessionStorage.setItem('sw_purged_v33', '1');
                     if (hadOld) { setTimeout(function(){ location.reload(true); }, 500); }
                 });
             }
@@ -45,11 +45,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css?v=32">
-    <link rel="stylesheet" href="css/panels.css?v=32">
-    <link rel="stylesheet" href="css/animations.css?v=32">
-    <link rel="stylesheet" href="css/features.css?v=32">
-    <link rel="stylesheet" href="css/mobile.css?v=32">
+    <link rel="stylesheet" href="css/main.css?v=33">
+    <link rel="stylesheet" href="css/panels.css?v=33">
+    <link rel="stylesheet" href="css/animations.css?v=33">
+    <link rel="stylesheet" href="css/features.css?v=33">
+    <link rel="stylesheet" href="css/mobile.css?v=33">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Firebase SDKs (compat mode for vanilla JS) -->
@@ -231,30 +231,26 @@
                 </div>
             </div>
 
-            <!-- Physique Goals -->
+            <!-- Body Analysis (Physique + Composition merged) -->
             <div class="sys-window mt">
-                <div class="sw-header">[Physique Tracker]</div>
-                <div class="sw-body">
-                    <div class="phys-form" id="physForm">
-                        <div class="pf-row">
-                            <label>Current Weight (kg)</label>
-                            <input type="number" id="pCurWeight" step="0.1">
-                        </div>
-                        <div class="pf-row">
-                            <label>Target Weight (kg)</label>
-                            <input type="number" id="pTarWeight" step="0.1">
-                        </div>
-                        <button class="sys-btn" id="savePhysBtn">[UPDATE]</button>
-                    </div>
-                    <div id="physProgress" class="phys-prog"></div>
-                </div>
-            </div>
-
-            <!-- Body Fat Analyzer -->
-            <div class="sys-window mt">
-                <div class="sw-header">[Body Composition Analyzer]</div>
+                <div class="sw-header">[Body Analysis]</div>
                 <div class="sw-body">
                     <div class="bf-form" id="bfForm">
+                        <!-- Weight & Target -->
+                        <div class="bf-section-label">⚖ Weight</div>
+                        <div class="bf-row-group">
+                            <div class="bf-row">
+                                <label>Current Weight (kg)</label>
+                                <input type="number" id="pCurWeight" step="0.1" placeholder="e.g. 75">
+                            </div>
+                            <div class="bf-row">
+                                <label>Target Weight (kg)</label>
+                                <input type="number" id="pTarWeight" step="0.1" placeholder="e.g. 70">
+                            </div>
+                        </div>
+
+                        <!-- Profile -->
+                        <div class="bf-section-label">👤 Profile</div>
                         <div class="bf-row-group">
                             <div class="bf-row">
                                 <label>Gender</label>
@@ -264,14 +260,14 @@
                                 </select>
                             </div>
                             <div class="bf-row">
-                                <label>Height (cm)</label>
-                                <input type="number" id="bfHeight" step="0.1" min="100" max="250" placeholder="e.g. 175">
+                                <label>Age</label>
+                                <input type="number" id="bfAge" min="13" max="80" placeholder="e.g. 22">
                             </div>
                         </div>
                         <div class="bf-row-group">
                             <div class="bf-row">
-                                <label>Age</label>
-                                <input type="number" id="bfAge" min="13" max="80" placeholder="e.g. 22">
+                                <label>Height (cm)</label>
+                                <input type="number" id="bfHeight" step="0.1" min="100" max="250" placeholder="e.g. 175">
                             </div>
                             <div class="bf-row">
                                 <label>Activity Level</label>
@@ -284,6 +280,9 @@
                                 </select>
                             </div>
                         </div>
+
+                        <!-- Measurements -->
+                        <div class="bf-section-label">📐 Measurements <small>(for body fat)</small></div>
                         <div class="bf-row-group">
                             <div class="bf-row">
                                 <label>Neck (cm)</label>
@@ -300,9 +299,10 @@
                                 <input type="number" id="bfHip" step="0.1" min="50" max="200" placeholder="e.g. 95">
                             </div>
                         </div>
-                        <div class="bf-method-note">Using U.S. Navy Method + BMI Analysis</div>
-                        <button class="sys-btn" id="calcBfBtn">[ANALYZE BODY COMPOSITION]</button>
+                        <div class="bf-method-note">Weight & Profile update BMR/TDEE · Measurements use U.S. Navy Method</div>
+                        <button class="sys-btn" id="calcBfBtn">[ANALYZE & SAVE]</button>
                     </div>
+                    <div id="physProgress" class="phys-prog"></div>
                     <div id="bfResults" class="bf-results"></div>
                     <div id="bfHistory" class="bf-history"></div>
                 </div>
@@ -781,22 +781,22 @@
         </div>
     </div>
 
-    <script src="js/firebase-config.js?v=32"></script>
-    <script src="js/auth.js?v=32"></script>
-    <script src="js/db.js?v=32"></script>
-    <script src="js/data.js?v=32"></script>
-    <script src="js/sounds.js?v=32"></script>
-    <script src="js/engine.js?v=32"></script>
-    <script src="js/quests.js?v=32"></script>
-    <script src="js/shop.js?v=32"></script>
-    <script src="js/ui.js?v=32"></script>
-    <script src="js/charts.js?v=32"></script>
-    <script src="js/features.js?v=32"></script>
-    <script src="js/tutorial.js?v=32"></script>
-    <script src="js/journal.js?v=32"></script>
-    <script src="js/templates.js?v=32"></script>
-    <script src="js/avatar.js?v=32"></script>
-    <script src="js/app.js?v=32"></script>
+    <script src="js/firebase-config.js?v=33"></script>
+    <script src="js/auth.js?v=33"></script>
+    <script src="js/db.js?v=33"></script>
+    <script src="js/data.js?v=33"></script>
+    <script src="js/sounds.js?v=33"></script>
+    <script src="js/engine.js?v=33"></script>
+    <script src="js/quests.js?v=33"></script>
+    <script src="js/shop.js?v=33"></script>
+    <script src="js/ui.js?v=33"></script>
+    <script src="js/charts.js?v=33"></script>
+    <script src="js/features.js?v=33"></script>
+    <script src="js/tutorial.js?v=33"></script>
+    <script src="js/journal.js?v=33"></script>
+    <script src="js/templates.js?v=33"></script>
+    <script src="js/avatar.js?v=33"></script>
+    <script src="js/app.js?v=33"></script>
 
     <!-- PWA Service Worker -->
     <script>

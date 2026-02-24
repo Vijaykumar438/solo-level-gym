@@ -390,6 +390,11 @@ function renderBodyFatHistory() {
 }
 
 function restoreBodyCompInputs() {
+    /* Restore weight fields from physique data */
+    if (D.physique) {
+        if (D.physique.currentWeight) document.getElementById('pCurWeight').value = D.physique.currentWeight;
+        if (D.physique.targetWeight) document.getElementById('pTarWeight').value = D.physique.targetWeight;
+    }
     const bc = D.physique && D.physique.bodyComp;
     if (!bc) return;
     if (bc.gender) document.getElementById('bfGender').value = bc.gender;
@@ -403,6 +408,8 @@ function restoreBodyCompInputs() {
     document.getElementById('bfHipRow').style.display = bc.gender === 'female' ? '' : 'none';
     // Render last results if they exist
     if (bc.lastBF) renderBodyFatResults();
+    // Always render weight progress if data exists
+    if (D.physique.currentWeight) renderPhysiqueTracker();
 }
 
 // ---- Quest rendering ----

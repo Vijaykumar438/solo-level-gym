@@ -2011,9 +2011,15 @@
     }
 }
 
-/* ========== BODY FAT ANALYZER ========== */
+/* ========== BODY ANALYSIS (merged) ========== */
 .bf-form{
     display:flex;flex-direction:column;gap:10px;
+}
+.bf-section-label{
+    font-family:var(--mono);font-size:.75rem;
+    color:var(--cyan);letter-spacing:1px;text-transform:uppercase;
+    padding:6px 0 2px;border-bottom:1px solid var(--border);
+    margin-top:4px;
 }
 .bf-row-group{
     display:grid;grid-template-columns:1fr 1fr;gap:10px;
