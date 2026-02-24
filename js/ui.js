@@ -248,7 +248,7 @@ function renderQuests() {
     // Click to clear
     container.querySelectorAll('.quest-item:not(.cleared):not(.failed)').forEach(el => {
         el.addEventListener('click', () => {
-            const qid = parseFloat(el.dataset.qid);
+            const qid = el.dataset.qid;
             const result = clearQuest(qid);
             if (result) {
                 if (typeof vibrate === 'function') vibrate([40, 30, 40]);

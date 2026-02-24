@@ -368,7 +368,7 @@ function generatePenaltyQuest(missedDays) {
     ];
     
     const quest = penaltyQuests[Math.floor(Math.random() * penaltyQuests.length)];
-    quest.id = Date.now() + Math.random();
+    quest.id = Date.now() + '_' + Math.floor(Math.random() * 1000000);
     quest.date = new Date().toISOString();
     quest.cleared = false;
     quest.failed = false;
