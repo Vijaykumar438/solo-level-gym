@@ -255,7 +255,7 @@ function renderQuests() {
                 result = clearQuest(qid);
             } catch(e) {
                 console.error('[Quest] clearQuest error:', e);
-                sysNotify('[System] Error clearing quest. Try again.', 'red');
+                sysNotify('[Quest Error] ' + (e && e.message ? e.message : String(e)), 'red');
                 return;
             }
             if (result) {
