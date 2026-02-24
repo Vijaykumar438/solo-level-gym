@@ -1,18 +1,24 @@
 /* ========== ADDITIONAL ANIMATIONS ========== */
 
 /* Stat card hover glow per stat type */
-.stat-card[data-stat="str"]:hover{border-color:#ff5252;box-shadow:0 0 15px rgba(255,82,82,.3)}
-.stat-card[data-stat="agi"]:hover{border-color:#ffd740;box-shadow:0 0 15px rgba(255,215,64,.3)}
-.stat-card[data-stat="vit"]:hover{border-color:#69f0ae;box-shadow:0 0 15px rgba(105,240,174,.3)}
-.stat-card[data-stat="end"]:hover{border-color:#ff9100;box-shadow:0 0 15px rgba(255,145,0,.3)}
-.stat-card[data-stat="wil"]:hover{border-color:#b388ff;box-shadow:0 0 15px rgba(179,136,255,.3)}
-.stat-card[data-stat="phs"]:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(0,229,255,.3)}
+.stat-card[data-stat="str"]:hover{border-color:#ff5252;box-shadow:0 0 20px rgba(255,82,82,.3),inset 0 0 15px rgba(255,82,82,.05)}
+.stat-card[data-stat="str"]:hover::before{background:linear-gradient(90deg,transparent,#ff5252,transparent)}
+.stat-card[data-stat="agi"]:hover{border-color:#ffd740;box-shadow:0 0 20px rgba(255,215,64,.3),inset 0 0 15px rgba(255,215,64,.05)}
+.stat-card[data-stat="agi"]:hover::before{background:linear-gradient(90deg,transparent,#ffd740,transparent)}
+.stat-card[data-stat="vit"]:hover{border-color:#69f0ae;box-shadow:0 0 20px rgba(105,240,174,.3),inset 0 0 15px rgba(105,240,174,.05)}
+.stat-card[data-stat="vit"]:hover::before{background:linear-gradient(90deg,transparent,#69f0ae,transparent)}
+.stat-card[data-stat="end"]:hover{border-color:#ff9100;box-shadow:0 0 20px rgba(255,145,0,.3),inset 0 0 15px rgba(255,145,0,.05)}
+.stat-card[data-stat="end"]:hover::before{background:linear-gradient(90deg,transparent,#ff9100,transparent)}
+.stat-card[data-stat="wil"]:hover{border-color:#b388ff;box-shadow:0 0 20px rgba(179,136,255,.3),inset 0 0 15px rgba(179,136,255,.05)}
+.stat-card[data-stat="wil"]:hover::before{background:linear-gradient(90deg,transparent,#b388ff,transparent)}
+.stat-card[data-stat="phs"]:hover{border-color:var(--cyan);box-shadow:0 0 25px rgba(0,229,255,.3),inset 0 0 15px rgba(0,229,255,.05)}
+.stat-card[data-stat="phs"]:hover::before{background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
 
 /* Quest clear animation */
-.quest-item.just-cleared{animation:questClear .6s ease}
+.quest-item.just-cleared{animation:questClear .7s ease}
 @keyframes questClear{
     0%{transform:scale(1);box-shadow:none}
-    50%{transform:scale(1.03);box-shadow:0 0 25px rgba(105,240,174,.4)}
+    40%{transform:scale(1.04);box-shadow:0 0 30px rgba(105,240,174,.4),inset 0 0 15px rgba(105,240,174,.08)}
     100%{transform:scale(1);box-shadow:none}
 }
 
@@ -24,7 +30,7 @@
 .glow-pulse{animation:glowPulse 2s infinite}
 @keyframes glowPulse{
     0%,100%{box-shadow:0 0 5px rgba(79,195,247,.2)}
-    50%{box-shadow:0 0 20px rgba(79,195,247,.5)}
+    50%{box-shadow:0 0 25px rgba(79,195,247,.5)}
 }
 
 /* Number tick up */
@@ -34,11 +40,40 @@
     100%{transform:translateY(0);opacity:1}
 }
 
+/* Shadow aura effect for panels */
+.shadow-aura{position:relative}
+.shadow-aura::after{
+    content:'';position:absolute;inset:-2px;border-radius:8px;
+    background:linear-gradient(45deg,transparent,rgba(0,229,255,.06),transparent,rgba(124,77,255,.06));
+    z-index:-1;animation:auraShift 4s ease infinite;
+}
+@keyframes auraShift{
+    0%,100%{opacity:.3}
+    50%{opacity:.7}
+}
+
+/* System window shimmer */
+.sys-shimmer::after{
+    content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;
+    background:linear-gradient(90deg,transparent,rgba(0,229,255,.04),transparent);
+    animation:sysShimmer 6s ease-in-out infinite;
+}
+@keyframes sysShimmer{0%{left:-100%}50%{left:200%}100%{left:200%}}
+
+/* Floating particles effect */
+@keyframes floatUp{
+    0%{transform:translateY(0) scale(1);opacity:.6}
+    100%{transform:translateY(-20px) scale(0);opacity:0}
+}
+
 /* Rank-up badge glow based on rank */
 .rank-e{border-color:#78909c!important}.rank-e .hq-val{color:#78909c!important}
-.rank-d{border-color:#66bb6a!important}.rank-d .hq-val{color:#66bb6a!important}
-.rank-c{border-color:#42a5f5!important}.rank-c .hq-val{color:#42a5f5!important}
-.rank-b{border-color:#ab47bc!important}.rank-b .hq-val{color:#ab47bc!important}
-.rank-a{border-color:#ffa726!important}.rank-a .hq-val{color:#ffa726!important}
-.rank-s{border-color:#ffd740!important;box-shadow:0 0 20px rgba(255,215,64,.3)!important}.rank-s .hq-val{color:#ffd740!important}
-.rank-x{border-color:#ff1744!important;box-shadow:0 0 25px rgba(255,23,68,.4),0 0 50px rgba(213,0,0,.2)!important}.rank-x .hq-val{color:#ff1744!important}
+.rank-d{border-color:#66bb6a!important;box-shadow:0 0 10px rgba(102,187,106,.15)!important}.rank-d .hq-val{color:#66bb6a!important}
+.rank-c{border-color:#42a5f5!important;box-shadow:0 0 12px rgba(66,165,245,.2)!important}.rank-c .hq-val{color:#42a5f5!important}
+.rank-b{border-color:#ab47bc!important;box-shadow:0 0 15px rgba(171,71,188,.25)!important}.rank-b .hq-val{color:#ab47bc!important}
+.rank-a{border-color:#ffa726!important;box-shadow:0 0 18px rgba(255,167,38,.3)!important}.rank-a .hq-val{color:#ffa726!important}
+.rank-s{border-color:#ffd740!important;box-shadow:0 0 25px rgba(255,215,64,.3),0 0 50px rgba(255,215,64,.1)!important}.rank-s .hq-val{color:#ffd740!important}
+.rank-x{border-color:#ff1744!important;box-shadow:0 0 30px rgba(255,23,68,.4),0 0 60px rgba(213,0,0,.2)!important}.rank-x .hq-val{color:#ff1744!important}
+
+/* Pulse animation for badges */
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
