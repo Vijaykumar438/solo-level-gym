@@ -245,6 +245,164 @@ function renderPhysiqueTracker() {
     `;
 }
 
+// ---- Body Fat Results Rendering ----
+function renderBodyFatResults() {
+    const el = document.getElementById('bfResults');
+    if (!el) return;
+    const bc = D.physique.bodyComp;
+    if (!bc || !bc.lastBF) {
+        el.innerHTML = '';
+        return;
+    }
+
+    const bf = bc.lastBF;
+    const bmi = bc.lastBMI;
+    const gender = bc.gender;
+    const weight = D.physique.currentWeight || 0;
+    const cat = getBFCategory(bf, gender);
+    const lean = weight > 0 ? calcLeanMass(weight, bf) : 0;
+    const fatMass = weight > 0 ? calcFatMass(weight, bf) : 0;
+    const bmiCat = bmi > 0 ? getBMICategory(bmi) : null;
+    const lastDate = bc.lastDate ? new Date(bc.lastDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+
+    // SVG gauge arc (180 degrees, bf% mapped to 2-50 range)
+    const gaugeMin = 2, gaugeMax = 50;
+    const normalized = Math.min(Math.max(bf, gaugeMin), gaugeMax);
+    const angle = ((normalized - gaugeMin) / (gaugeMax - gaugeMin)) * 180;
+    const rad = (angle - 90) * Math.PI / 180;
+    const r = 70;
+    const cx = 85, cy = 80;
+    const x1 = cx - r, y1 = cy;
+    const endX = cx + r * Math.cos(rad), endY = cy + r * Math.sin(rad);
+    const largeArc = angle > 180 ? 1 : 0;
+
+    let html = `
+        <div class="bf-result-card">
+            <div class="bf-gauge-wrap">
+                <svg class="bf-gauge-svg" viewBox="0 0 170 100">
+                    <path d="M ${x1} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}" 
+                          fill="none" stroke="rgba(79,195,247,.1)" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M ${x1} ${cy} A ${r} ${r} 0 ${largeArc} 1 ${endX.toFixed(1)} ${endY.toFixed(1)}" 
+                          fill="none" stroke="${cat.color}" stroke-width="8" stroke-linecap="round"
+                          class="bf-gauge-fill"/>
+                    <text x="${cx}" y="${cy - 10}" text-anchor="middle" fill="${cat.color}" 
+                          font-family="var(--heading)" font-size="22" class="bf-gauge-val">${bf.toFixed(1)}%</text>
+                    <text x="${cx}" y="${cy + 8}" text-anchor="middle" fill="var(--dim)" 
+                          font-family="var(--mono)" font-size="7">BODY FAT</text>
+                </svg>
+            </div>
+            <div class="bf-cat-badge" style="color:${cat.color};border-color:${cat.color}">
+                ${cat.icon} ${cat.label}
+            </div>
+            <div class="bf-stats-grid">
+    `;
+
+    if (weight > 0) {
+        html += `
+                <div class="bf-stat">
+                    <div class="bf-stat-val" style="color:var(--green)">${lean.toFixed(1)}</div>
+                    <div class="bf-stat-label">Lean Mass (kg)</div>
+                </div>
+                <div class="bf-stat">
+                    <div class="bf-stat-val" style="color:var(--red)">${fatMass.toFixed(1)}</div>
+                    <div class="bf-stat-label">Fat Mass (kg)</div>
+                </div>
+        `;
+    }
+    if (bmi > 0 && bmiCat) {
+        html += `
+                <div class="bf-stat">
+                    <div class="bf-stat-val" style="color:${bmiCat.color}">${bmi.toFixed(1)}</div>
+                    <div class="bf-stat-label">BMI (${bmiCat.label})</div>
+                </div>
+        `;
+    }
+    html += `
+                <div class="bf-stat">
+                    <div class="bf-stat-val" style="color:var(--dim)">${lastDate}</div>
+                    <div class="bf-stat-label">Last Scan</div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Composition bar
+    if (weight > 0) {
+        const leanPct = ((1 - bf / 100) * 100).toFixed(1);
+        const fatPct = bf.toFixed(1);
+        html += `
+            <div class="bf-comp-bar">
+                <div class="bf-comp-label">Body Composition</div>
+                <div class="bf-comp-track">
+                    <div class="bf-comp-lean" style="width:${leanPct}%"></div>
+                    <div class="bf-comp-fat" style="width:${fatPct}%"></div>
+                </div>
+                <div class="bf-comp-legend">
+                    <span><span class="bf-dot bf-dot-lean"></span> Lean ${leanPct}%</span>
+                    <span><span class="bf-dot bf-dot-fat"></span> Fat ${fatPct}%</span>
+                </div>
+            </div>
+        `;
+    }
+
+    el.innerHTML = html;
+
+    // Render history
+    renderBodyFatHistory();
+}
+
+function renderBodyFatHistory() {
+    const el = document.getElementById('bfHistory');
+    if (!el) return;
+    const bc = D.physique.bodyComp;
+    if (!bc || !bc.history || bc.history.length < 2) {
+        el.innerHTML = '';
+        return;
+    }
+
+    const hist = bc.history.slice(-8);
+    const first = hist[0];
+    const last = hist[hist.length - 1];
+    const change = last.bf - first.bf;
+
+    let rows = hist.map(h => {
+        const d = new Date(h.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        return `<div class="bf-hist-row">
+            <span class="bf-hist-date">${d}</span>
+            <span class="bf-hist-bf">${h.bf.toFixed(1)}%</span>
+            <span class="bf-hist-bmi">${h.bmi ? h.bmi.toFixed(1) : '—'}</span>
+            <span class="bf-hist-wt">${h.weight ? h.weight.toFixed(1) : '—'}</span>
+        </div>`;
+    }).join('');
+
+    el.innerHTML = `
+        <div class="bf-hist-panel">
+            <div class="bf-hist-title">Scan History</div>
+            <div class="bf-hist-change" style="color:${change <= 0 ? 'var(--green)' : 'var(--red)'}">
+                ${change <= 0 ? '▼' : '▲'} ${Math.abs(change).toFixed(1)}% since first scan
+            </div>
+            <div class="bf-hist-header">
+                <span>Date</span><span>BF%</span><span>BMI</span><span>Weight</span>
+            </div>
+            ${rows}
+        </div>
+    `;
+}
+
+function restoreBodyCompInputs() {
+    const bc = D.physique && D.physique.bodyComp;
+    if (!bc) return;
+    if (bc.gender) document.getElementById('bfGender').value = bc.gender;
+    if (bc.height) document.getElementById('bfHeight').value = bc.height;
+    if (bc.neck) document.getElementById('bfNeck').value = bc.neck;
+    if (bc.waist) document.getElementById('bfWaist').value = bc.waist;
+    if (bc.hip) document.getElementById('bfHip').value = bc.hip;
+    // Show/hide hip row
+    document.getElementById('bfHipRow').style.display = bc.gender === 'female' ? '' : 'none';
+    // Render last results if they exist
+    if (bc.lastBF) renderBodyFatResults();
+}
+
 // ---- Quest rendering ----
 function renderQuests() {
     const container = document.getElementById('questList');

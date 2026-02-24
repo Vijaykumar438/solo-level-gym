@@ -446,6 +446,84 @@ function updatePhysique(current, target) {
     saveGame();
 }
 
+// ---- Body Fat Calculator (U.S. Navy Method) ----
+const BF_CATEGORIES_MALE = [
+    { max: 6,  label: 'Essential Fat', color: '#ff5252', icon: '⚠️' },
+    { max: 14, label: 'Athletic',      color: '#69f0ae', icon: '⚡' },
+    { max: 18, label: 'Fitness',       color: '#4fc3f7', icon: '💪' },
+    { max: 25, label: 'Average',       color: '#ffd740', icon: '📊' },
+    { max: 100,label: 'Above Average', color: '#ff5252', icon: '🔥' }
+];
+const BF_CATEGORIES_FEMALE = [
+    { max: 14, label: 'Essential Fat', color: '#ff5252', icon: '⚠️' },
+    { max: 21, label: 'Athletic',      color: '#69f0ae', icon: '⚡' },
+    { max: 25, label: 'Fitness',       color: '#4fc3f7', icon: '💪' },
+    { max: 32, label: 'Average',       color: '#ffd740', icon: '📊' },
+    { max: 100,label: 'Above Average', color: '#ff5252', icon: '🔥' }
+];
+
+function calcBodyFat(gender, height, neck, waist, hip) {
+    // U.S. Navy Method
+    let bf;
+    if (gender === 'male') {
+        bf = 86.010 * Math.log10(waist - neck) - 70.041 * Math.log10(height) + 36.76;
+    } else {
+        bf = 163.205 * Math.log10(waist + hip - neck) - 97.684 * Math.log10(height) - 78.387;
+    }
+    return Math.max(2, Math.min(bf, 60)); // Clamp to sane range
+}
+
+function calcBMI(weight, heightCm) {
+    const hm = heightCm / 100;
+    return weight / (hm * hm);
+}
+
+function getBMICategory(bmi) {
+    if (bmi < 18.5) return { label: 'Underweight', color: '#4fc3f7' };
+    if (bmi < 25)   return { label: 'Normal',      color: '#69f0ae' };
+    if (bmi < 30)   return { label: 'Overweight',   color: '#ffd740' };
+    return             { label: 'Obese',        color: '#ff5252' };
+}
+
+function getBFCategory(bf, gender) {
+    const cats = gender === 'male' ? BF_CATEGORIES_MALE : BF_CATEGORIES_FEMALE;
+    return cats.find(c => bf <= c.max) || cats[cats.length - 1];
+}
+
+function calcLeanMass(weight, bfPct) {
+    return weight * (1 - bfPct / 100);
+}
+
+function calcFatMass(weight, bfPct) {
+    return weight * (bfPct / 100);
+}
+
+function saveBodyComp(gender, height, neck, waist, hip, bf, bmi) {
+    if (!D.physique.bodyComp) D.physique.bodyComp = {};
+    D.physique.bodyComp.gender = gender;
+    D.physique.bodyComp.height = height;
+    D.physique.bodyComp.neck = neck;
+    D.physique.bodyComp.waist = waist;
+    D.physique.bodyComp.hip = hip;
+    D.physique.bodyComp.lastBF = bf;
+    D.physique.bodyComp.lastBMI = bmi;
+    D.physique.bodyComp.lastDate = new Date().toISOString();
+    // History
+    if (!D.physique.bodyComp.history) D.physique.bodyComp.history = [];
+    D.physique.bodyComp.history.push({
+        date: new Date().toISOString(),
+        bf: Math.round(bf * 10) / 10,
+        bmi: Math.round(bmi * 10) / 10,
+        weight: D.physique.currentWeight || null,
+        waist, neck, hip
+    });
+    // Keep last 50 entries
+    if (D.physique.bodyComp.history.length > 50) {
+        D.physique.bodyComp.history = D.physique.bodyComp.history.slice(-50);
+    }
+    saveGame();
+}
+
 // ---- Helpers ----
 function todayStr() {
     return new Date().toDateString();

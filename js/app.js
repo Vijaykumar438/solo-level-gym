@@ -518,6 +518,37 @@ function handlePhysiqueSubmit() {
     refreshUI();
 }
 
+// ---- Body Fat Calculator Handler ----
+function handleBodyFatCalc() {
+    const gender = document.getElementById('bfGender').value;
+    const height = parseFloat(document.getElementById('bfHeight').value);
+    const neck = parseFloat(document.getElementById('bfNeck').value);
+    const waist = parseFloat(document.getElementById('bfWaist').value);
+    const hip = parseFloat(document.getElementById('bfHip').value) || 0;
+
+    if (!height || !neck || !waist) {
+        sysNotify('[System] Fill in height, neck, and waist measurements.', 'red');
+        return;
+    }
+    if (gender === 'female' && !hip) {
+        sysNotify('[System] Hip measurement required for female calculation.', 'red');
+        return;
+    }
+    if (waist <= neck) {
+        sysNotify('[System] Waist must be larger than neck measurement.', 'red');
+        return;
+    }
+
+    const weight = D.physique.currentWeight || parseFloat(document.getElementById('pCurWeight').value) || 0;
+    const bf = calcBodyFat(gender, height, neck, waist, hip);
+    const bmi = weight > 0 ? calcBMI(weight, height) : 0;
+
+    saveBodyComp(gender, height, neck, waist, hip, bf, bmi);
+    renderBodyFatResults();
+    if (typeof playSound === 'function') playSound('questClear');
+    sysNotify(`[Body Analysis Complete] Body Fat: ${bf.toFixed(1)}% — The System sees all.`, 'blue');
+}
+
 // ---- Delete Handlers ----
 function handleDeleteWorkout(id) {
     deleteWorkout(id);
@@ -728,6 +759,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Physique button
     document.getElementById('savePhysBtn').addEventListener('click', handlePhysiqueSubmit);
+
+    // Body Fat Calculator
+    document.getElementById('calcBfBtn').addEventListener('click', handleBodyFatCalc);
+    document.getElementById('bfGender').addEventListener('change', function() {
+        document.getElementById('bfHipRow').style.display = this.value === 'female' ? '' : 'none';
+    });
+    // Hide hip row by default (male)
+    document.getElementById('bfHipRow').style.display = 'none';
+    // Restore saved measurements
+    restoreBodyCompInputs();
 
     // Stat allocation buttons
     document.querySelectorAll('.sp-btn').forEach(btn => {

@@ -8,7 +8,7 @@
     <!-- Force clear old service worker cache (one-time purge) -->
     <script>
         (function(){
-            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v25')) {
+            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v26')) {
                 navigator.serviceWorker.getRegistrations().then(function(regs) {
                     var hadOld = false;
                     regs.forEach(function(r) { r.unregister(); hadOld = true; });
@@ -17,7 +17,7 @@
                             names.forEach(function(n) { caches.delete(n); });
                         });
                     }
-                    sessionStorage.setItem('sw_purged_v25', '1');
+                    sessionStorage.setItem('sw_purged_v26', '1');
                     if (hadOld) { setTimeout(function(){ location.reload(true); }, 500); }
                 });
             }
@@ -45,11 +45,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css?v=25">
-    <link rel="stylesheet" href="css/panels.css?v=25">
-    <link rel="stylesheet" href="css/animations.css?v=25">
-    <link rel="stylesheet" href="css/features.css?v=25">
-    <link rel="stylesheet" href="css/mobile.css?v=25">
+    <link rel="stylesheet" href="css/main.css?v=26">
+    <link rel="stylesheet" href="css/panels.css?v=26">
+    <link rel="stylesheet" href="css/animations.css?v=26">
+    <link rel="stylesheet" href="css/features.css?v=26">
+    <link rel="stylesheet" href="css/mobile.css?v=26">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Firebase SDKs (compat mode for vanilla JS) -->
@@ -247,6 +247,48 @@
                         <button class="sys-btn" id="savePhysBtn">[UPDATE]</button>
                     </div>
                     <div id="physProgress" class="phys-prog"></div>
+                </div>
+            </div>
+
+            <!-- Body Fat Analyzer -->
+            <div class="sys-window mt">
+                <div class="sw-header">[Body Composition Analyzer]</div>
+                <div class="sw-body">
+                    <div class="bf-form" id="bfForm">
+                        <div class="bf-row-group">
+                            <div class="bf-row">
+                                <label>Gender</label>
+                                <select id="bfGender">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="bf-row">
+                                <label>Height (cm)</label>
+                                <input type="number" id="bfHeight" step="0.1" min="100" max="250" placeholder="e.g. 175">
+                            </div>
+                        </div>
+                        <div class="bf-row-group">
+                            <div class="bf-row">
+                                <label>Neck (cm)</label>
+                                <input type="number" id="bfNeck" step="0.1" min="20" max="60" placeholder="e.g. 38">
+                            </div>
+                            <div class="bf-row">
+                                <label>Waist (cm)</label>
+                                <input type="number" id="bfWaist" step="0.1" min="40" max="200" placeholder="e.g. 82">
+                            </div>
+                        </div>
+                        <div class="bf-row-group bf-hip-row" id="bfHipRow">
+                            <div class="bf-row">
+                                <label>Hip (cm) <small>(females)</small></label>
+                                <input type="number" id="bfHip" step="0.1" min="50" max="200" placeholder="e.g. 95">
+                            </div>
+                        </div>
+                        <div class="bf-method-note">Using U.S. Navy Method + BMI Analysis</div>
+                        <button class="sys-btn" id="calcBfBtn">[ANALYZE BODY COMPOSITION]</button>
+                    </div>
+                    <div id="bfResults" class="bf-results"></div>
+                    <div id="bfHistory" class="bf-history"></div>
                 </div>
             </div>
 
@@ -687,22 +729,22 @@
         </div>
     </div>
 
-    <script src="js/firebase-config.js?v=25"></script>
-    <script src="js/auth.js?v=25"></script>
-    <script src="js/db.js?v=25"></script>
-    <script src="js/data.js?v=25"></script>
-    <script src="js/sounds.js?v=25"></script>
-    <script src="js/engine.js?v=25"></script>
-    <script src="js/quests.js?v=25"></script>
-    <script src="js/shop.js?v=25"></script>
-    <script src="js/ui.js?v=25"></script>
-    <script src="js/charts.js?v=25"></script>
-    <script src="js/features.js?v=25"></script>
-    <script src="js/tutorial.js?v=25"></script>
-    <script src="js/journal.js?v=25"></script>
-    <script src="js/templates.js?v=25"></script>
-    <script src="js/avatar.js?v=25"></script>
-    <script src="js/app.js?v=25"></script>
+    <script src="js/firebase-config.js?v=26"></script>
+    <script src="js/auth.js?v=26"></script>
+    <script src="js/db.js?v=26"></script>
+    <script src="js/data.js?v=26"></script>
+    <script src="js/sounds.js?v=26"></script>
+    <script src="js/engine.js?v=26"></script>
+    <script src="js/quests.js?v=26"></script>
+    <script src="js/shop.js?v=26"></script>
+    <script src="js/ui.js?v=26"></script>
+    <script src="js/charts.js?v=26"></script>
+    <script src="js/features.js?v=26"></script>
+    <script src="js/tutorial.js?v=26"></script>
+    <script src="js/journal.js?v=26"></script>
+    <script src="js/templates.js?v=26"></script>
+    <script src="js/avatar.js?v=26"></script>
+    <script src="js/app.js?v=26"></script>
 
     <!-- PWA Service Worker -->
     <script>
