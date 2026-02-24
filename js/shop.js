@@ -34,7 +34,7 @@ const SHOP_ITEMS = [
     { id: 'p_xp_minor',         cat: 'potion',  name: 'XP Elixir (Minor)',        icon: '🧪',  desc: "Grants +50 XP instantly. Small steps compound.",                                  cost: 50,   rankReq: 'E', tier: 1, consumable: true, effect: { type: 'xp', value: 50 } },
     { id: 'p_xp_major',         cat: 'potion',  name: 'XP Elixir (Major)',        icon: '⚗️',  desc: "Grants +200 XP instantly. Growth accelerator.",                                   cost: 200,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'xp', value: 200 } },
     { id: 'p_xp_supreme',       cat: 'potion',  name: 'XP Elixir (Supreme)',      icon: '🔮',  desc: "Grants +500 XP instantly. Raw power in a bottle.",                                cost: 500,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'xp', value: 500 } },
-    { id: 'p_gold_boost',       cat: 'potion',  name: 'Gold Multiplier',          icon: '💰',  desc: "Grants +100 Gold. Fortune favors the disciplined.",                               cost: 80,   rankReq: 'E', tier: 1, consumable: true, effect: { type: 'gold', value: 100 } },
+    { id: 'p_gold_boost',       cat: 'potion',  name: 'Gold Multiplier',          icon: '💰',  desc: "Grants +100 Gold. Fortune favors the disciplined.",                               cost: 120,  rankReq: 'E', tier: 1, consumable: true, effect: { type: 'gold', value: 100 } },
     { id: 'p_xp_boost_30',      cat: 'potion',  name: 'XP Boost Scroll',          icon: '📈',  desc: "All XP earned is DOUBLED for 30 minutes. Train hard, earn harder.",               cost: 300,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'xp_boost_timed', duration: 1800000, multiplier: 2 } },
     { id: 'p_gold_boost_30',    cat: 'potion',  name: 'Gold Boost Scroll',        icon: '💎',  desc: "All Gold earned is DOUBLED for 30 minutes. Fortune smiles on you.",               cost: 300,  rankReq: 'D', tier: 2, consumable: true, effect: { type: 'gold_boost_timed', duration: 1800000, multiplier: 2 } },
     { id: 'p_boss_boost_30',    cat: 'potion',  name: 'Double Strike Elixir',     icon: '⚡',  desc: "Boss damage DOUBLED for 30 minutes. Unleash destruction.",                        cost: 400,  rankReq: 'C', tier: 3, consumable: true, effect: { type: 'boss_boost_timed', duration: 1800000, multiplier: 2 } },
@@ -227,6 +227,12 @@ function buyItem(itemId) {
             sysNotify(`[System] Daily purchase limit reached (${DAILY_BUY_LIMIT}/${DAILY_BUY_LIMIT}). The merchant rests.`, 'red');
             return null;
         }
+        // Check stack limit before spending gold
+        const existing = D.shop.inventory.find(i => i.id === item.id);
+        if (existing && existing.qty >= 5) {
+            sysNotify('[System] Max stack reached (5). Use before buying more.', 'red');
+            return null;
+        }
         D.shop.potionLog.bought++;
     }
     
@@ -234,14 +240,9 @@ function buyItem(itemId) {
     D.gold -= item.cost;
     
     if (item.consumable) {
-        // Add to inventory (max 5 of each type)
+        // Add to inventory
         const existing = D.shop.inventory.find(i => i.id === item.id);
         if (existing) {
-            if (existing.qty >= 5) {
-                sysNotify('[System] Max stack reached (5). Use before buying more.', 'red');
-                D.gold += item.cost; // refund
-                return null;
-            }
             existing.qty++;
         } else {
             D.shop.inventory.push({ id: item.id, qty: 1 });
