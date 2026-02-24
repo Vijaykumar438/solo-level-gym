@@ -406,7 +406,7 @@ function renderJournal() {
                         <span class="jn-ch-arrow">▸</span>
                     </div>
                 </div>
-                <div class="jn-chapter-body hidden" id="jnBody_${ch.id}">
+                <div class="jn-chapter-body" id="jnBody_${ch.id}">
                     ${ch.story()}
                 </div>
             </div>
@@ -444,8 +444,8 @@ function toggleJournalChapter(chId) {
     const chapter = body?.closest('.jn-chapter');
     if (!body) return;
 
-    const wasHidden = body.classList.contains('hidden');
-    body.classList.toggle('hidden');
+    const wasHidden = !body.classList.contains('open');
+    body.classList.toggle('open');
 
     // Update arrow
     const arrow = chapter?.querySelector('.jn-ch-arrow');

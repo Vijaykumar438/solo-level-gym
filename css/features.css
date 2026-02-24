@@ -1440,8 +1440,18 @@
    ======================================== */
 .jn-header{
     text-align:center;padding:18px 0 8px;
-    font-family:var(--heading);font-size:1.3rem;
-    color:var(--gold);letter-spacing:2px;text-transform:uppercase;
+}
+.jn-header-icon{
+    font-size:2rem;margin-bottom:4px;
+}
+.jn-header-title{
+    font-family:var(--font);font-size:clamp(1rem,3vw,1.3rem);
+    color:var(--gold);letter-spacing:clamp(2px,1vw,4px);text-transform:uppercase;
+    text-shadow:0 0 15px rgba(255,215,64,.3);
+}
+.jn-header-sub{
+    font-family:var(--mono);font-size:clamp(.65rem,1.5vw,.75rem);
+    color:var(--dim);letter-spacing:1px;margin-top:4px;
 }
 .jn-progress{
     text-align:center;color:var(--dim);font-size:.78rem;
@@ -1453,58 +1463,87 @@
     transition:border-color .3s;
 }
 .jn-chapter:hover{ border-color:var(--blue); }
+.jn-chapter.jn-new{ border-color:rgba(0,229,255,.25); }
 .jn-chapter-header{
-    display:flex;align-items:center;gap:10px;
+    display:flex;align-items:center;justify-content:space-between;
     padding:12px 14px;cursor:pointer;
-    font-family:var(--heading);font-size:.92rem;color:var(--text);
+    font-family:var(--body);font-size:.92rem;color:var(--text);
     transition:background .25s;position:relative;
 }
-.jn-chapter-header:hover{ background:rgba(79,195,247,.06); }
-.jn-chapter-header .jn-ch-num{
-    color:var(--blue);font-size:.75rem;font-family:var(--mono);
-    min-width:28px;
+.jn-chapter-header:hover{ background:rgba(0,229,255,.05); }
+.jn-ch-left{
+    display:flex;align-items:center;gap:10px;min-width:0;flex:1;
+}
+.jn-ch-icon{
+    font-size:1.2rem;flex-shrink:0;
+}
+.jn-ch-info{
+    display:flex;flex-direction:column;gap:1px;min-width:0;
+}
+.jn-ch-num{
+    color:var(--cyan);font-size:.7rem;font-family:var(--mono);
+    letter-spacing:1px;
+}
+.jn-ch-title{
+    font-weight:600;font-size:clamp(.85rem,2vw,.95rem);
+    color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.jn-ch-right{
+    display:flex;align-items:center;gap:8px;flex-shrink:0;
+}
+.jn-ch-arrow{
+    color:var(--dim);font-size:.9rem;transition:color .2s;
 }
 .jn-badge-new{
-    position:absolute;right:14px;top:50%;transform:translateY(-50%);
     background:var(--red);color:#fff;font-size:.6rem;
     padding:2px 7px;border-radius:8px;font-family:var(--mono);
     letter-spacing:1px;animation:pulse 1.5s infinite;
 }
 .jn-chapter-body{
-    display:none;padding:0 16px 16px;
-    font-size:.88rem;line-height:1.7;color:var(--dim);
+    display:none;padding:14px 16px 16px;
+    font-size:clamp(.85rem,2.2vw,.95rem);line-height:1.8;color:var(--text);
     font-family:'Rajdhani',sans-serif;border-top:1px solid var(--border);
+    opacity:.9;
 }
-.jn-chapter-body.open{ display:block; }
+.jn-chapter-body p{
+    margin-bottom:10px;
+}
+.jn-chapter-body.open{ display:block;animation:panelIn .3s ease; }
 .jn-highlight{
-    color:var(--blue);font-weight:600;
+    color:var(--cyan);font-weight:600;
 }
 .jn-system-msg{
     display:block;margin:10px 0;padding:8px 12px;
-    background:rgba(79,195,247,.08);border-left:3px solid var(--blue);
-    color:var(--blue);font-family:var(--mono);font-size:.78rem;
+    background:rgba(0,229,255,.06);border-left:3px solid var(--cyan);
+    color:var(--cyan);font-family:var(--mono);font-size:clamp(.72rem,1.8vw,.82rem);
     letter-spacing:.5px;border-radius:0 6px 6px 0;
 }
 .jn-quote{
     display:block;margin:10px 0;padding:10px 14px;
     border-left:3px solid var(--gold);color:var(--gold);
-    font-style:italic;font-size:.85rem;
+    font-style:italic;font-size:clamp(.82rem,2vw,.9rem);
     background:rgba(255,215,0,.04);border-radius:0 6px 6px 0;
 }
 .jn-final{
     text-align:center;color:var(--gold);font-size:1rem;
-    font-family:var(--heading);padding:12px 0 4px;
+    font-family:var(--font);padding:12px 0 4px;
     letter-spacing:1.5px;
 }
 /* Locked chapters */
-.jn-locked{ opacity:.5; }
-.jn-locked .jn-locked-header{
-    cursor:default;color:var(--dim);
+.jn-locked{ opacity:.45; }
+.jn-locked .jn-chapter-header{
+    cursor:default;
 }
-.jn-locked .jn-locked-header:hover{ background:transparent; }
-.jn-lock-condition{
-    font-size:.68rem;color:var(--dim);font-family:var(--mono);
-    margin-left:auto;letter-spacing:.5px;
+.jn-locked .jn-chapter-header:hover{ background:transparent; }
+.jn-locked .jn-ch-title{ color:var(--dim); }
+.jn-locked-header{
+    font-family:var(--mono);font-size:clamp(.7rem,1.8vw,.8rem);
+    color:var(--dim);letter-spacing:2px;text-transform:uppercase;
+    padding:16px 0 8px;text-align:center;
+}
+.jn-ch-cond{
+    font-size:clamp(.6rem,1.5vw,.7rem);color:var(--dim);font-family:var(--mono);
+    letter-spacing:.5px;text-align:right;
 }
 /* Chapter accent colors by milestone tier */
 .jn-ch-awakening .jn-ch-num{ color:#81d4fa; }
