@@ -397,6 +397,8 @@ function restoreBodyCompInputs() {
     if (bc.neck) document.getElementById('bfNeck').value = bc.neck;
     if (bc.waist) document.getElementById('bfWaist').value = bc.waist;
     if (bc.hip) document.getElementById('bfHip').value = bc.hip;
+    if (bc.age) document.getElementById('bfAge').value = bc.age;
+    if (bc.activityLevel) document.getElementById('bfActivity').value = bc.activityLevel;
     // Show/hide hip row
     document.getElementById('bfHipRow').style.display = bc.gender === 'female' ? '' : 'none';
     // Render last results if they exist

@@ -447,8 +447,10 @@ function applyFoodServings(food) {
 }
 
 // ═══════════════════════════════════════════
-//  ENERGY BALANCE — Intake vs Output
+//  ENERGY BALANCE — Intake vs Output (live TDEE grows minute-by-minute)
 // ═══════════════════════════════════════════
+let _ebRefreshTimer = null;
+
 function renderEnergyBalance() {
     const el = document.getElementById('energyBalance');
     if (!el) return;
@@ -469,15 +471,24 @@ function renderEnergyBalance() {
     let workoutBurn = 0;
     todayWorkouts.forEach(w => { workoutBurn += w.calBurned || 0; });
 
-    // Estimated BMR (Mifflin-St Jeor, simplified for male ~175cm)
-    // If physique weight available, use it; otherwise default 70kg
-    const bodyWeight = (D.physique && D.physique.currentWeight) ? D.physique.currentWeight : 70;
-    const bmr = Math.round(10 * bodyWeight + 6.25 * 175 - 5 * 25 + 5); // ~1750-1900 for 70-80kg
-    const bmrToday = Math.round(bmr * (new Date().getHours() / 24)); // Proportional to time of day
+    // Live TDEE (grows throughout the day, minute-precision)
+    const bmr = calcBMR();
+    const tdee = getDailyTDEE();
+    const tdeeSoFar = getLiveTDEE();
 
-    const calOut = workoutBurn + bmrToday;
+    const calOut = workoutBurn + tdeeSoFar;
     const net = calIn - calOut;
-    const totalOut = workoutBurn + bmr; // Full day estimate
+    const totalOut = workoutBurn + tdee; // Full day estimate
+
+    // Activity label
+    const bc = D.physique && D.physique.bodyComp;
+    const mult = (bc && bc.activityLevel) || 1.55;
+    const actLabels = { '1.2': 'Sedentary', '1.375': 'Light', '1.55': 'Moderate', '1.725': 'Active', '1.9': 'Athlete' };
+    const actLabel = actLabels[String(mult)] || 'Moderate';
+
+    // Body info source
+    const weight = (D.physique && D.physique.currentWeight) || 70;
+    const hasData = !!(bc && bc.height && bc.age);
 
     // Bar widths
     const maxCal = Math.max(calIn, calOut, 500);
@@ -486,7 +497,6 @@ function renderEnergyBalance() {
 
     // Verdict
     let verdict, verdictClass, verdictDesc;
-    const absNet = Math.abs(net);
     if (net > 200) {
         verdict = `+${net} kcal SURPLUS`;
         verdictClass = 'surplus';
@@ -511,8 +521,8 @@ function renderEnergyBalance() {
             <div class="eb-vs">⚔</div>
             <div class="eb-col eb-out">
                 <div class="eb-col-label">Output</div>
-                <div class="eb-col-val">${calOut}</div>
-                <div class="eb-col-sub">${workoutBurn} exercise + ${bmrToday} BMR</div>
+                <div class="eb-col-val" id="ebOutVal">${calOut}</div>
+                <div class="eb-col-sub">${workoutBurn} exercise + ${tdeeSoFar} TDEE</div>
             </div>
         </div>
         <div class="eb-bar-wrap">
@@ -544,10 +554,22 @@ function renderEnergyBalance() {
                 <div class="eb-break-label">Fats</div>
             </div>
         </div>
-        <div style="text-align:center;margin-top:10px;font-family:var(--mono);font-size:clamp(.6rem,1.5vw,.7rem);color:var(--dim)">
-            Est. full-day output: ${totalOut} kcal (BMR ${bmr} + exercise ${workoutBurn}) · Based on ${bodyWeight}kg body weight
+        <div class="eb-footer">
+            <span>📊 Full-day est: ${totalOut} kcal (TDEE ${tdee} + exercise ${workoutBurn})</span>
+            <span>⚙ BMR ${bmr} × ${actLabel} · ${weight}kg${hasData ? '' : ' (defaults — set Age & Height in Body Composition)'}</span>
         </div>
     `;
+
+    // Start live refresh (every 60s) if not already running
+    if (!_ebRefreshTimer) {
+        _ebRefreshTimer = setInterval(() => {
+            // Only refresh if the log panel is visible
+            const logPanel = document.querySelector('[data-panel="log"]');
+            if (logPanel && !logPanel.classList.contains('hidden') && logPanel.offsetParent !== null) {
+                renderEnergyBalance();
+            }
+        }, 60000);
+    }
 }
 
 // ═══════════════════════════════════════════
@@ -691,6 +713,8 @@ function handleBodyFatCalc() {
     const neck = parseFloat(document.getElementById('bfNeck').value);
     const waist = parseFloat(document.getElementById('bfWaist').value);
     const hip = parseFloat(document.getElementById('bfHip').value) || 0;
+    const age = parseInt(document.getElementById('bfAge').value, 10) || 0;
+    const activityLevel = parseFloat(document.getElementById('bfActivity').value) || 1.55;
 
     if (!height || !neck || !waist) {
         sysNotify('[System] Fill in height, neck, and waist measurements.', 'red');
@@ -709,10 +733,10 @@ function handleBodyFatCalc() {
     const bf = calcBodyFat(gender, height, neck, waist, hip);
     const bmi = weight > 0 ? calcBMI(weight, height) : 0;
 
-    saveBodyComp(gender, height, neck, waist, hip, bf, bmi);
+    saveBodyComp(gender, height, neck, waist, hip, bf, bmi, age, activityLevel);
     renderBodyFatResults();
     if (typeof playSound === 'function') playSound('questClear');
-    sysNotify(`[Body Analysis Complete] Body Fat: ${bf.toFixed(1)}% — The System sees all.`, 'blue');
+    sysNotify(`[Body Analysis Complete] Body Fat: ${bf.toFixed(1)}% — BMR/TDEE updated.`, 'blue');
 }
 
 // ---- Delete Handlers ----

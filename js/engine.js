@@ -530,7 +530,7 @@ function calcFatMass(weight, bfPct) {
     return weight * (bfPct / 100);
 }
 
-function saveBodyComp(gender, height, neck, waist, hip, bf, bmi) {
+function saveBodyComp(gender, height, neck, waist, hip, bf, bmi, age, activityLevel) {
     if (!D.physique.bodyComp) D.physique.bodyComp = {};
     D.physique.bodyComp.gender = gender;
     D.physique.bodyComp.height = height;
@@ -540,6 +540,8 @@ function saveBodyComp(gender, height, neck, waist, hip, bf, bmi) {
     D.physique.bodyComp.lastBF = bf;
     D.physique.bodyComp.lastBMI = bmi;
     D.physique.bodyComp.lastDate = new Date().toISOString();
+    if (age) D.physique.bodyComp.age = age;
+    if (activityLevel) D.physique.bodyComp.activityLevel = activityLevel;
     // History
     if (!D.physique.bodyComp.history) D.physique.bodyComp.history = [];
     D.physique.bodyComp.history.push({
@@ -554,6 +556,40 @@ function saveBodyComp(gender, height, neck, waist, hip, bf, bmi) {
         D.physique.bodyComp.history = D.physique.bodyComp.history.slice(-50);
     }
     saveGame();
+}
+
+// ═══════════════════════════════════════════
+//  BMR / TDEE — Live calorie output that grows throughout the day
+//  Mifflin-St Jeor equation × activity multiplier
+// ═══════════════════════════════════════════
+function calcBMR() {
+    const bc = D.physique && D.physique.bodyComp;
+    const weight = (D.physique && D.physique.currentWeight) || 70;
+    const height = (bc && bc.height) || 175;
+    const age = (bc && bc.age) || 25;
+    const gender = (bc && bc.gender) || 'male';
+
+    // Mifflin-St Jeor
+    if (gender === 'female') {
+        return Math.round(10 * weight + 6.25 * height - 5 * age - 161);
+    }
+    return Math.round(10 * weight + 6.25 * height - 5 * age + 5);
+}
+
+function getDailyTDEE() {
+    const bmr = calcBMR();
+    const bc = D.physique && D.physique.bodyComp;
+    const mult = (bc && bc.activityLevel) || 1.55;
+    return Math.round(bmr * mult);
+}
+
+// Returns the TDEE burned so far today (grows smoothly minute-by-minute)
+function getLiveTDEE() {
+    const tdee = getDailyTDEE();
+    const now = new Date();
+    const minutesSinceMidnight = now.getHours() * 60 + now.getMinutes();
+    const fraction = minutesSinceMidnight / 1440; // 1440 = 24 * 60
+    return Math.round(tdee * fraction);
 }
 
 // ---- Helpers ----
