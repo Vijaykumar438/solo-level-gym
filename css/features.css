@@ -2132,3 +2132,68 @@
     .bf-gauge-svg{ width:150px;height:88px; }
     .bf-hist-header,.bf-hist-row{ font-size:.65rem; }
 }
+
+/* ========== TUTORIAL / HUNTER'S GUIDE ========== */
+/* Quick Start Box */
+.tut-quickstart{
+    margin-top:16px;padding:16px;
+    background:rgba(0,229,255,.03);
+    border:1px solid rgba(0,229,255,.15);
+    border-radius:10px;
+}
+.tut-qs-title{
+    font-family:var(--font);font-size:clamp(.9rem,2.5vw,1.1rem);
+    color:var(--cyan);text-align:center;letter-spacing:2px;
+    margin-bottom:12px;text-shadow:0 0 10px rgba(0,229,255,.3);
+}
+.tut-qs-steps{
+    display:flex;flex-direction:column;gap:8px;
+}
+.tut-qs-step{
+    display:flex;align-items:center;gap:10px;
+    padding:8px 12px;background:rgba(255,255,255,.02);
+    border-radius:6px;font-family:var(--mono);
+    font-size:clamp(.75rem,2vw,.85rem);color:var(--text);
+}
+.tut-qs-step strong{ color:var(--cyan); }
+.tut-qs-num{
+    font-family:var(--font);color:var(--cyan);
+    font-size:1.1rem;min-width:24px;text-align:center;
+}
+
+/* Tutorial content inline styles */
+.tut-highlight{
+    color:var(--cyan);font-weight:600;
+}
+.tut-tip{
+    display:block;margin:8px 0;padding:8px 12px;
+    background:rgba(0,229,255,.05);border-left:3px solid var(--cyan);
+    color:var(--cyan);font-family:var(--mono);
+    font-size:clamp(.72rem,1.8vw,.82rem);
+    letter-spacing:.5px;border-radius:0 6px 6px 0;
+}
+.tut-stats-grid{
+    display:flex;flex-direction:column;gap:4px;
+    padding:4px 0;
+}
+.tut-stats-grid span{
+    font-size:clamp(.78rem,2vw,.88rem);
+}
+.tut-stats-grid strong{
+    color:var(--cyan);
+}
+.tut-rank-list{
+    line-height:1.8;
+}
+.tut-rank{
+    display:inline-block;min-width:60px;
+    font-family:var(--font);font-weight:700;
+    letter-spacing:1px;margin-right:6px;
+}
+.rank-e{ color:#9e9e9e; }
+.rank-d{ color:#42a5f5; }
+.rank-c{ color:#66bb6a; }
+.rank-b{ color:#ab47bc; }
+.rank-a{ color:#ffa726; }
+.rank-s{ color:#ef5350; }
+.rank-x{ color:#ff1744;text-shadow:0 0 8px rgba(255,23,68,.4); }

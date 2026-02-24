@@ -160,54 +160,80 @@ function renderTutorial() {
     const container = document.getElementById('tutorialContent');
     if (!container) return;
 
-    let html = `<div class="tut-header">
-        <div class="tut-header-icon">📖</div>
-        <h2 class="tut-header-title">HUNTER'S GUIDE</h2>
-        <p class="tut-header-sub">Everything you need to know about the System</p>
-    </div>`;
+    let html = `
+        <div class="jn-header">
+            <div class="jn-header-icon">📖</div>
+            <div class="jn-header-title">HUNTER'S GUIDE</div>
+            <div class="jn-header-sub">System Manual — Everything you need to survive</div>
+            <div class="jn-progress">${TUTORIAL_SECTIONS.length} sections</div>
+        </div>
+    `;
 
-    html += '<div class="tut-sections">';
-
-    for (let i = 0; i < TUTORIAL_SECTIONS.length; i++) {
-        const sec = TUTORIAL_SECTIONS[i];
+    TUTORIAL_SECTIONS.forEach((sec, i) => {
         const isOpen = tutorialExpanded[sec.id] || false;
-
-        html += `<div class="tut-section ${isOpen ? 'open' : ''}" data-section="${sec.id}">
-            <div class="tut-section-header" onclick="toggleTutSection('${sec.id}')">
-                <div class="tut-section-num">${String(i + 1).padStart(2, '0')}</div>
-                <div class="tut-section-icon">${sec.icon}</div>
-                <div class="tut-section-title">${sec.title}</div>
-                <div class="tut-section-arrow">${isOpen ? '▾' : '▸'}</div>
+        html += `
+            <div class="jn-chapter ${isOpen ? '' : ''}" data-section="${sec.id}">
+                <div class="jn-chapter-header" onclick="toggleTutSection('${sec.id}')">
+                    <div class="jn-ch-left">
+                        <span class="jn-ch-icon">${sec.icon}</span>
+                        <div class="jn-ch-info">
+                            <span class="jn-ch-num">Section ${String(i + 1).padStart(2, '0')}</span>
+                            <span class="jn-ch-title">${sec.title}</span>
+                        </div>
+                    </div>
+                    <div class="jn-ch-right">
+                        <span class="jn-ch-arrow">${isOpen ? '▾' : '▸'}</span>
+                    </div>
+                </div>
+                <div class="jn-chapter-body ${isOpen ? 'open' : ''}" id="tutBody_${sec.id}">
+                    ${sec.content}
+                </div>
             </div>
-            <div class="tut-section-body" style="${isOpen ? '' : 'display:none'}">
-                ${sec.content}
-            </div>
-        </div>`;
-    }
-
-    html += '</div>';
+        `;
+    });
 
     // Quick Start
-    html += `<div class="tut-quickstart">
-        <div class="tut-qs-title">⚡ QUICK START</div>
-        <div class="tut-qs-steps">
-            <div class="tut-qs-step"><span class="tut-qs-num">1</span> Go to <strong>Log Tab</strong> → Report a workout</div>
-            <div class="tut-qs-step"><span class="tut-qs-num">2</span> Log food → Type a name, pick from suggestions</div>
-            <div class="tut-qs-step"><span class="tut-qs-num">3</span> Check <strong>Daily Gate</strong> → Clear your quests</div>
-            <div class="tut-qs-step"><span class="tut-qs-num">4</span> Level up → Distribute stat points</div>
-            <div class="tut-qs-step"><span class="tut-qs-num">5</span> Come back tomorrow → Build your streak</div>
+    html += `
+        <div class="tut-quickstart">
+            <div class="tut-qs-title">⚡ QUICK START</div>
+            <div class="tut-qs-steps">
+                <div class="tut-qs-step"><span class="tut-qs-num">1</span> Go to <strong>Log Tab</strong> → Report a workout</div>
+                <div class="tut-qs-step"><span class="tut-qs-num">2</span> Log food → Type a name, pick from suggestions</div>
+                <div class="tut-qs-step"><span class="tut-qs-num">3</span> Check <strong>Daily Gate</strong> → Clear your quests</div>
+                <div class="tut-qs-step"><span class="tut-qs-num">4</span> Level up → Distribute stat points</div>
+                <div class="tut-qs-step"><span class="tut-qs-num">5</span> Come back tomorrow → Build your streak</div>
+            </div>
         </div>
-    </div>`;
+    `;
 
     container.innerHTML = html;
 }
 
 function toggleTutSection(id) {
-    tutorialExpanded[id] = !tutorialExpanded[id];
-    renderTutorial();
+    const body = document.getElementById(`tutBody_${id}`);
+    const chapter = body?.closest('.jn-chapter');
+    if (!body) return;
+
+    const wasHidden = !body.classList.contains('open');
+
+    // Close all other sections
+    document.querySelectorAll('#tutorialContent .jn-chapter-body.open').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('#tutorialContent .jn-ch-arrow').forEach(a => a.textContent = '▸');
+
+    // Toggle this one
+    if (wasHidden) {
+        body.classList.add('open');
+        const arrow = chapter?.querySelector('.jn-ch-arrow');
+        if (arrow) arrow.textContent = '▾';
+        tutorialExpanded = {};
+        tutorialExpanded[id] = true;
+    } else {
+        tutorialExpanded[id] = false;
+    }
+
+    if (typeof playSound === 'function') playSound('click');
 }
 
 function initTutorial() {
-    // Start with welcome open
     tutorialExpanded['welcome'] = true;
 }
