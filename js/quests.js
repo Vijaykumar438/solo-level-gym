@@ -583,7 +583,9 @@ function clearQuest(questId) {
         if (typeof grantXP === 'function') grantXP(bonusXP);
         if (typeof grantGold === 'function') grantGold(bonusGold);
         if (typeof D.streak === 'number') D.streak++;
-        sysNotify(`[All 8 Gates Cleared] +${bonusXP} Bonus XP, +${bonusGold} Gold. The shadows bow to your discipline.`, 'gold');
+        const allClearMsg = (typeof NARRATOR !== 'undefined') ? NARRATOR.getAllClearReaction() : 'The shadows bow to your discipline.';
+        sysNotify(`[All 8 Gates Cleared] +${bonusXP} XP, +${bonusGold} Gold`, 'gold');
+        setTimeout(() => { if (typeof sysNotify === 'function') sysNotify(allClearMsg, 'gold'); }, 1500);
     }
 
     if (typeof checkAchievements === 'function') checkAchievements();
@@ -692,8 +694,12 @@ function checkAutoCompleteQuests() {
 
     // Show notifications for auto-cleared quests
     if (autoCleared.length > 0) {
-        autoCleared.forEach(q => {
-            sysNotify(`[Auto-Cleared] "${q.title}" — +${q.xp} XP, +${q.gold} Gold`, 'green');
+        autoCleared.forEach((q, i) => {
+            const reaction = (typeof NARRATOR !== 'undefined') ? NARRATOR.getQuestReaction(q) : '';
+            setTimeout(() => {
+                sysNotify(`[Auto-Cleared] "${q.title}" — +${q.xp} XP`, 'green');
+                if (reaction) setTimeout(() => sysNotify(reaction, 'blue'), 800);
+            }, i * 1500);
         });
         if (typeof vibrate === 'function') vibrate([40, 30, 40, 30, 40]);
         if (typeof refreshUI === 'function') refreshUI();

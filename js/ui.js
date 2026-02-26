@@ -45,7 +45,10 @@ document.addEventListener('click', function(e) {
         if (typeof grantXP === 'function') grantXP(bonusXP);
         if (typeof grantGold === 'function') grantGold(bonusGold);
         if (typeof D.streak === 'number') D.streak++;
-        sysNotify('[All 8 Gates Cleared] +' + bonusXP + ' Bonus XP, +' + bonusGold + ' Gold. The shadows bow to your discipline.', 'gold');
+        // Living narrator all-clear reaction
+        var allClearMsg = (typeof NARRATOR !== 'undefined') ? NARRATOR.getAllClearReaction() : 'The shadows bow to your discipline.';
+        sysNotify('[All 8 Gates Cleared] +' + bonusXP + ' XP, +' + bonusGold + ' Gold', 'gold');
+        setTimeout(function() { sysNotify(allClearMsg, 'gold'); }, 1500);
     }
 
     if (typeof checkAchievements === 'function') checkAchievements();
@@ -57,6 +60,11 @@ document.addEventListener('click', function(e) {
     var checkEl = el.querySelector('.qi-check');
     if (checkEl) checkEl.textContent = '✓';
     sysNotify('[Quest Cleared] "' + quest.title + '" — +' + quest.xp + ' XP, +' + quest.gold + ' Gold', 'green');
+    // Living narrator quest reaction
+    if (typeof NARRATOR !== 'undefined') {
+        var questReaction = NARRATOR.getQuestReaction(quest);
+        setTimeout(function() { sysNotify(questReaction, 'blue'); }, 1200);
+    }
 
     if (typeof refreshUI === 'function') refreshUI();
 });
@@ -819,9 +827,21 @@ function showLevelUp(level, pts) {
     const overlay = document.getElementById('levelUpOverlay');
     document.getElementById('luLevel').textContent = level;
     document.getElementById('luSub').textContent = `+${pts} free stat points · +1 all stats`;
-    document.getElementById('luWisdom').textContent = `"${getRandomWisdom()}"`;
+    // Living narrator flavor text
+    const flavor = (typeof NARRATOR !== 'undefined') ? NARRATOR.getLevelUpFlavor(level) : getRandomWisdom();
+    document.getElementById('luWisdom').textContent = `"${flavor}"`;
     overlay.classList.remove('hidden');
     if (typeof vibrate === 'function') vibrate([50, 80, 50, 80, 100]);
+
+    // Check for rank transition
+    const rank = getRank(level);
+    const prevRank = getRank(level - 1);
+    if (rank.name !== prevRank.name && typeof NARRATOR !== 'undefined') {
+        setTimeout(() => {
+            const speech = NARRATOR.getRankUpSpeech(rank.name);
+            sysNotify('[RANK UP] ' + rank.title + ' — ' + speech, 'gold');
+        }, 2000);
+    }
 }
 
 function closeLevelUp() {

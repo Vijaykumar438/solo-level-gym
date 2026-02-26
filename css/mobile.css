@@ -275,7 +275,7 @@ select{
     transform: scale(0.95);
 }
 
-.wisdom-box:active{
+.wisdom-box:active, .sys-voice:active{
     border-color: rgba(79,195,247,0.3);
 }
 

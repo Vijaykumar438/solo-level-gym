@@ -203,15 +203,10 @@ function checkOpenNotification() {
 
     // If it's past noon and haven't trained, show an in-app nudge
     if (!trainedToday && hour >= 12) {
-        const msgs = [
-            "⚠ You haven't trained today. The System is watching.",
-            "⬡ Daily gate remains uncompleted. The shadows grow.",
-            "☠ No workout detected. Degradation approaches.",
-            "🔥 Your streak depends on today. Enter the gate.",
-            "🌑 The System demands action. Train or face consequences."
-        ];
-        const pick = msgs[Math.floor(Math.random() * msgs.length)];
-        setTimeout(() => sysNotify(pick, 'red'), 2000);
+        const nudge = (typeof NARRATOR !== 'undefined') 
+            ? NARRATOR.getIdleNudge() 
+            : "⚠ You haven't trained today. The System is watching.";
+        setTimeout(() => sysNotify('⚠ ' + nudge, 'red'), 2000);
     }
 }
 
@@ -245,11 +240,16 @@ function bootSequence() {
                     initParticles();
                     refreshUI();
                     renderAllCharts();
-                    sysNotify('[System] Player recognized. Welcome back, Hunter.', 'blue');
-                    
-                    // Wisdom on status panel
-                    document.getElementById('wisdomText').textContent = `"${getRandomWisdom()}"`;
 
+                    // Living System greeting
+                    if (typeof NARRATOR !== 'undefined') {
+                        const greeting = NARRATOR.getGreeting();
+                        sysNotify('[System] ' + greeting, 'blue');
+                        // Start cycling system messages on dashboard
+                        NARRATOR.startCycling('svMsg');
+                    } else {
+                        sysNotify('[System] Player recognized. Welcome back, Hunter.', 'blue');
+                    }
                     // Check daily login reward
                     if (typeof checkDailyLogin === 'function') checkDailyLogin();
 
@@ -656,7 +656,16 @@ function handleWorkoutSubmit() {
     const result = logWorkout(exercise, reps, sets, weight, intensity);
     vibrate([30, 50, 30]);
     if (typeof playSound === 'function') playSound('workout');
-    sysNotify(`[Workout Logged] ${exercise} — +${result.xpGain} XP, -${result.calBurned} cal`, 'green');
+
+    // Living narrator reaction
+    if (typeof NARRATOR !== 'undefined') {
+        const totalReps = reps * sets;
+        const reaction = NARRATOR.getWorkoutReaction(exercise, totalReps, result.calBurned);
+        sysNotify(`[Workout Logged] ${exercise} — +${result.xpGain} XP`, 'green');
+        setTimeout(() => sysNotify(reaction, 'blue'), 1200);
+    } else {
+        sysNotify(`[Workout Logged] ${exercise} — +${result.xpGain} XP, -${result.calBurned} cal`, 'green');
+    }
     document.getElementById('logExercise').value = '';
     document.getElementById('logReps').value = '';
     document.getElementById('logSets').value = '1';
@@ -680,7 +689,15 @@ function handleFoodSubmit() {
     const result = logFood(food, meal, protein, carbs, fats);
     vibrate(20);
     if (typeof playSound === 'function') playSound('food');
-    sysNotify(`[Food Logged] ${food} — ${result.calories} kcal, +${result.xpGain} XP`, 'blue');
+
+    // Living narrator reaction
+    if (typeof NARRATOR !== 'undefined') {
+        const reaction = NARRATOR.getFoodReaction(food, result.calories, protein);
+        sysNotify(`[Food Logged] ${food} — ${result.calories} kcal, +${result.xpGain} XP`, 'blue');
+        setTimeout(() => sysNotify(reaction, 'blue'), 1200);
+    } else {
+        sysNotify(`[Food Logged] ${food} — ${result.calories} kcal, +${result.xpGain} XP`, 'blue');
+    }
     document.getElementById('logFood').value = '';
     document.getElementById('logProtein').value = '';
     document.getElementById('logCarbs').value = '';

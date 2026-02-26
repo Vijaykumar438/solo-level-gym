@@ -256,16 +256,96 @@ input,select,button{font-family:var(--body)}
 .pp-stat-val{font-family:var(--font);font-size:clamp(1rem,3vw,1.3rem);color:var(--blue);font-weight:700}
 .pp-stat-label{font-size:clamp(.65rem,1.5vw,.75rem);color:var(--dim)}
 
-/* ========== WISDOM ========== */
-.wisdom-box{
-    margin-top:clamp(16px,4vw,25px);padding:clamp(14px,3vw,20px);text-align:center;
-    border:1px solid rgba(0,229,255,.1);border-radius:8px;
-    background:linear-gradient(135deg,rgba(0,229,255,.03),rgba(124,77,255,.03));
+/* ========== SYSTEM VOICE (Living Narrator) ========== */
+.sys-voice{
+    margin-top:clamp(16px,4vw,25px);padding:0;
+    border:1px solid rgba(0,229,255,.2);border-radius:10px;
+    background:linear-gradient(135deg,rgba(0,10,30,.85),rgba(10,5,35,.85));
     position:relative;overflow:hidden;
+    box-shadow:0 0 20px rgba(0,229,255,.08), inset 0 0 30px rgba(0,229,255,.03);
+    transition:box-shadow .4s;
 }
-.wisdom-box::before{
-    content:'';position:absolute;top:0;left:0;right:0;height:1px;
-    background:linear-gradient(90deg,transparent,rgba(0,229,255,.2),transparent);
+.sys-voice:hover{box-shadow:0 0 30px rgba(0,229,255,.15), inset 0 0 40px rgba(0,229,255,.05)}
+
+.sv-header{
+    display:flex;align-items:center;gap:8px;
+    padding:clamp(8px,2vw,12px) clamp(12px,3vw,18px);
+    border-bottom:1px solid rgba(0,229,255,.1);
+    background:rgba(0,229,255,.03);
 }
+.sv-pulse{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--cyan);
+    box-shadow:0 0 8px var(--cyan),0 0 16px var(--cyan);
+    animation:sv-pulse 2s ease-in-out infinite;
+}
+@keyframes sv-pulse{
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:.4;transform:scale(.7)}
+}
+.sv-title{
+    font-family:var(--font);font-size:clamp(.65rem,1.8vw,.8rem);
+    color:var(--cyan);letter-spacing:4px;font-weight:700;
+    text-shadow:0 0 10px rgba(0,229,255,.3);
+    flex:1;
+}
+.sv-status{
+    font-family:var(--mono);font-size:clamp(.55rem,1.4vw,.65rem);
+    color:var(--green);letter-spacing:2px;
+    animation:sv-status-blink 3s ease-in-out infinite;
+}
+@keyframes sv-status-blink{
+    0%,90%,100%{opacity:1}
+    95%{opacity:.3}
+}
+
+.sv-body{
+    padding:clamp(14px,3vw,22px) clamp(14px,3vw,20px);
+    min-height:clamp(50px,8vw,70px);
+    display:flex;align-items:center;
+}
+.sv-msg{
+    font-family:var(--body);font-size:clamp(.88rem,2.4vw,1.05rem);
+    color:var(--cyan);line-height:1.7;
+    text-shadow:0 0 15px rgba(0,229,255,.12);
+    transition:opacity .3s, transform .3s;
+    position:relative;
+}
+.sv-msg::after{
+    content:'▊';
+    color:var(--cyan);opacity:.7;
+    animation:sv-cursor 1s step-end infinite;
+    margin-left:2px;font-size:.85em;
+}
+@keyframes sv-cursor{
+    0%,50%{opacity:.7}
+    51%,100%{opacity:0}
+}
+
+/* Scanline effect */
+.sv-scanline{
+    position:absolute;top:0;left:0;right:0;bottom:0;
+    pointer-events:none;
+    background:repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,229,255,.015) 2px,
+        rgba(0,229,255,.015) 4px
+    );
+    z-index:1;
+}
+.sv-scanline::after{
+    content:'';position:absolute;
+    top:-100%;left:0;right:0;height:60px;
+    background:linear-gradient(180deg,transparent,rgba(0,229,255,.06),transparent);
+    animation:sv-scan 4s linear infinite;
+}
+@keyframes sv-scan{
+    0%{top:-60px}
+    100%{top:calc(100% + 60px)}
+}
+
+/* Legacy support — keep wb classes working if referenced */
 .wb-label{font-family:var(--mono);font-size:clamp(.6rem,1.5vw,.7rem);color:var(--dim);letter-spacing:3px;margin-bottom:8px}
 .wb-text{font-size:clamp(.9rem,2.5vw,1.05rem);font-style:italic;color:var(--cyan);line-height:1.7;text-shadow:0 0 20px rgba(0,229,255,.15)}
