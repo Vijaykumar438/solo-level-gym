@@ -142,6 +142,143 @@
 .avatar-s .avatar-svg{filter:drop-shadow(0 0 25px rgba(255,215,64,0.35))}
 .avatar-x .avatar-svg{filter:drop-shadow(0 0 30px rgba(255,23,68,0.4)) drop-shadow(0 0 60px rgba(213,0,0,0.2))}
 
+/* ---- Energy Fields ---- */
+.energy-field{animation:energyFieldPulse 6s ease-in-out infinite}
+.energy-field-rev{animation:energyFieldPulse 6s ease-in-out infinite reverse}
+.energy-field-slow{animation:energyFieldPulse 10s ease-in-out infinite}
+.energy-field-pulse{animation:energyFieldPulse 3s ease-in-out infinite}
+@keyframes energyFieldPulse{
+    0%,100%{transform:scale(1);opacity:.7}
+    50%{transform:scale(1.08);opacity:1}
+}
+
+/* ---- Aura Ring Spin ---- */
+.aura-ring-spin{animation:auraRingSpin 8s linear infinite}
+.aura-ring-spin-rev{animation:auraRingSpin 12s linear infinite reverse}
+@keyframes auraRingSpin{
+    0%{transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+}
+
+/* ---- Vein Pulse ---- */
+.vein-pulse{animation:veinPulse 2s ease-in-out infinite}
+.vein-d1{animation-delay:.3s}
+.vein-d2{animation-delay:.6s}
+.vein-d3{animation-delay:.9s}
+@keyframes veinPulse{
+    0%,100%{opacity:.15;stroke-width:.4}
+    50%{opacity:.5;stroke-width:.8}
+}
+
+/* ---- Eye Glow ---- */
+.eye-glow-a{animation:eyeGlowA 3s ease-in-out infinite}
+@keyframes eyeGlowA{
+    0%,100%{r:1.2;opacity:.5}
+    50%{r:2;opacity:.9}
+}
+.eye-glow-s{animation:eyeGlowS 2.5s ease-in-out infinite}
+@keyframes eyeGlowS{
+    0%,100%{r:1.5;opacity:.5;filter:drop-shadow(0 0 2px #ffd740)}
+    50%{r:2.5;opacity:1;filter:drop-shadow(0 0 6px #ffd740)}
+}
+.eye-glow-x{animation:eyeGlowX 1.5s ease-in-out infinite}
+@keyframes eyeGlowX{
+    0%,100%{r:3;filter:drop-shadow(0 0 3px #ff1744)}
+    50%{r:3.5;filter:drop-shadow(0 0 10px #ff1744) drop-shadow(0 0 20px #d50000)}
+}
+
+/* ---- Horn Effects (X rank) ---- */
+.horn-pulse{animation:hornPulse 2s ease-in-out infinite}
+@keyframes hornPulse{
+    0%,100%{filter:drop-shadow(0 0 2px #ff1744)}
+    50%{filter:drop-shadow(0 0 8px #ff1744) drop-shadow(0 0 15px #d50000)}
+}
+.horn-tip-glow{animation:hornTipGlow 1.5s ease-in-out infinite}
+@keyframes hornTipGlow{
+    0%,100%{opacity:.4;r:3}
+    50%{opacity:.9;r:5}
+}
+
+/* ---- Dark Mist (X rank) ---- */
+.dark-mist{animation:darkMist 4s ease-in-out infinite}
+@keyframes darkMist{
+    0%,100%{opacity:.2;rx:45;ry:10}
+    50%{opacity:.4;rx:55;ry:14}
+}
+
+/* ---- Crown Glow (S rank) ---- */
+.crown-glow{animation:crownGlow 3s ease-in-out infinite}
+@keyframes crownGlow{
+    0%,100%{filter:drop-shadow(0 0 3px #ffd740);opacity:.8}
+    50%{filter:drop-shadow(0 0 10px #ffd740) drop-shadow(0 0 20px rgba(255,215,64,.3));opacity:1}
+}
+
+/* ---- Energy Wisps ---- */
+.energy-wisp{
+    animation:energyWisp 3s ease-in-out infinite;
+    transform-origin:bottom center;
+}
+@keyframes energyWisp{
+    0%{opacity:0;transform:translateY(0) translateX(0)}
+    20%{opacity:.3}
+    80%{opacity:.15}
+    100%{opacity:0;transform:translateY(-80px) translateX(var(--wisp-drift,10px))}
+}
+.shadow-wisp{animation:shadowWisp 4s ease-in infinite}
+@keyframes shadowWisp{
+    0%{opacity:0;transform:translateY(0) scaleY(1)}
+    15%{opacity:.25}
+    85%{opacity:.1}
+    100%{opacity:0;transform:translateY(-100px) scaleY(2)}
+}
+
+/* ---- Lightning Arcs ---- */
+.lightning-arc{animation:lightningArc 3s steps(1) infinite}
+@keyframes lightningArc{
+    0%,84%,100%{opacity:0}
+    85%{opacity:.8}
+    87%{opacity:0}
+    89%{opacity:.6}
+    91%{opacity:0}
+}
+
+/* ---- Sparkle Particles (S rank) ---- */
+.sparkle-particle{animation:sparkle 2s ease-in-out infinite}
+@keyframes sparkle{
+    0%,100%{opacity:0;r:0}
+    25%{opacity:0}
+    50%{opacity:.8;r:2}
+    75%{opacity:0}
+}
+
+/* ---- Dark Particles (X rank) ---- */
+.avatar-particle-dark{animation:darkParticle 4s ease-in-out infinite}
+@keyframes darkParticle{
+    0%,100%{transform:translateY(0) scale(1);opacity:.2}
+    50%{transform:translateY(-20px) scale(1.5);opacity:.08}
+}
+
+/* ---- Head Idle Bob ---- */
+.head-idle{animation:headIdle 5s ease-in-out infinite}
+@keyframes headIdle{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-2px)}
+}
+
+/* ---- Subtle Arm Sway ---- */
+.arm-left{animation:armSwayL 6s ease-in-out infinite}
+.arm-right{animation:armSwayR 6s ease-in-out infinite}
+.forearm-left{animation:armSwayL 6s ease-in-out infinite .3s}
+.forearm-right{animation:armSwayR 6s ease-in-out infinite .3s}
+@keyframes armSwayL{
+    0%,100%{transform:rotate(0deg)}
+    50%{transform:rotate(-1.5deg)}
+}
+@keyframes armSwayR{
+    0%,100%{transform:rotate(0deg)}
+    50%{transform:rotate(1.5deg)}
+}
+
 
 /* ========== SHADOW MISSION OVERLAY ========== */
 .sm-overlay{
