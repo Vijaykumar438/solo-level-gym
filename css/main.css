@@ -146,9 +146,9 @@ input,select,button{font-family:var(--body)}
 
 /* ========== TAB NAV ========== */
 .tab-nav{
-    position:relative;z-index:2;display:flex;padding:0 var(--space);gap:2px;
+    position:sticky;top:0;z-index:50;display:flex;padding:0 var(--space);gap:2px;
     border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
-    background:rgba(6,13,31,.4);
+    background:rgba(6,13,31,.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
 }
 .tab-nav::-webkit-scrollbar{display:none}
 .tab{
