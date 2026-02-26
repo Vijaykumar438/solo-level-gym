@@ -390,6 +390,7 @@ function renderBodyFatHistory() {
 }
 
 function restoreBodyCompInputs() {
+    if (!D) return;
     /* Restore weight fields from physique data */
     if (D.physique) {
         if (D.physique.currentWeight) document.getElementById('pCurWeight').value = D.physique.currentWeight;

@@ -873,6 +873,9 @@ function appInit() {
     // Initialize template creator dropdown
     if (typeof populateCreatorSelect === 'function') populateCreatorSelect();
 
+    // Restore body comp inputs (needs D to be loaded)
+    try { restoreBodyCompInputs(); } catch(e) { console.error('[System] restoreBodyCompInputs error:', e); }
+
     // Boot animation
     bootSequence();
 }
@@ -956,8 +959,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Hide hip row by default (male)
     document.getElementById('bfHipRow').style.display = 'none';
-    // Restore saved measurements
-    restoreBodyCompInputs();
 
     // Stat allocation buttons
     document.querySelectorAll('.sp-btn').forEach(btn => {
