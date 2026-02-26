@@ -47,6 +47,126 @@
 .mc-hit .mc-count{ color:var(--green); }
 .mc-partial .mc-count{ color:var(--gold); }
 
+/* ========== HUNTER'S DOMAIN — Status Tab Environment ========== */
+.status-env{
+    position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+    border-radius:0;
+}
+.panel[data-panel="status"]{overflow:hidden}
+.panel[data-panel="status"] > *:not(.status-env){position:relative;z-index:1}
+
+/* Rank gradient backgrounds */
+.status-env.env-e{
+    background:linear-gradient(180deg,rgba(10,15,30,.95) 0%,rgba(20,25,45,.9) 50%,rgba(15,20,35,.95) 100%);
+}
+.status-env.env-d{
+    background:linear-gradient(180deg,rgba(8,18,12,.95) 0%,rgba(12,30,18,.88) 40%,rgba(8,20,14,.95) 100%);
+}
+.status-env.env-c{
+    background:linear-gradient(180deg,rgba(6,12,28,.95) 0%,rgba(10,22,50,.88) 40%,rgba(6,15,35,.95) 100%);
+}
+.status-env.env-b{
+    background:linear-gradient(180deg,rgba(15,8,25,.95) 0%,rgba(28,12,45,.88) 40%,rgba(18,8,30,.95) 100%);
+}
+.status-env.env-a{
+    background:linear-gradient(180deg,rgba(25,18,8,.95) 0%,rgba(40,28,10,.88) 40%,rgba(30,20,8,.95) 100%);
+}
+.status-env.env-s{
+    background:linear-gradient(180deg,rgba(20,18,5,.95) 0%,rgba(35,30,8,.86) 35%,rgba(8,15,25,.9) 70%,rgba(15,12,5,.95) 100%);
+}
+.status-env.env-x{
+    background:linear-gradient(180deg,rgba(20,2,2,.96) 0%,rgba(35,5,5,.9) 30%,rgba(5,0,0,.94) 60%,rgba(25,3,3,.96) 100%);
+}
+
+/* Horizontal energy sweep — glowing line left→right */
+.env-sweep{
+    position:absolute;top:0;left:-100%;width:60%;height:100%;
+    pointer-events:none;
+    animation:envSweep var(--sweep-dur,8s) linear infinite;
+    animation-delay:var(--sweep-delay,0s);
+}
+.env-sweep-line{
+    position:absolute;top:var(--sweep-y,50%);left:0;right:0;
+    height:1px;
+    background:linear-gradient(90deg,transparent 0%,var(--sweep-color,rgba(0,229,255,.12)) 40%,var(--sweep-color,rgba(0,229,255,.2)) 50%,var(--sweep-color,rgba(0,229,255,.12)) 60%,transparent 100%);
+    box-shadow:0 0 8px var(--sweep-glow,rgba(0,229,255,.08));
+}
+@keyframes envSweep{
+    0%{transform:translateX(0)}
+    100%{transform:translateX(calc(100vw + 100%))}
+}
+
+/* Floating ambient particles — drift left→right & upward */
+.env-particle{
+    position:absolute;border-radius:50%;
+    width:var(--p-size,3px);height:var(--p-size,3px);
+    background:var(--p-color,rgba(0,229,255,.3));
+    box-shadow:0 0 var(--p-glow,4px) var(--p-color,rgba(0,229,255,.15));
+    animation:envParticleDrift var(--p-dur,12s) linear infinite;
+    animation-delay:var(--p-delay,0s);
+    opacity:0;
+    left:var(--p-x,-10px);top:var(--p-y,50%);
+}
+@keyframes envParticleDrift{
+    0%{transform:translate(0,0);opacity:0}
+    10%{opacity:var(--p-opacity,.4)}
+    80%{opacity:var(--p-opacity,.4)}
+    100%{transform:translate(calc(100vw + 40px),var(--p-rise,-60px));opacity:0}
+}
+
+/* Ground fog */
+.env-fog{
+    position:absolute;bottom:0;left:0;right:0;height:clamp(60px,15vh,120px);
+    background:linear-gradient(0deg,var(--fog-color,rgba(0,229,255,.04)) 0%,transparent 100%);
+    animation:envFog 6s ease-in-out infinite;
+}
+@keyframes envFog{
+    0%,100%{opacity:.6;transform:scaleX(1)}
+    50%{opacity:1;transform:scaleX(1.02)}
+}
+
+/* Energy pillars (B+ ranks) */
+.env-pillar{
+    position:absolute;bottom:0;width:1px;
+    background:linear-gradient(0deg,var(--pillar-color,rgba(171,71,188,.15)) 0%,transparent 100%);
+    height:var(--pillar-h,40%);
+    animation:envPillar var(--pillar-dur,4s) ease-in-out infinite;
+    animation-delay:var(--pillar-delay,0s);
+    opacity:.5;
+}
+@keyframes envPillar{
+    0%,100%{opacity:.3;height:var(--pillar-h,40%)}
+    50%{opacity:.7;height:calc(var(--pillar-h,40%) + 5%)}
+}
+
+/* Rune circle (A+ ranks) */
+.env-rune{
+    position:absolute;border-radius:50%;
+    border:1px solid var(--rune-color,rgba(255,167,38,.1));
+    width:var(--rune-size,200px);height:var(--rune-size,200px);
+    left:50%;top:var(--rune-top,30%);
+    transform:translate(-50%,-50%);
+    animation:envRune var(--rune-dur,20s) linear infinite;
+    opacity:.15;
+}
+@keyframes envRune{
+    0%{transform:translate(-50%,-50%) rotate(0deg)}
+    100%{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+/* Ambient glow spots */
+.env-glow{
+    position:absolute;border-radius:50%;
+    width:var(--glow-size,150px);height:var(--glow-size,150px);
+    background:radial-gradient(circle,var(--glow-color,rgba(0,229,255,.04)) 0%,transparent 70%);
+    animation:envGlowPulse var(--glow-dur,5s) ease-in-out infinite;
+    animation-delay:var(--glow-delay,0s);
+}
+@keyframes envGlowPulse{
+    0%,100%{opacity:.4;transform:scale(1)}
+    50%{opacity:.8;transform:scale(1.15)}
+}
+
 /* ========== AVATAR ========== */
 .avatar-wrap{
     display:flex;flex-direction:column;align-items:center;

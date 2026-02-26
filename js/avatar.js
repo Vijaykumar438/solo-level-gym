@@ -1,6 +1,7 @@
 // ==========================================
 //  AVATAR.JS — Rank-based body evolution
 //  v36: Enhanced animations & visual effects
+//  v42: Hunter's Domain background environment
 // ==========================================
 
 function renderAvatar() {
@@ -9,6 +10,9 @@ function renderAvatar() {
     
     const rank = getRank(D.level);
     const rankName = rank.name;
+    
+    // Render the ambient domain background
+    renderStatusEnvironment(rankName);
     
     container.innerHTML = '';
     container.className = 'avatar-wrap avatar-' + rankName.toLowerCase();
@@ -442,4 +446,179 @@ function getLightningArcs(rank) {
     }
     
     return arcs;
+}
+
+// ==========================================
+//  HUNTER'S DOMAIN — Status Tab Environment
+//  Rank-evolving animated background
+// ==========================================
+
+function renderStatusEnvironment(rank) {
+    const env = document.getElementById('statusEnv');
+    if (!env) return;
+
+    const r = rank.toUpperCase();
+    env.innerHTML = '';
+    env.className = 'status-env env-' + rank.toLowerCase();
+
+    // ---- Configuration per rank ----
+    const cfg = {
+        E: {
+            particles: 6,  pColor: 'rgba(120,144,156,.25)', pGlow: '3px',
+            sweeps: 1,      sweepColor: 'rgba(120,144,156,.06)', sweepGlow: 'rgba(120,144,156,.03)',
+            fogColor: 'rgba(120,144,156,.03)',
+            glows: [{x:'20%',y:'40%',size:'180px',color:'rgba(120,144,156,.03)',dur:'7s'}],
+            pillars: 0, runes: 0
+        },
+        D: {
+            particles: 10, pColor: 'rgba(102,187,106,.3)', pGlow: '4px',
+            sweeps: 1,      sweepColor: 'rgba(102,187,106,.08)', sweepGlow: 'rgba(102,187,106,.04)',
+            fogColor: 'rgba(102,187,106,.04)',
+            glows: [
+                {x:'15%',y:'35%',size:'200px',color:'rgba(102,187,106,.04)',dur:'6s'},
+                {x:'75%',y:'60%',size:'160px',color:'rgba(102,187,106,.03)',dur:'8s',delay:'2s'}
+            ],
+            pillars: 0, runes: 0
+        },
+        C: {
+            particles: 14, pColor: 'rgba(66,165,245,.3)', pGlow: '5px',
+            sweeps: 2,      sweepColor: 'rgba(66,165,245,.1)', sweepGlow: 'rgba(66,165,245,.05)',
+            fogColor: 'rgba(66,165,245,.05)',
+            glows: [
+                {x:'25%',y:'30%',size:'220px',color:'rgba(66,165,245,.05)',dur:'5s'},
+                {x:'70%',y:'55%',size:'180px',color:'rgba(66,165,245,.04)',dur:'7s',delay:'1.5s'},
+                {x:'50%',y:'80%',size:'140px',color:'rgba(66,165,245,.03)',dur:'9s',delay:'3s'}
+            ],
+            pillars: 0, runes: 0
+        },
+        B: {
+            particles: 18, pColor: 'rgba(171,71,188,.35)', pGlow: '6px',
+            sweeps: 2,      sweepColor: 'rgba(171,71,188,.12)', sweepGlow: 'rgba(171,71,188,.06)',
+            fogColor: 'rgba(171,71,188,.06)',
+            glows: [
+                {x:'20%',y:'25%',size:'250px',color:'rgba(171,71,188,.05)',dur:'5s'},
+                {x:'80%',y:'50%',size:'200px',color:'rgba(206,147,216,.04)',dur:'6s',delay:'2s'},
+                {x:'45%',y:'75%',size:'180px',color:'rgba(171,71,188,.03)',dur:'8s',delay:'1s'}
+            ],
+            pillars: 4, pillarColor: 'rgba(171,71,188,.08)',
+            runes: 0
+        },
+        A: {
+            particles: 22, pColor: 'rgba(255,167,38,.35)', pGlow: '7px',
+            sweeps: 3,      sweepColor: 'rgba(255,167,38,.14)', sweepGlow: 'rgba(255,167,38,.07)',
+            fogColor: 'rgba(255,167,38,.06)',
+            glows: [
+                {x:'15%',y:'20%',size:'280px',color:'rgba(255,167,38,.06)',dur:'4.5s'},
+                {x:'75%',y:'40%',size:'220px',color:'rgba(255,224,130,.05)',dur:'5.5s',delay:'1s'},
+                {x:'50%',y:'70%',size:'200px',color:'rgba(255,167,38,.04)',dur:'7s',delay:'2.5s'}
+            ],
+            pillars: 5, pillarColor: 'rgba(255,167,38,.1)',
+            runes: 1, runeColor: 'rgba(255,167,38,.08)'
+        },
+        S: {
+            particles: 28, pColor: 'rgba(255,215,64,.4)', pGlow: '8px',
+            pColor2: 'rgba(79,195,247,.3)',
+            sweeps: 3,      sweepColor: 'rgba(255,215,64,.16)', sweepGlow: 'rgba(255,215,64,.08)',
+            fogColor: 'rgba(255,215,64,.07)',
+            glows: [
+                {x:'10%',y:'15%',size:'300px',color:'rgba(255,215,64,.07)',dur:'4s'},
+                {x:'80%',y:'35%',size:'250px',color:'rgba(79,195,247,.05)',dur:'5s',delay:'1s'},
+                {x:'40%',y:'60%',size:'220px',color:'rgba(255,215,64,.05)',dur:'6s',delay:'2s'},
+                {x:'65%',y:'85%',size:'180px',color:'rgba(79,195,247,.04)',dur:'7s',delay:'3s'}
+            ],
+            pillars: 6, pillarColor: 'rgba(255,215,64,.12)',
+            runes: 2, runeColor: 'rgba(255,215,64,.1)'
+        },
+        X: {
+            particles: 35, pColor: 'rgba(255,23,68,.4)', pGlow: '10px',
+            pColor2: 'rgba(0,0,0,.5)',
+            sweeps: 4,      sweepColor: 'rgba(213,0,0,.18)', sweepGlow: 'rgba(255,23,68,.1)',
+            fogColor: 'rgba(213,0,0,.08)',
+            glows: [
+                {x:'10%',y:'10%',size:'350px',color:'rgba(213,0,0,.08)',dur:'3.5s'},
+                {x:'85%',y:'30%',size:'280px',color:'rgba(0,0,0,.06)',dur:'4.5s',delay:'1s'},
+                {x:'30%',y:'55%',size:'250px',color:'rgba(255,23,68,.06)',dur:'5s',delay:'2s'},
+                {x:'70%',y:'80%',size:'200px',color:'rgba(213,0,0,.05)',dur:'6s',delay:'0.5s'},
+                {x:'50%',y:'40%',size:'300px',color:'rgba(0,0,0,.04)',dur:'7s',delay:'3s'}
+            ],
+            pillars: 8, pillarColor: 'rgba(213,0,0,.14)',
+            runes: 3, runeColor: 'rgba(255,23,68,.12)'
+        }
+    };
+
+    const c = cfg[r] || cfg.E;
+
+    // ---- Layer 1: Ambient glow spots ----
+    (c.glows || []).forEach(g => {
+        const d = document.createElement('div');
+        d.className = 'env-glow';
+        d.style.cssText = `left:${g.x};top:${g.y};--glow-size:${g.size};--glow-color:${g.color};--glow-dur:${g.dur};--glow-delay:${g.delay||'0s'}`;
+        env.appendChild(d);
+    });
+
+    // ---- Layer 2: Floating particles (drift left→right) ----
+    for (let i = 0; i < c.particles; i++) {
+        const p = document.createElement('div');
+        p.className = 'env-particle';
+        const useAlt = c.pColor2 && Math.random() > 0.65;
+        const color = useAlt ? c.pColor2 : c.pColor;
+        const size = (2 + Math.random() * 3).toFixed(1) + 'px';
+        const y = (5 + Math.random() * 90).toFixed(1) + '%';
+        const dur = (10 + Math.random() * 15).toFixed(1) + 's';
+        const delay = (Math.random() * 20).toFixed(1) + 's';
+        const rise = (-20 - Math.random() * 80).toFixed(0) + 'px';
+        const opacity = (0.2 + Math.random() * 0.4).toFixed(2);
+        p.style.cssText = `--p-color:${color};--p-size:${size};--p-y:${y};--p-dur:${dur};--p-delay:${delay};--p-rise:${rise};--p-opacity:${opacity};--p-glow:${c.pGlow}`;
+        env.appendChild(p);
+    }
+
+    // ---- Layer 3: Horizontal energy sweeps ----
+    for (let i = 0; i < c.sweeps; i++) {
+        const sw = document.createElement('div');
+        sw.className = 'env-sweep';
+        const sweepY = (15 + Math.random() * 70).toFixed(1) + '%';
+        const dur = (6 + Math.random() * 6).toFixed(1) + 's';
+        const delay = (Math.random() * 8).toFixed(1) + 's';
+        sw.style.cssText = `--sweep-dur:${dur};--sweep-delay:${delay}`;
+        const line = document.createElement('div');
+        line.className = 'env-sweep-line';
+        line.style.cssText = `--sweep-y:${sweepY};--sweep-color:${c.sweepColor};--sweep-glow:${c.sweepGlow}`;
+        sw.appendChild(line);
+        env.appendChild(sw);
+    }
+
+    // ---- Layer 4: Ground fog ----
+    const fog = document.createElement('div');
+    fog.className = 'env-fog';
+    fog.style.cssText = `--fog-color:${c.fogColor}`;
+    env.appendChild(fog);
+
+    // ---- Layer 5: Energy pillars (B+ ranks) ----
+    if (c.pillars > 0) {
+        for (let i = 0; i < c.pillars; i++) {
+            const pl = document.createElement('div');
+            pl.className = 'env-pillar';
+            const x = (8 + (84 / (c.pillars - 1 || 1)) * i).toFixed(1) + '%';
+            const h = (25 + Math.random() * 35).toFixed(0) + '%';
+            const dur = (3 + Math.random() * 4).toFixed(1) + 's';
+            const delay = (Math.random() * 4).toFixed(1) + 's';
+            pl.style.cssText = `left:${x};--pillar-color:${c.pillarColor};--pillar-h:${h};--pillar-dur:${dur};--pillar-delay:${delay}`;
+            env.appendChild(pl);
+        }
+    }
+
+    // ---- Layer 6: Rune circles (A+ ranks) ----
+    if (c.runes > 0) {
+        for (let i = 0; i < c.runes; i++) {
+            const rn = document.createElement('div');
+            rn.className = 'env-rune';
+            const size = (150 + i * 80 + Math.random() * 60).toFixed(0) + 'px';
+            const top = (25 + Math.random() * 50).toFixed(1) + '%';
+            const dur = (15 + i * 8 + Math.random() * 5).toFixed(0) + 's';
+            const dashLen = 8 + Math.floor(Math.random() * 12);
+            const gapLen = 6 + Math.floor(Math.random() * 10);
+            rn.style.cssText = `--rune-color:${c.runeColor};--rune-size:${size};--rune-top:${top};--rune-dur:${dur};border-style:dashed;border-width:1px;border-image:none`;
+            env.appendChild(rn);
+        }
+    }
 }
