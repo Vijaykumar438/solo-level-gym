@@ -81,25 +81,55 @@ function sysNotify(msg, type = '') {
     if (type === 'red' && typeof playSound === 'function') playSound('error');
 }
 
-// ---- Tab switching ----
+// ---- Tab switching (smooth transitions) ----
+let _tabSwitching = false;
+
 function initTabs() {
     document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', () => {
+            if (_tabSwitching) return;
             const target = tab.dataset.tab;
+            const currentTab = document.querySelector('.tab.active');
+            const currentPanel = document.querySelector('.panel.active');
+            const nextPanel = document.querySelector(`[data-panel="${target}"]`);
+
+            // Skip if already on this tab
+            if (currentTab === tab || !nextPanel) return;
+
+            // Update tab highlight immediately
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
             tab.classList.add('active');
-            document.querySelector(`[data-panel="${target}"]`).classList.add('active');
-            
-            if (target === 'analysis') {
-                setTimeout(renderAllCharts, 120);
-                setTimeout(renderCalendar, 50);
+
+            // Smooth panel transition
+            if (currentPanel) {
+                _tabSwitching = true;
+                currentPanel.classList.add('panel-leaving');
+
+                // After exit animation, swap panels
+                setTimeout(() => {
+                    currentPanel.classList.remove('active', 'panel-leaving');
+                    nextPanel.classList.add('active');
+                    _tabSwitching = false;
+
+                    // Post-switch hooks
+                    if (target === 'analysis') {
+                        setTimeout(renderAllCharts, 120);
+                        setTimeout(renderCalendar, 50);
+                    }
+                    if (target === 'shop' && typeof renderShop === 'function') setTimeout(renderShop, 50);
+                    if (target === 'gates') setTimeout(renderQuests, 50);
+                    if (target === 'tutorial' && typeof renderTutorial === 'function') setTimeout(renderTutorial, 50);
+                    if (target === 'journal' && typeof renderJournal === 'function') setTimeout(renderJournal, 50);
+                    if (target === 'log' && typeof renderTemplates === 'function') setTimeout(renderTemplates, 50);
+
+                    // Scroll to top of new panel
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 200); // matches panelExit duration
+            } else {
+                nextPanel.classList.add('active');
             }
-            if (target === 'shop' && typeof renderShop === 'function') setTimeout(renderShop, 50);
-            if (target === 'gates') setTimeout(renderQuests, 50);
-            if (target === 'tutorial' && typeof renderTutorial === 'function') setTimeout(renderTutorial, 50);
-            if (target === 'journal' && typeof renderJournal === 'function') setTimeout(renderJournal, 50);
-            if (target === 'log' && typeof renderTemplates === 'function') setTimeout(renderTemplates, 50);
+
+            if (typeof playSound === 'function') playSound('click');
         });
     });
 }
