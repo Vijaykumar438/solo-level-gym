@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>SYSTEM â€” Solo Leveling</title>
+    <title>SYSTEM — Solo Leveling</title>
 
     <!-- Force clear old service worker cache (one-time purge) -->
     <script>
@@ -85,8 +85,8 @@
             <p id="loginError" class="login-error hidden"></p>
 
             <div class="login-footer">
-                <p class="login-note">âš¡ Google sign-in syncs progress across devices</p>
-                <p class="login-note">ðŸ‘¤ Guest mode saves locally only</p>
+                <p class="login-note">⚡ Google sign-in syncs progress across devices</p>
+                <p class="login-note">👤 Guest mode saves locally only</p>
             </div>
         </div>
     </div>
@@ -117,7 +117,7 @@
                 <span class="sys-bracket">[</span>
                 <span class="sys-title">S Y S T E M</span>
                 <span class="sys-bracket">]</span>
-                <span id="syncIndicator" class="sync-indicator sync-saved" title="Cloud sync">â˜</span>
+                <span id="syncIndicator" class="sync-indicator sync-saved" title="Cloud sync">☁</span>
             </div>
             <div class="header-quick">
                 <div class="hq-item hq-user">
@@ -135,9 +135,9 @@
                     <span class="hq-label">GOLD</span>
                     <span class="hq-val gold-text" id="hqGold">0</span>
                 </div>
-                <button id="linkGoogleBtn" class="hq-link-btn hidden" title="Link Google Account">ðŸ”—</button>
-                <button id="soundToggleBtn" class="hq-sound-btn" title="Toggle Sound">ðŸ”Š</button>
-                <button id="signOutBtn" class="hq-signout-btn" title="Sign Out">â»</button>
+                <button id="linkGoogleBtn" class="hq-link-btn hidden" title="Link Google Account">🔗</button>
+                <button id="soundToggleBtn" class="hq-sound-btn" title="Toggle Sound">🔊</button>
+                <button id="signOutBtn" class="hq-signout-btn" title="Sign Out">⏻</button>
             </div>
         </header>
 
@@ -155,14 +155,14 @@
 
         <!-- Tab Navigation -->
         <nav class="tab-nav">
-            <button class="tab active" data-tab="status"><span class="tab-icon">â—ˆ</span> Status</button>
-            <button class="tab" data-tab="gates"><span class="tab-icon">â¬¡</span> Daily Gate</button>
-            <button class="tab" data-tab="log"><span class="tab-icon">â¬¢</span> Log</button>
-            <button class="tab" data-tab="shop"><span class="tab-icon">â¬Ÿ</span> Shop</button>
-            <button class="tab" data-tab="skills"><span class="tab-icon">â—‡</span> Skills</button>
-            <button class="tab" data-tab="analysis"><span class="tab-icon">â–³</span> Analysis</button>
-            <button class="tab" data-tab="journal"><span class="tab-icon">ðŸ“–</span> Journal</button>
-            <button class="tab" data-tab="tutorial"><span class="tab-icon">ï¿½</span> Guide</button>
+            <button class="tab active" data-tab="status"><span class="tab-icon">◈</span> Status</button>
+            <button class="tab" data-tab="gates"><span class="tab-icon">⬡</span> Daily Gate</button>
+            <button class="tab" data-tab="log"><span class="tab-icon">⬢</span> Log</button>
+            <button class="tab" data-tab="shop"><span class="tab-icon">⬟</span> Shop</button>
+            <button class="tab" data-tab="skills"><span class="tab-icon">◇</span> Skills</button>
+            <button class="tab" data-tab="analysis"><span class="tab-icon">△</span> Analysis</button>
+            <button class="tab" data-tab="journal"><span class="tab-icon">📖</span> Journal</button>
+            <button class="tab" data-tab="tutorial"><span class="tab-icon">�</span> Guide</button>
         </nav>
 
         <!-- ===== STATUS TAB ===== -->
@@ -174,43 +174,43 @@
                     <div class="sw-row"><span class="sw-key">Level</span><span class="sw-val" id="swLevel">1</span></div>
                     <div class="sw-row"><span class="sw-key">Rank</span><span class="sw-val" id="swRank">E-Rank</span></div>
                     <div class="sw-row"><span class="sw-key">Title</span><span class="sw-val" id="swTitle">The Weakest Hunter</span></div>
-                    <div class="sw-row"><span class="sw-key">Weapon</span><span class="sw-val" id="swWeapon">â€”</span></div>
+                    <div class="sw-row"><span class="sw-key">Weapon</span><span class="sw-val" id="swWeapon">—</span></div>
                 </div>
             </div>
 
             <div class="stats-grid">
                 <div class="stat-card" data-stat="str">
-                    <div class="sc-icon">âš”</div>
+                    <div class="sc-icon">⚔</div>
                     <div class="sc-name">STR</div>
                     <div class="sc-val" id="statSTR">5</div>
                     <div class="sc-bar"><div class="sc-fill" id="barSTR"></div></div>
                 </div>
                 <div class="stat-card" data-stat="agi">
-                    <div class="sc-icon">âš¡</div>
+                    <div class="sc-icon">⚡</div>
                     <div class="sc-name">AGI</div>
                     <div class="sc-val" id="statAGI">4</div>
                     <div class="sc-bar"><div class="sc-fill" id="barAGI"></div></div>
                 </div>
                 <div class="stat-card" data-stat="vit">
-                    <div class="sc-icon">â™¥</div>
+                    <div class="sc-icon">♥</div>
                     <div class="sc-name">VIT</div>
                     <div class="sc-val" id="statVIT">5</div>
                     <div class="sc-bar"><div class="sc-fill" id="barVIT"></div></div>
                 </div>
                 <div class="stat-card" data-stat="end">
-                    <div class="sc-icon">â—‰</div>
+                    <div class="sc-icon">◉</div>
                     <div class="sc-name">END</div>
                     <div class="sc-val" id="statEND">4</div>
                     <div class="sc-bar"><div class="sc-fill" id="barEND"></div></div>
                 </div>
                 <div class="stat-card" data-stat="wil">
-                    <div class="sc-icon">â˜¬</div>
+                    <div class="sc-icon">☬</div>
                     <div class="sc-name">WIL</div>
                     <div class="sc-val" id="statWIL">3</div>
                     <div class="sc-bar"><div class="sc-fill" id="barWIL"></div></div>
                 </div>
                 <div class="stat-card" data-stat="phs">
-                    <div class="sc-icon">â˜‰</div>
+                    <div class="sc-icon">☉</div>
                     <div class="sc-name">PHS</div>
                     <div class="sc-val" id="statPHS">3.0</div>
                     <div class="sc-bar"><div class="sc-fill phs-fill" id="barPHS"></div></div>
@@ -237,7 +237,7 @@
                 <div class="sw-body">
                     <div class="bf-form" id="bfForm">
                         <!-- Weight & Target -->
-                        <div class="bf-section-label">âš– Weight</div>
+                        <div class="bf-section-label">⚖ Weight</div>
                         <div class="bf-row-group">
                             <div class="bf-row">
                                 <label>Current Weight (kg)</label>
@@ -250,7 +250,7 @@
                         </div>
 
                         <!-- Profile -->
-                        <div class="bf-section-label">ðŸ‘¤ Profile</div>
+                        <div class="bf-section-label">👤 Profile</div>
                         <div class="bf-row-group">
                             <div class="bf-row">
                                 <label>Gender</label>
@@ -273,16 +273,16 @@
                                 <label>Activity Level</label>
                                 <select id="bfActivity">
                                     <option value="1.2">Sedentary (desk job)</option>
-                                    <option value="1.375">Light (1-3Ã—/week)</option>
-                                    <option value="1.55" selected>Moderate (3-5Ã—/week)</option>
-                                    <option value="1.725">Active (6-7Ã—/week)</option>
-                                    <option value="1.9">Athlete (2Ã—/day)</option>
+                                    <option value="1.375">Light (1-3×/week)</option>
+                                    <option value="1.55" selected>Moderate (3-5×/week)</option>
+                                    <option value="1.725">Active (6-7×/week)</option>
+                                    <option value="1.9">Athlete (2×/day)</option>
                                 </select>
                             </div>
                         </div>
 
                         <!-- Measurements -->
-                        <div class="bf-section-label">ðŸ“ Measurements <small>(for body fat)</small></div>
+                        <div class="bf-section-label">📐 Measurements <small>(for body fat)</small></div>
                         <div class="bf-row-group">
                             <div class="bf-row">
                                 <label>Neck (cm)</label>
@@ -299,7 +299,7 @@
                                 <input type="number" id="bfHip" step="0.1" min="50" max="200" placeholder="e.g. 95">
                             </div>
                         </div>
-                        <div class="bf-method-note">Weight & Profile update BMR/TDEE Â· Measurements use U.S. Navy Method</div>
+                        <div class="bf-method-note">Weight & Profile update BMR/TDEE · Measurements use U.S. Navy Method</div>
                         <button class="sys-btn" id="calcBfBtn">[ANALYZE & SAVE]</button>
                     </div>
                     <div id="physProgress" class="phys-prog"></div>
@@ -310,8 +310,8 @@
 
             <!-- Ancient Wisdom -->
             <div class="wisdom-box" id="wisdomBox">
-                <div class="wb-label">â€” Words of the Departed Monarchs â€”</div>
-                <div class="wb-text" id="wisdomText">"The body breaks before the will â€” forge the latter in fire."</div>
+                <div class="wb-label">— Words of the Departed Monarchs —</div>
+                <div class="wb-text" id="wisdomText">"The body breaks before the will — forge the latter in fire."</div>
             </div>
 
             <!-- Rank Avatar -->
@@ -319,9 +319,9 @@
 
             <!-- Shadow Army -->
             <div class="army-window" id="armySection">
-                <div class="army-header">â˜¬ SHADOW ARMY</div>
+                <div class="army-header">☬ SHADOW ARMY</div>
                 <div class="army-body">
-                    <div class="army-icon">ðŸ‘¤</div>
+                    <div class="army-icon">👤</div>
                     <div class="army-info">
                         <div class="army-count" id="armyCount">0</div>
                         <div class="army-rank-name" id="armyRankName">No Shadows</div>
@@ -334,20 +334,20 @@
         <!-- ===== DAILY GATE TAB ===== -->
         <section class="panel" data-panel="gates">
             <div class="sys-window">
-                <div class="sw-header">[Daily Gate â€” <span id="gateDate"></span>]</div>
+                <div class="sw-header">[Daily Gate — <span id="gateDate"></span>]</div>
                 <div class="gate-meta">
                     <div class="gm-item">
-                        <span class="gm-icon">ðŸ”¥</span>
+                        <span class="gm-icon">🔥</span>
                         <span class="gm-val" id="streakVal">0</span>
                         <span class="gm-label">Day Streak</span>
                     </div>
                     <div class="gm-item">
-                        <span class="gm-icon">â—ˆ</span>
+                        <span class="gm-icon">◈</span>
                         <span class="gm-val" id="gateProgress">0/5</span>
                         <span class="gm-label">Cleared</span>
                     </div>
                     <div class="gm-item penalty-box" id="penaltyIndicator">
-                        <span class="gm-icon">â˜ </span>
+                        <span class="gm-icon">☠</span>
                         <span class="gm-val" id="penaltyCount">0</span>
                         <span class="gm-label">Penalties</span>
                     </div>
@@ -358,12 +358,12 @@
 
             <!-- Weekly Muscle Coverage -->
             <div class="sys-window mt" id="muscleCoveragePanel">
-                <div class="sw-header">[Weekly Muscle Coverage â€” Train Each Group 2Ã—/Week]</div>
+                <div class="sw-header">[Weekly Muscle Coverage — Train Each Group 2×/Week]</div>
                 <div id="muscleCoverageGrid" class="muscle-coverage-grid"></div>
             </div>
 
             <div class="gate-bonus" id="gateBonusBox">
-                <span class="gb-icon">â—†</span>
+                <span class="gb-icon">◆</span>
                 <span>Clear all gates: <strong id="gateBonusText">+150 Bonus XP, +50 Gold</strong></span>
             </div>
 
@@ -376,12 +376,12 @@
             <!-- Weekly Boss Raid -->
             <div class="boss-window" id="bossSection">
                 <div class="boss-header">
-                    <span class="boss-header-title">â˜  WEEKLY BOSS RAID</span>
-                    <span class="boss-rank" id="bossRankLabel">â€”</span>
+                    <span class="boss-header-title">☠ WEEKLY BOSS RAID</span>
+                    <span class="boss-rank" id="bossRankLabel">—</span>
                 </div>
                 <div class="boss-body" id="bossBody">
                     <div class="boss-icon" id="bossIcon"></div>
-                    <div class="boss-name" id="bossName">Loadingâ€¦</div>
+                    <div class="boss-name" id="bossName">Loading…</div>
                     <div class="boss-hp-info">
                         <span>HP</span>
                         <span id="bossHpText">0 / 0</span>
@@ -398,13 +398,13 @@
         <section class="panel" data-panel="log">
             <!-- Workout Templates -->
             <div class="sys-window">
-                <div class="sw-header">[Workout Templates â€” Quick Log]</div>
+                <div class="sw-header">[Workout Templates — Quick Log]</div>
                 <div id="templatesContent" class="templates-content"></div>
             </div>
 
             <!-- Workout Log -->
             <div class="sys-window">
-                <div class="sw-header">[Report â€” Workout]</div>
+                <div class="sw-header">[Report — Workout]</div>
                 <div class="log-form">
                     <div class="lf-row">
                         <label>Muscle Group</label>
@@ -415,7 +415,7 @@
                     <div class="lf-row">
                         <label>Exercise</label>
                         <select id="logExercise">
-                            <option value="">â€” Select â€”</option>
+                            <option value="">— Select —</option>
                         </select>
                     </div>
                     <div class="lf-two">
@@ -435,9 +435,9 @@
                     <div class="lf-row">
                         <label>Intensity</label>
                         <select id="logIntensity">
-                            <option value="low">Low â€” Warm-up pace</option>
-                            <option value="medium" selected>Medium â€” Working effort</option>
-                            <option value="high">High â€” Near max effort</option>
+                            <option value="low">Low — Warm-up pace</option>
+                            <option value="medium" selected>Medium — Working effort</option>
+                            <option value="high">High — Near max effort</option>
                         </select>
                     </div>
                     <button class="sys-btn" id="submitWorkout">[REPORT WORKOUT]</button>
@@ -446,7 +446,7 @@
 
             <!-- Food Log -->
             <div class="sys-window mt">
-                <div class="sw-header">[Report â€” Sustenance]</div>
+                <div class="sw-header">[Report — Sustenance]</div>
                 <div class="log-form">
                     <div class="lf-two">
                         <div class="lf-row food-autocomplete-wrap">
@@ -492,9 +492,9 @@
                 </div>
             </div>
 
-            <!-- Energy Balance â€” Intake vs Output -->
+            <!-- Energy Balance — Intake vs Output -->
             <div class="sys-window mt" id="energyBalanceSection">
-                <div class="sw-header">[Energy Balance â€” Intake vs Output]</div>
+                <div class="sw-header">[Energy Balance — Intake vs Output]</div>
                 <div class="energy-balance" id="energyBalance"></div>
             </div>
 
@@ -520,7 +520,7 @@
             <!-- Shop Header -->
             <div class="shop-header-panel mt">
                 <div class="shop-banner">
-                    <div class="shop-banner-icon">âš”</div>
+                    <div class="shop-banner-icon">⚔</div>
                     <div class="shop-banner-text">
                         <div class="shop-banner-title">HUNTER'S ARMORY</div>
                         <div class="shop-banner-sub">Trophies of your evolution. Proof you rose from the ashes.</div>
@@ -528,31 +528,31 @@
                 </div>
                 <div class="shop-stats-row">
                     <div class="shop-stat">
-                        <span class="shop-stat-icon">ðŸ’°</span>
+                        <span class="shop-stat-icon">💰</span>
                         <span class="shop-stat-val gold-text" id="shopGoldDisplay">0</span>
                         <span class="shop-stat-label">Gold</span>
                     </div>
                     <div class="shop-stat">
-                        <span class="shop-stat-icon">ðŸ“¦</span>
+                        <span class="shop-stat-icon">📦</span>
                         <span class="shop-stat-val" id="shopCollectionCount">0/0</span>
                         <span class="shop-stat-label">Collected</span>
                     </div>
                 </div>
                 <div class="shop-daily-limits" id="shopDailyLimits">
-                    <span class="shop-limit-tag" id="shopLimitBuy">ðŸ›’ Buy: 5/5</span>
-                    <span class="shop-limit-tag" id="shopLimitUse">ðŸ§ª Use: 3/3</span>
+                    <span class="shop-limit-tag" id="shopLimitBuy">🛒 Buy: 5/5</span>
+                    <span class="shop-limit-tag" id="shopLimitUse">🧪 Use: 3/3</span>
                 </div>
             </div>
 
             <!-- Shop Filters -->
             <div class="shop-filters mt">
                 <button class="shop-filter-btn active" data-filter="all">ALL</button>
-                <button class="shop-filter-btn" data-filter="weapon">âš” Weapons</button>
-                <button class="shop-filter-btn" data-filter="armor">ðŸ›¡ Armor</button>
-                <button class="shop-filter-btn" data-filter="potion">ðŸ§ª Potions</button>
-                <button class="shop-filter-btn" data-filter="artifact">ðŸ’Ž Artifacts</button>
-                <button class="shop-filter-btn" data-filter="relic">ðŸ’ Relics</button>
-                <button class="shop-filter-btn" data-filter="scroll">ðŸ“œ Scrolls</button>
+                <button class="shop-filter-btn" data-filter="weapon">⚔ Weapons</button>
+                <button class="shop-filter-btn" data-filter="armor">🛡 Armor</button>
+                <button class="shop-filter-btn" data-filter="potion">🧪 Potions</button>
+                <button class="shop-filter-btn" data-filter="artifact">💎 Artifacts</button>
+                <button class="shop-filter-btn" data-filter="relic">💍 Relics</button>
+                <button class="shop-filter-btn" data-filter="scroll">📜 Scrolls</button>
             </div>
 
             <!-- Shop Items Grid -->
@@ -576,17 +576,17 @@
         <section class="panel" data-panel="analysis">
             <!-- Dungeon Calendar Heatmap -->
             <div class="sys-window">
-                <div class="sw-header">[Dungeon Calendar â€” Gate Activity]</div>
+                <div class="sw-header">[Dungeon Calendar — Gate Activity]</div>
                 <div class="heatmap-container">
                     <div class="heatmap-year-nav">
-                        <button class="heatmap-nav-btn" id="heatmapPrev">â—€</button>
+                        <button class="heatmap-nav-btn" id="heatmapPrev">◀</button>
                         <span class="heatmap-year" id="heatmapYear">2026</span>
-                        <button class="heatmap-nav-btn" id="heatmapNext">â–¶</button>
+                        <button class="heatmap-nav-btn" id="heatmapNext">▶</button>
                     </div>
                     <div class="heatmap-stats">
                         <span class="heatmap-stat"><span class="heatmap-stat-val" id="hmTotalDays">0</span> days active</span>
                         <span class="heatmap-stat"><span class="heatmap-stat-val" id="hmTotalXP">0</span> total XP</span>
-                        <span class="heatmap-stat">ðŸ”¥ <span class="heatmap-stat-val" id="hmStreak">0</span> streak</span>
+                        <span class="heatmap-stat">🔥 <span class="heatmap-stat-val" id="hmStreak">0</span> streak</span>
                     </div>
                     <div class="heatmap-months" id="heatmapMonths"></div>
                     <div class="heatmap-grid-wrap">
@@ -609,7 +609,7 @@
             </div>
 
             <div class="sys-window mt">
-                <div class="sw-header">[Progress Analysis â€” 7 Day]</div>
+                <div class="sw-header">[Progress Analysis — 7 Day]</div>
                 <div class="chart-wrap"><canvas id="chartXP"></canvas></div>
             </div>
             <div class="sys-window mt">
@@ -617,7 +617,7 @@
                 <div class="chart-wrap"><canvas id="chartCal"></canvas></div>
             </div>
             <div class="sys-window mt">
-                <div class="sw-header">[Macro Breakdown â€” Today]</div>
+                <div class="sw-header">[Macro Breakdown — Today]</div>
                 <div class="chart-wrap chart-small"><canvas id="chartMacro"></canvas></div>
             </div>
             <div class="sys-window mt">
@@ -638,9 +638,9 @@
             <div class="sys-window mt">
                 <div class="sw-header">[Data Management]</div>
                 <div class="data-mgmt">
-                    <button class="sys-btn dm-btn" id="btnExport">â¬‡ Export Save</button>
-                    <button class="sys-btn dm-btn" id="btnImport">â¬† Import Save</button>
-                    <button class="sys-btn dm-btn dm-danger" id="btnReset" onclick="handleResetData()">â˜  Reset All Data</button>
+                    <button class="sys-btn dm-btn" id="btnExport">⬇ Export Save</button>
+                    <button class="sys-btn dm-btn" id="btnImport">⬆ Import Save</button>
+                    <button class="sys-btn dm-btn dm-danger" id="btnReset" onclick="handleResetData()">☠ Reset All Data</button>
                 </div>
             </div>
 
@@ -649,13 +649,13 @@
                 <div class="sw-header">[System Notifications]</div>
                 <div class="notif-settings">
                     <div class="notif-row">
-                        <span class="notif-label">ðŸ”” Training Reminders</span>
+                        <span class="notif-label">🔔 Training Reminders</span>
                         <button class="notif-toggle-btn" id="notifToggleBtn" onclick="toggleNotifications()">
                             <span class="notif-toggle-status" id="notifToggleStatus">OFF</span>
                         </button>
                     </div>
                     <div class="notif-row" id="notifTimeRow" style="display:none">
-                        <span class="notif-label">â° Reminder Time</span>
+                        <span class="notif-label">⏰ Reminder Time</span>
                         <select class="notif-time-select" id="notifTimeSelect" onchange="setNotifTime(this.value)">
                             <option value="7">7:00 AM</option>
                             <option value="8">8:00 AM</option>
@@ -703,7 +703,7 @@
         <!-- Shadow Mission Overlay -->
         <div id="shadowMissionOverlay" class="sm-overlay hidden">
             <div class="sm-box sm-entrance">
-                <div class="sm-alert">âš  EMERGENCY QUEST âš </div>
+                <div class="sm-alert">⚠ EMERGENCY QUEST ⚠</div>
                 <div class="sm-title" id="smTitle"></div>
                 <div class="sm-desc" id="smDesc"></div>
                 <div class="sm-reward" id="smReward"></div>
@@ -732,7 +732,7 @@
         <!-- Template Creator Overlay -->
         <div id="templateCreatorOverlay" class="tpl-creator-overlay hidden">
             <div class="tpl-creator-box">
-                <div class="tpl-creator-title">âš™ CREATE TEMPLATE</div>
+                <div class="tpl-creator-title">⚙ CREATE TEMPLATE</div>
                 <div class="tpl-creator-form">
                     <div class="lf-row">
                         <label>Template Name</label>
@@ -757,11 +757,11 @@
         <!-- Decay Report Overlay -->
         <div id="decayOverlay" class="decay-overlay hidden">
             <div class="decay-box">
-                <div class="decay-glitch">âš  SYSTEM PENALTY âš </div>
+                <div class="decay-glitch">⚠ SYSTEM PENALTY ⚠</div>
                 <div class="decay-title" id="decayTitle">YOU WERE ABSENT</div>
                 <div class="decay-subtitle" id="decaySubtitle">The System does not forgive. The System does not forget.</div>
                 <div class="decay-losses" id="decayLosses"></div>
-                <div class="decay-quote">"Every day you skip, the shadows grow â€” but not yours."</div>
+                <div class="decay-quote">"Every day you skip, the shadows grow — but not yours."</div>
                 <button class="sys-btn decay-close-btn" id="decayClose">[ACCEPT PUNISHMENT]</button>
             </div>
         </div>
@@ -771,9 +771,9 @@
     <!-- Reset Confirm Modal (outside mainApp so it always works) -->
     <div id="resetOverlay" class="reset-overlay hidden">
         <div class="reset-box">
-            <div class="reset-icon">â˜ </div>
+            <div class="reset-icon">☠</div>
             <div class="reset-title">SYSTEM WIPE</div>
-            <div class="reset-msg" id="resetMsg">âš  WARNING: This will erase ALL progress. Your rank, stats, quests, and history will be permanently destroyed. This cannot be undone.</div>
+            <div class="reset-msg" id="resetMsg">⚠ WARNING: This will erase ALL progress. Your rank, stats, quests, and history will be permanently destroyed. This cannot be undone.</div>
             <div class="reset-buttons">
                 <button class="sys-btn reset-btn-danger" id="resetConfirm" onclick="confirmReset()">[DESTROY ALL DATA]</button>
                 <button class="sys-btn reset-btn-cancel" id="resetCancel" onclick="cancelReset()">[CANCEL]</button>
@@ -827,4 +827,3 @@
     </script>
 </body>
 </html>
-
