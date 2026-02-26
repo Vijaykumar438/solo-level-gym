@@ -33,6 +33,15 @@
 .quest-item.cleared .qi-check{border-color:var(--green);color:var(--green);background:rgba(105,240,174,.12);box-shadow:0 0 8px rgba(105,240,174,.2)}
 .quest-item.failed .qi-check{border-color:var(--red);color:var(--red);background:rgba(255,82,82,.12)}
 .qi-body{flex:1;min-width:0}
+.qi-cat{
+    display:inline-block;font-family:var(--font);font-size:.55rem;letter-spacing:1.5px;
+    padding:1px 7px;border-radius:3px;margin-bottom:3px;
+    color:var(--cat-color,var(--blue));
+    border:1px solid var(--cat-color,var(--blue));
+    background:color-mix(in srgb, var(--cat-color,var(--blue)) 10%, transparent);
+    opacity:.85;
+}
+.quest-item.cleared .qi-cat{opacity:.4}
 .qi-title{font-weight:600;font-size:clamp(.9rem,2.5vw,1.05rem);color:var(--text);margin-bottom:2px;overflow-wrap:break-word}
 .qi-desc{font-size:clamp(.75rem,2vw,.85rem);color:var(--dim)}
 .qi-reward{text-align:right;white-space:nowrap;flex-shrink:0}

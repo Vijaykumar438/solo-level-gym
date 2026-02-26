@@ -458,10 +458,13 @@ function renderQuests() {
         const penaltyCls = q.isPenalty ? ' quest-penalty' : '';
         const check = q.cleared ? '✓' : q.failed ? '✗' : '';
         const rewardLabel = q.isPenalty ? 'Mercy' : '';
+        const cat = (typeof QUEST_CATS !== 'undefined' && q.cat && QUEST_CATS[q.cat]) ? QUEST_CATS[q.cat] : null;
+        const catBadge = cat ? `<span class="qi-cat" style="--cat-color:${cat.color}">${cat.icon} ${cat.label}</span>` : '';
         return `
             <div class="quest-item ${cls}${penaltyCls}" data-qid="${q.id}">
                 <div class="qi-check">${check}</div>
                 <div class="qi-body">
+                    ${catBadge}
                     <div class="qi-title">${q.title}</div>
                     <div class="qi-desc">${q.desc}</div>
                 </div>
