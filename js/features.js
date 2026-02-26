@@ -111,6 +111,9 @@ function completeShadowMission() {
     if (typeof vibrate === 'function') vibrate([40, 30, 40]);
     sysNotify(`[Mission Complete] ${mission.title} — +${mission.xp} XP, +${mission.gold} Gold`, 'green');
     
+    // Check shadow soldier extractions (shadowMissions milestone)
+    if (typeof checkShadowExtractions === 'function') setTimeout(() => checkShadowExtractions(), 1200);
+    
     overlay.classList.add('hidden');
     shadowMissionActive = false;
     refreshUI();
@@ -343,8 +346,10 @@ function dealBossDamage(amount, source) {
         
         if (typeof vibrate === 'function') vibrate([50, 100, 50, 100, 50, 200]);
         if (typeof playSound === 'function') playSound('bossDefeat');
-        sysNotify(`[BOSS DEFEATED] ☠ ${D.boss.name} has fallen! +${D.boss.reward.xp} XP, +${D.boss.reward.gold} Gold, +1 Shadow Soldier!`, 'gold');
+        sysNotify(`[BOSS DEFEATED] \u2620 ${D.boss.name} has fallen! +${D.boss.reward.xp} XP, +${D.boss.reward.gold} Gold, +1 Shadow Soldier!`, 'gold');
         saveGame();
+        // Check if any new shadow soldiers can be extracted
+        if (typeof checkShadowExtractions === 'function') setTimeout(() => checkShadowExtractions(), 1500);
         refreshUI();
         return true;
     }
@@ -432,20 +437,224 @@ function closeLoginReward() {
 }
 
 
-// ============= SHADOW ARMY =============
+// ============= NAMED SHADOW SOLDIERS =============
+const SHADOW_SOLDIERS = [
+    // ── Tier 1: Foot Soldiers (Early game) ──
+    { id:'iron',   name:'Iron',          title:'Shadow Knight',          icon:'\u2694\uFE0F', rank:'E', tier:1,
+      unlock:{type:'level', value:5},     passive:'XP +3%',             bonus:{xp:0.03},
+      lore:'The first shadow to kneel. A loyal knight bound to your will.' },
+
+    { id:'fang',   name:'Fang',          title:'Shadow Wolf',            icon:'\uD83D\uDC3A', rank:'E', tier:1,
+      unlock:{type:'workouts', value:10}, passive:'Gold +3%',            bonus:{gold:0.03},
+      lore:'A beast of shadow, swift and tireless. Extracted from the hunt.' },
+
+    { id:'steel',  name:'Steel',         title:'Shadow Infantry',        icon:'\uD83D\uDEE1\uFE0F', rank:'E', tier:1,
+      unlock:{type:'shadowMissions', value:5}, passive:'Boss DMG +3%',   bonus:{bossDmg:0.03},
+      lore:'Forged in the crucible of shadow missions. The foot soldier who never retreats.' },
+
+    // ── Tier 2: Elite Soldiers ──
+    { id:'tank',   name:'Tank',          title:'High Orc Shadow',        icon:'\uD83D\uDC79', rank:'D', tier:2,
+      unlock:{type:'level', value:15},    passive:'Boss DMG +5%',        bonus:{bossDmg:0.05},
+      lore:'An orcish titan. The ground trembles where he stands.' },
+
+    { id:'tusk',   name:'Tusk',          title:'Orc Shaman',             icon:'\uD83E\uDDB4', rank:'D', tier:2,
+      unlock:{type:'bossKills', value:5}, passive:'XP +5%',              bonus:{xp:0.05},
+      lore:'Ancient magic flows through his bones. The shaman sees all.' },
+
+    // ── Tier 3: Commanders ──
+    { id:'igris',  name:'Igris',         title:'Blood-Red Knight',       icon:'\uD83D\uDD34', rank:'C', tier:3,
+      unlock:{type:'level', value:30},    passive:'All +5%',             bonus:{xp:0.05, gold:0.05, bossDmg:0.05},
+      lore:'The most loyal shadow. A knight who chose his monarch over death itself.' },
+
+    { id:'jima',   name:'Jima',          title:'Ice Elf Shadow',         icon:'\u2744\uFE0F', rank:'C', tier:3,
+      unlock:{type:'streak', value:14},   passive:'Gold +8%',            bonus:{gold:0.08},
+      lore:'Frozen discipline given form. Two weeks of ice in your veins.' },
+
+    // ── Tier 4: Generals ──
+    { id:'fangs',  name:'Fangs',         title:'Shadow Beast',           icon:'\uD83D\uDC32', rank:'B', tier:4,
+      unlock:{type:'bossKills', value:15},passive:'Boss DMG +10%',       bonus:{bossDmg:0.10},
+      lore:'A creature of pure instinct and savage power. 15 bosses fed its hunger.' },
+
+    { id:'greed',  name:'Greed',         title:'Giant Shadow',           icon:'\uD83D\uDC4A', rank:'B', tier:4,
+      unlock:{type:'quests', value:100},  passive:'XP +8%',              bonus:{xp:0.08},
+      lore:'An insatiable hunger for power. 100 quests devoured.' },
+
+    { id:'iron_b', name:'Iron Body',     title:'Elite Knight',           icon:'\u2699\uFE0F', rank:'B', tier:4,
+      unlock:{type:'level', value:50},    passive:'Gold +10%',           bonus:{gold:0.10},
+      lore:'The original knight, reforged. Stronger, sharper, unstoppable.' },
+
+    // ── Tier 5: Monarch's Guard ──
+    { id:'kaisel', name:'Kaisel',        title:'Shadow Dragon',          icon:'\uD83D\uDC09', rank:'A', tier:5,
+      unlock:{type:'level', value:70},    passive:'All +8%',             bonus:{xp:0.08, gold:0.08, bossDmg:0.08},
+      lore:'The sky belongs to the Monarch. A dragon of pure shadow soars above.' },
+
+    { id:'beru',   name:'Beru',          title:'Ant King',               icon:'\uD83D\uDC1C', rank:'A', tier:5,
+      unlock:{type:'bossKills', value:30},passive:'Boss DMG +15%',       bonus:{bossDmg:0.15},
+      lore:'"My liege! Shall I destroy them all?" The strongest soldier awakens.' },
+
+    // ── Tier 6: Legendary ──
+    { id:'bellion',name:'Bellion',       title:'Grand Marshal',          icon:'\uD83D\uDC51', rank:'S', tier:6,
+      unlock:{type:'level', value:100},   passive:'All +12%',            bonus:{xp:0.12, gold:0.12, bossDmg:0.12},
+      lore:'Commander of the Shadow Army. The Grand Marshal kneels only to the Monarch.' },
+
+    { id:'marshal_igris', name:'Marshal Igris', title:'Shadow Marshal',  icon:'\u265B',  rank:'S', tier:6,
+      unlock:{type:'streak', value:60},   passive:'XP +15%',             bonus:{xp:0.15},
+      lore:'60 days of unbroken discipline. Igris evolves beyond mortal limits.' },
+
+    { id:'ashborn',name:'Ashborn\'s Will',title:'Shadow Monarch Fragment',icon:'\u2B1B', rank:'X', tier:7,
+      unlock:{type:'level', value:150},   passive:'All +20%',            bonus:{xp:0.20, gold:0.20, bossDmg:0.20},
+      lore:'A fragment of the Shadow Monarch\'s own will. The ultimate power awakens.' },
+];
+
+// ── Shadow Army Count (backward compat) ──
 function getShadowArmyCount() {
     return D.shadowArmy || 0;
 }
 
 function getShadowArmyRank() {
-    const count = getShadowArmyCount();
-    if (count >= 100) return { name: 'Monarch\'s Legion', icon: '👑', tier: 6 };
-    if (count >= 50)  return { name: 'Shadow Battalion', icon: '⬛', tier: 5 };
-    if (count >= 25)  return { name: 'Shadow Company',   icon: '🖤', tier: 4 };
-    if (count >= 10)  return { name: 'Shadow Squad',     icon: '🌑', tier: 3 };
-    if (count >= 5)   return { name: 'Shadow Unit',      icon: '◼', tier: 2 };
-    if (count >= 1)   return { name: 'First Shadow',     icon: '▪', tier: 1 };
-    return { name: 'No Shadows', icon: '○', tier: 0 };
+    const unlocked = getUnlockedShadows().length;
+    if (unlocked >= 14) return { name: 'Shadow Monarch\'s Legion', icon: '\uD83D\uDC51', tier: 7 };
+    if (unlocked >= 11) return { name: 'Monarch\'s Guard',    icon: '\u2B1B', tier: 6 };
+    if (unlocked >= 8)  return { name: 'Shadow Battalion',    icon: '\u265B', tier: 5 };
+    if (unlocked >= 5)  return { name: 'Shadow Company',      icon: '\uD83D\uDD34', tier: 4 };
+    if (unlocked >= 3)  return { name: 'Shadow Squad',        icon: '\uD83D\uDC79', tier: 3 };
+    if (unlocked >= 1)  return { name: 'First Shadow',        icon: '\u25AA', tier: 1 };
+    return { name: 'No Shadows', icon: '\u25CB', tier: 0 };
+}
+
+function getUnlockedShadows() {
+    if (!D || !D.shadows) return [];
+    return SHADOW_SOLDIERS.filter(s => D.shadows[s.id]);
+}
+
+// ── Calculate total passive bonuses from all unlocked shadows ──
+function getShadowBonuses() {
+    const result = { xp: 0, gold: 0, bossDmg: 0 };
+    if (!D || !D.shadows) return result;
+    SHADOW_SOLDIERS.forEach(s => {
+        if (D.shadows[s.id]) {
+            if (s.bonus.xp)      result.xp      += s.bonus.xp;
+            if (s.bonus.gold)    result.gold    += s.bonus.gold;
+            if (s.bonus.bossDmg) result.bossDmg += s.bonus.bossDmg;
+        }
+    });
+    return result;
+}
+
+// ── Check if any new shadows should be extracted ──
+let _ariseQueue = [];
+let _ariseShowing = false;
+
+function checkShadowExtractions() {
+    if (!D || !D.shadows) { D.shadows = {}; }
+    const newShadows = [];
+
+    SHADOW_SOLDIERS.forEach(s => {
+        if (D.shadows[s.id]) return; // already extracted
+        let met = false;
+        switch (s.unlock.type) {
+            case 'level':
+                met = D.level >= s.unlock.value; break;
+            case 'bossKills':
+                met = (D.stats.bossesDefeated || 0) >= s.unlock.value; break;
+            case 'workouts':
+                met = (D.stats.totalWorkouts || 0) >= s.unlock.value; break;
+            case 'quests':
+                met = (D.stats.totalQuestsCompleted || 0) >= s.unlock.value; break;
+            case 'streak':
+                met = (D.streak || 0) >= s.unlock.value; break;
+            case 'shadowMissions':
+                met = (D.stats.shadowMissionsCompleted || 0) >= s.unlock.value; break;
+        }
+        if (met) {
+            D.shadows[s.id] = true;
+            D.shadowArmy = (D.shadowArmy || 0) + 1;
+            newShadows.push(s);
+        }
+    });
+
+    if (newShadows.length > 0) {
+        saveGame();
+        _ariseQueue.push(...newShadows);
+        if (!_ariseShowing) showNextArise();
+    }
+}
+
+function showNextArise() {
+    if (_ariseQueue.length === 0) { _ariseShowing = false; refreshUI(); return; }
+    _ariseShowing = true;
+    const shadow = _ariseQueue.shift();
+    showAriseAnimation(shadow);
+}
+
+function showAriseAnimation(shadow) {
+    const overlay = document.getElementById('ariseOverlay');
+    if (!overlay) return;
+
+    document.getElementById('ariseName').textContent = shadow.name;
+    document.getElementById('ariseTitle').textContent = shadow.title;
+    document.getElementById('ariseIcon').textContent = shadow.icon;
+    document.getElementById('ariseRank').textContent = shadow.rank + '-Rank';
+    document.getElementById('arisePassive').textContent = shadow.passive;
+    document.getElementById('ariseLore').textContent = shadow.lore;
+
+    // Rank color
+    const rankColors = { E:'#4fc3f7', D:'#69f0ae', C:'#ffd740', B:'#ff9800', A:'#ff5252', S:'#e040fb', X:'#ff1744' };
+    const rColor = rankColors[shadow.rank] || '#4fc3f7';
+    document.getElementById('ariseRank').style.color = rColor;
+    document.getElementById('ariseIcon').style.textShadow = '0 0 30px ' + rColor + ', 0 0 60px ' + rColor;
+
+    overlay.classList.remove('hidden');
+    overlay.classList.add('arise-entrance');
+    setTimeout(() => overlay.classList.remove('arise-entrance'), 800);
+
+    if (typeof playSound === 'function') playSound('levelUp');
+    if (typeof vibrate === 'function') vibrate([100, 50, 100, 50, 200]);
+
+    // Narrator reaction
+    if (typeof narratorSpeak === 'function') {
+        const msgs = [
+            `"ARISE." — ${shadow.name} has joined your shadow army.`,
+            `Shadow extracted: ${shadow.name}, the ${shadow.title}. ${shadow.passive} bonus activated.`,
+            `The darkness parts. ${shadow.name} kneels before you. Another soldier for the army.`,
+            `"${shadow.name}... you belong to me now." Shadow extraction complete.`,
+            `A new shadow rises from the void. ${shadow.name} — ${shadow.title}. The army grows.`
+        ];
+        setTimeout(() => narratorSpeak(msgs[Math.floor(Math.random() * msgs.length)]), 600);
+    }
+
+    sysNotify(`[ARISE!] ${shadow.icon} ${shadow.name} — ${shadow.title} extracted! ${shadow.passive}`, 'gold');
+}
+
+function closeAriseOverlay() {
+    const overlay = document.getElementById('ariseOverlay');
+    if (overlay) overlay.classList.add('hidden');
+    // Show next in queue
+    setTimeout(() => showNextArise(), 400);
+}
+
+// ── Get unlock progress description ──
+function getShadowUnlockHint(shadow) {
+    const u = shadow.unlock;
+    let current = 0;
+    switch (u.type) {
+        case 'level':          current = D.level || 0; break;
+        case 'bossKills':      current = D.stats.bossesDefeated || 0; break;
+        case 'workouts':       current = D.stats.totalWorkouts || 0; break;
+        case 'quests':         current = D.stats.totalQuestsCompleted || 0; break;
+        case 'streak':         current = D.streak || 0; break;
+        case 'shadowMissions': current = D.stats.shadowMissionsCompleted || 0; break;
+    }
+    const labels = {
+        level: 'Reach Level',
+        bossKills: 'Defeat Bosses',
+        workouts: 'Log Workouts',
+        quests: 'Clear Quests',
+        streak: 'Day Streak',
+        shadowMissions: 'Shadow Missions'
+    };
+    const pct = Math.min(100, Math.round((current / u.value) * 100));
+    return { label: labels[u.type] || u.type, current, target: u.value, pct };
 }
 
 
@@ -459,6 +668,11 @@ logWorkout = function(exercise, reps, sets, weight, intensity) {
     let damage = Math.round(result.calBurned * 1.5 + result.xpGain * 0.5);
     if (typeof getShopBossDmgMultiplier === 'function') {
         damage = Math.round(damage * getShopBossDmgMultiplier());
+    }
+    // Apply shadow soldier boss damage bonus
+    if (typeof getShadowBonuses === 'function') {
+        const sb = getShadowBonuses();
+        if (sb.bossDmg > 0) damage = Math.round(damage * (1 + sb.bossDmg));
     }
     const boss = getWeeklyBoss();
     if (boss && !boss.defeated) {
@@ -526,29 +740,59 @@ function renderBossPanel() {
 }
 
 function renderArmyPanel() {
+    const sec = document.getElementById('armySection');
+    if (!sec) return;
+
+    const unlocked = getUnlockedShadows();
+    const armyRank = getShadowArmyRank();
+    const bonuses = getShadowBonuses();
+
+    // Header info
     const countEl = document.getElementById('armyCount');
     const rankEl = document.getElementById('armyRankName');
-    const visualEl = document.getElementById('armyVisual');
-    if (!countEl) return;
-    
-    const count = getShadowArmyCount();
-    const armyRank = getShadowArmyRank();
-    countEl.textContent = count;
-    rankEl.textContent = armyRank.name;
-    
-    // Update army icon
-    const iconEl = document.getElementById('armySection');
-    if (iconEl) {
-        const ico = iconEl.querySelector('.army-icon');
-        if (ico) ico.textContent = armyRank.icon;
+    if (countEl) countEl.textContent = unlocked.length + ' / ' + SHADOW_SOLDIERS.length;
+    if (rankEl) rankEl.textContent = armyRank.icon + ' ' + armyRank.name;
+
+    // Bonus summary
+    const bonusSumEl = document.getElementById('armyBonusSummary');
+    if (bonusSumEl) {
+        const parts = [];
+        if (bonuses.xp > 0)      parts.push('XP +' + Math.round(bonuses.xp * 100) + '%');
+        if (bonuses.gold > 0)    parts.push('Gold +' + Math.round(bonuses.gold * 100) + '%');
+        if (bonuses.bossDmg > 0) parts.push('Boss DMG +' + Math.round(bonuses.bossDmg * 100) + '%');
+        bonusSumEl.textContent = parts.length > 0 ? parts.join(' \u00B7 ') : 'No bonuses yet';
     }
-    
-    // Build visual soldiers (max 30 dots)
-    const showCount = Math.min(count, 30);
-    let html = '';
-    for (let i = 0; i < showCount; i++) {
-        html += '<div class="army-soldier"></div>';
-    }
-    if (count > 30) html += `<span style="color:var(--dim);font-size:.7rem;margin-left:4px">+${count - 30}</span>`;
-    visualEl.innerHTML = html;
+
+    // Render shadow cards
+    const grid = document.getElementById('shadowGrid');
+    if (!grid) return;
+
+    const rankColors = { E:'#4fc3f7', D:'#69f0ae', C:'#ffd740', B:'#ff9800', A:'#ff5252', S:'#e040fb', X:'#ff1744' };
+
+    grid.innerHTML = SHADOW_SOLDIERS.map(s => {
+        const isUnlocked = D.shadows && D.shadows[s.id];
+        const rc = rankColors[s.rank] || '#4fc3f7';
+
+        if (isUnlocked) {
+            return '<div class="shadow-card shadow-unlocked" style="--sc-color:' + rc + '">' +
+                '<div class="sc-rank" style="color:' + rc + '">' + s.rank + '</div>' +
+                '<div class="sc-icon">' + s.icon + '</div>' +
+                '<div class="sc-name">' + s.name + '</div>' +
+                '<div class="sc-title">' + s.title + '</div>' +
+                '<div class="sc-passive">' + s.passive + '</div>' +
+            '</div>';
+        } else {
+            const hint = getShadowUnlockHint(s);
+            return '<div class="shadow-card shadow-locked">' +
+                '<div class="sc-rank" style="color:' + rc + '">' + s.rank + '</div>' +
+                '<div class="sc-icon sc-icon-locked">?</div>' +
+                '<div class="sc-name">???</div>' +
+                '<div class="sc-title">' + s.title + '</div>' +
+                '<div class="sc-unlock-bar">' +
+                    '<div class="sc-unlock-fill" style="width:' + hint.pct + '%;background:' + rc + '"></div>' +
+                '</div>' +
+                '<div class="sc-unlock-hint">' + hint.label + ': ' + hint.current + '/' + hint.target + '</div>' +
+            '</div>';
+        }
+    }).join('');
 }

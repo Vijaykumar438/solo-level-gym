@@ -8,7 +8,7 @@
     <!-- Force clear old service worker cache (one-time purge) -->
     <script>
         (function(){
-            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v39')) {
+            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v40')) {
                 navigator.serviceWorker.getRegistrations().then(function(regs) {
                     var hadOld = false;
                     regs.forEach(function(r) { r.unregister(); hadOld = true; });
@@ -17,7 +17,7 @@
                             names.forEach(function(n) { caches.delete(n); });
                         });
                     }
-                    sessionStorage.setItem('sw_purged_v39', '1');
+                    sessionStorage.setItem('sw_purged_v40', '1');
                     if (hadOld) { setTimeout(function(){ location.reload(true); }, 500); }
                 });
             }
@@ -45,11 +45,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css?v=39">
-    <link rel="stylesheet" href="css/panels.css?v=39">
-    <link rel="stylesheet" href="css/animations.css?v=39">
-    <link rel="stylesheet" href="css/features.css?v=39">
-    <link rel="stylesheet" href="css/mobile.css?v=39">
+    <link rel="stylesheet" href="css/main.css?v=40">
+    <link rel="stylesheet" href="css/panels.css?v=40">
+    <link rel="stylesheet" href="css/animations.css?v=40">
+    <link rel="stylesheet" href="css/features.css?v=40">
+    <link rel="stylesheet" href="css/mobile.css?v=40">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Firebase SDKs (compat mode for vanilla JS) -->
@@ -326,15 +326,15 @@
 
             <!-- Shadow Army -->
             <div class="army-window" id="armySection">
-                <div class="army-header">☬ SHADOW ARMY</div>
+                <div class="army-header">\u2620 SHADOW ARMY</div>
                 <div class="army-body">
-                    <div class="army-icon">👤</div>
-                    <div class="army-info">
-                        <div class="army-count" id="armyCount">0</div>
+                    <div class="army-info-row">
+                        <div class="army-count" id="armyCount">0 / 15</div>
                         <div class="army-rank-name" id="armyRankName">No Shadows</div>
                     </div>
-                    <div class="army-visual" id="armyVisual"></div>
+                    <div class="army-bonus-summary" id="armyBonusSummary">No bonuses yet</div>
                 </div>
+                <div class="shadow-grid" id="shadowGrid"></div>
             </div>
         </section>
 
@@ -736,6 +736,23 @@
             </div>
         </div>
 
+        <!-- ARISE! Shadow Extraction Overlay -->
+        <div id="ariseOverlay" class="arise-overlay hidden">
+            <div class="arise-box">
+                <div class="arise-vfx"></div>
+                <div class="arise-text">A R I S E</div>
+                <div class="arise-icon-wrap">
+                    <div class="arise-icon" id="ariseIcon"></div>
+                </div>
+                <div class="arise-rank-badge" id="ariseRank">E-Rank</div>
+                <div class="arise-name" id="ariseName">Iron</div>
+                <div class="arise-title-text" id="ariseTitle">Shadow Knight</div>
+                <div class="arise-passive" id="arisePassive">XP +3%</div>
+                <div class="arise-lore" id="ariseLore"></div>
+                <button class="sys-btn arise-btn" onclick="closeAriseOverlay()">[ACCEPT]</button>
+            </div>
+        </div>
+
         <!-- Template Creator Overlay -->
         <div id="templateCreatorOverlay" class="tpl-creator-overlay hidden">
             <div class="tpl-creator-box">
@@ -788,23 +805,23 @@
         </div>
     </div>
 
-    <script src="js/firebase-config.js?v=39"></script>
-    <script src="js/auth.js?v=39"></script>
-    <script src="js/db.js?v=39"></script>
-    <script src="js/data.js?v=39"></script>
-    <script src="js/sounds.js?v=39"></script>
-    <script src="js/engine.js?v=39"></script>
-    <script src="js/quests.js?v=39"></script>
-    <script src="js/shop.js?v=39"></script>
-    <script src="js/ui.js?v=39"></script>
-    <script src="js/charts.js?v=39"></script>
-    <script src="js/features.js?v=39"></script>
-    <script src="js/tutorial.js?v=39"></script>
-    <script src="js/journal.js?v=39"></script>
-    <script src="js/templates.js?v=39"></script>
-    <script src="js/avatar.js?v=39"></script>
-    <script src="js/narrator.js?v=39"></script>
-    <script src="js/app.js?v=39"></script>
+    <script src="js/firebase-config.js?v=40"></script>
+    <script src="js/auth.js?v=40"></script>
+    <script src="js/db.js?v=40"></script>
+    <script src="js/data.js?v=40"></script>
+    <script src="js/sounds.js?v=40"></script>
+    <script src="js/engine.js?v=40"></script>
+    <script src="js/quests.js?v=40"></script>
+    <script src="js/shop.js?v=40"></script>
+    <script src="js/ui.js?v=40"></script>
+    <script src="js/charts.js?v=40"></script>
+    <script src="js/features.js?v=40"></script>
+    <script src="js/tutorial.js?v=40"></script>
+    <script src="js/journal.js?v=40"></script>
+    <script src="js/templates.js?v=40"></script>
+    <script src="js/avatar.js?v=40"></script>
+    <script src="js/narrator.js?v=40"></script>
+    <script src="js/app.js?v=40"></script>
 
     <!-- PWA Service Worker -->
     <script>

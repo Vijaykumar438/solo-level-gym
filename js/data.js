@@ -513,6 +513,7 @@ function getDefaultData() {
         quests: [],      // { id, date, title, desc, type, xp, gold, cleared, failed }
         penalties: [],   // { id, date, reason, xpLost }
         shadowArmy: 0,
+        shadows: {},        // { iron: true, igris: true, ... } named shadow soldiers
         templates: [],      // custom workout templates
         journalRead: [],    // IDs of read journal chapters
         boss: null,

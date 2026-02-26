@@ -480,39 +480,195 @@
 }
 
 .army-body{
-    padding:clamp(12px,3vw,18px);display:flex;align-items:center;gap:clamp(10px,2.5vw,20px);flex-wrap:wrap;
+    padding:clamp(10px,2.5vw,16px) clamp(12px,3vw,18px);
+    display:flex;flex-direction:column;gap:6px;
 }
 
-.army-icon{
-    font-size:2.5rem;
-    filter:drop-shadow(0 0 8px rgba(79,195,247,0.3));
+.army-info-row{
+    display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
 }
-
-.army-info{flex:1}
 
 .army-count{
-    font-family:var(--font);font-size:clamp(1.4rem,4vw,2rem);font-weight:700;
+    font-family:var(--font);font-size:clamp(1.1rem,3vw,1.5rem);font-weight:700;
     color:var(--blue);text-shadow:0 0 10px rgba(79,195,247,0.3);
 }
 
 .army-rank-name{
     font-family:var(--mono);font-size:.8rem;color:var(--dim);
-    margin-top:4px;
 }
 
-.army-visual{
-    display:flex;gap:3px;flex-wrap:wrap;max-width:120px;
+.army-bonus-summary{
+    font-family:var(--mono);font-size:clamp(.65rem,1.8vw,.78rem);
+    color:var(--green);letter-spacing:.5px;
 }
 
-.army-soldier{
-    width:8px;height:8px;background:var(--blue);border-radius:2px;
-    opacity:.6;animation:soldierPulse 2s ease-in-out infinite;
+/* ── Shadow Card Grid ── */
+.shadow-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;
+    padding:clamp(8px,2vw,14px) clamp(12px,3vw,18px) clamp(12px,3vw,18px);
 }
 
-.army-soldier:nth-child(odd){animation-delay:.5s}
-.army-soldier:nth-child(3n){animation-delay:1s}
+.shadow-card{
+    border-radius:8px;padding:10px 8px;text-align:center;
+    position:relative;overflow:hidden;
+    transition:transform .2s,box-shadow .2s;
+}
+.shadow-card:hover{transform:translateY(-2px)}
 
-@keyframes soldierPulse{0%,100%{opacity:.4}50%{opacity:.8}}
+/* Unlocked card */
+.shadow-unlocked{
+    background:linear-gradient(160deg,rgba(0,229,255,.06),rgba(79,195,247,.03));
+    border:1px solid var(--sc-color,var(--cyan));
+    box-shadow:0 0 8px rgba(0,229,255,.1);
+}
+.shadow-unlocked::after{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 50% 0%,var(--sc-color),transparent 70%);
+    opacity:.06;pointer-events:none;
+}
+.shadow-unlocked:hover{box-shadow:0 0 16px rgba(0,229,255,.2)}
+
+/* Locked card */
+.shadow-locked{
+    background:rgba(255,255,255,.02);
+    border:1px solid rgba(255,255,255,.06);
+    opacity:.55;
+}
+.shadow-locked:hover{opacity:.7}
+
+.sc-rank{
+    font-family:var(--font);font-size:.6rem;font-weight:700;
+    letter-spacing:1px;margin-bottom:4px;
+}
+
+.sc-icon{
+    font-size:1.6rem;margin:4px 0;
+    filter:drop-shadow(0 0 6px rgba(0,229,255,.3));
+}
+.sc-icon-locked{
+    font-size:1.4rem;color:var(--dim);
+    filter:none;opacity:.4;
+}
+
+.sc-name{
+    font-family:var(--font);font-size:clamp(.7rem,2vw,.85rem);font-weight:700;
+    color:var(--text);margin-top:2px;
+}
+
+.sc-title{
+    font-family:var(--mono);font-size:.6rem;color:var(--dim);
+    margin-top:1px;letter-spacing:.3px;
+}
+
+.sc-passive{
+    font-family:var(--mono);font-size:.6rem;color:var(--green);
+    margin-top:4px;letter-spacing:.5px;
+}
+
+.sc-unlock-bar{
+    height:3px;background:rgba(255,255,255,.06);border-radius:2px;
+    margin-top:6px;overflow:hidden;
+}
+.sc-unlock-fill{
+    height:100%;border-radius:2px;transition:width .4s;
+}
+
+.sc-unlock-hint{
+    font-family:var(--mono);font-size:.55rem;color:var(--dim);
+    margin-top:3px;
+}
+
+
+/* ========== ARISE OVERLAY ========== */
+.arise-overlay{
+    position:fixed;inset:0;z-index:9200;
+    background:radial-gradient(ellipse at 50% 60%,rgba(106,27,154,.4),rgba(0,0,0,.95) 70%);
+    display:flex;align-items:center;justify-content:center;
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+
+.arise-box{
+    text-align:center;max-width:340px;width:90%;position:relative;
+    padding:30px 24px 24px;
+}
+
+.arise-vfx{
+    position:absolute;inset:-40px;
+    background:radial-gradient(circle at 50% 50%,rgba(156,39,176,.15),transparent 60%);
+    animation:ariseVfxPulse 2s ease-in-out infinite;
+    pointer-events:none;
+}
+@keyframes ariseVfxPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:1}}
+
+.arise-text{
+    font-family:var(--font);font-size:clamp(2rem,7vw,3.2rem);font-weight:900;
+    color:#e040fb;letter-spacing:clamp(8px,3vw,16px);
+    text-shadow:0 0 30px rgba(224,64,251,.6),0 0 60px rgba(156,39,176,.4);
+    margin-bottom:20px;
+    animation:ariseTextGlow 1.5s ease-in-out infinite alternate;
+}
+@keyframes ariseTextGlow{
+    0%{text-shadow:0 0 20px rgba(224,64,251,.4),0 0 40px rgba(156,39,176,.2)}
+    100%{text-shadow:0 0 40px rgba(224,64,251,.8),0 0 80px rgba(156,39,176,.5),0 0 120px rgba(106,27,154,.3)}
+}
+
+.arise-icon-wrap{
+    position:relative;margin:0 auto 16px;width:80px;height:80px;
+    display:flex;align-items:center;justify-content:center;
+}
+.arise-icon-wrap::before{
+    content:'';position:absolute;inset:-8px;border-radius:50%;
+    border:2px solid rgba(224,64,251,.3);
+    animation:ariseRingPulse 1.5s ease-in-out infinite;
+}
+@keyframes ariseRingPulse{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.2);opacity:.8}}
+
+.arise-icon{
+    font-size:3rem;
+    filter:drop-shadow(0 0 20px rgba(224,64,251,.5));
+}
+
+.arise-rank-badge{
+    font-family:var(--font);font-size:.8rem;font-weight:700;
+    letter-spacing:2px;margin-bottom:8px;
+}
+
+.arise-name{
+    font-family:var(--font);font-size:clamp(1.4rem,5vw,2rem);font-weight:900;
+    color:var(--text);letter-spacing:2px;
+    text-shadow:0 0 10px rgba(255,255,255,.2);
+}
+
+.arise-title-text{
+    font-family:var(--mono);font-size:.8rem;color:var(--dim);
+    letter-spacing:1px;margin-top:4px;
+}
+
+.arise-passive{
+    font-family:var(--mono);font-size:.85rem;color:var(--green);
+    margin-top:12px;letter-spacing:.5px;
+    text-shadow:0 0 8px rgba(105,240,174,.3);
+}
+
+.arise-lore{
+    font-family:var(--body);font-size:.8rem;color:rgba(255,255,255,.5);
+    margin-top:10px;line-height:1.4;font-style:italic;
+}
+
+.arise-btn{
+    margin-top:20px;font-size:.9rem;letter-spacing:2px;
+    background:rgba(224,64,251,.15);border-color:rgba(224,64,251,.4);
+    color:#e040fb;
+}
+.arise-btn:hover{
+    background:rgba(224,64,251,.25);box-shadow:0 0 16px rgba(224,64,251,.3);
+}
+
+.arise-entrance .arise-text{animation:ariseSlam .6s cubic-bezier(.17,.67,.38,1.2)}
+@keyframes ariseSlam{0%{transform:scale(3);opacity:0}60%{transform:scale(.9)}100%{transform:scale(1);opacity:1}}
+
+.arise-entrance .arise-icon{animation:ariseFadeUp .5s .3s both}
+@keyframes ariseFadeUp{0%{transform:translateY(30px);opacity:0}100%{transform:translateY(0);opacity:1}}
 
 
 /* ========== LOGIN REWARD OVERLAY ========== */
@@ -664,8 +820,8 @@
     .lr-day-val{font-size:.45rem}
     .boss-icon{width:70px;height:70px}
     .boss-name{font-size:1rem}
-    .army-body{flex-wrap:wrap;gap:10px}
-    .army-icon{font-size:2rem}
+    .shadow-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:6px}
+    .sc-icon{font-size:1.3rem}
 }
 
 /* ========== SHOP ========== */

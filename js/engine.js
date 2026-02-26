@@ -20,6 +20,7 @@ function loadGame() {
             if (!D.physique) D.physique = def.physique;
             if (!D.settings) D.settings = def.settings;
             if (!D.shop) D.shop = def.shop;
+            if (!D.shadows) D.shadows = {};
             // Merge new settings keys
             for (const k in def.settings) {
                 if (!(k in D.settings)) D.settings[k] = def.settings[k];
@@ -47,6 +48,11 @@ function grantXP(amount) {
     if (typeof getShopXPMultiplier === 'function') {
         const mult = getShopXPMultiplier();
         if (mult > 1) amount = Math.round(amount * mult);
+    }
+    // Apply shadow soldier XP bonus
+    if (typeof getShadowBonuses === 'function') {
+        const sb = getShadowBonuses();
+        if (sb.xp > 0) amount = Math.round(amount * (1 + sb.xp));
     }
     D.xp += amount;
     while (D.xp >= xpForLevel(D.level)) {
@@ -85,6 +91,9 @@ function levelUp() {
     // Check achievements
     checkAchievements();
     
+    // Check shadow soldier extractions
+    if (typeof checkShadowExtractions === 'function') checkShadowExtractions();
+    
     // Show level up overlay
     showLevelUp(D.level, pts);
     if (typeof playSound === 'function') playSound('levelUp');
@@ -97,6 +106,11 @@ function grantGold(amount) {
     if (typeof getShopGoldMultiplier === 'function') {
         const mult = getShopGoldMultiplier();
         if (mult > 1) amount = Math.round(amount * mult);
+    }
+    // Apply shadow soldier Gold bonus
+    if (typeof getShadowBonuses === 'function') {
+        const sb = getShadowBonuses();
+        if (sb.gold > 0) amount = Math.round(amount * (1 + sb.gold));
     }
     D.gold += amount;
     saveGame();

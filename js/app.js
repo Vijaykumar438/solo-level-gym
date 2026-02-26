@@ -884,6 +884,9 @@ function appInit() {
     // Initialize shop data
     try { if (typeof initShopData === 'function') initShopData(); } catch(e) { console.error('[System] initShopData error:', e); }
 
+    // Check shadow soldier extractions (catch up on any milestones reached while offline)
+    try { if (typeof checkShadowExtractions === 'function') setTimeout(() => checkShadowExtractions(), 3000); } catch(e) { console.error('[System] checkShadowExtractions error:', e); }
+
     // Initialize tabs
     initTabs();
 

@@ -589,6 +589,8 @@ function clearQuest(questId) {
     }
 
     if (typeof checkAchievements === 'function') checkAchievements();
+    // Check shadow soldier extractions (quest milestones)
+    if (typeof checkShadowExtractions === 'function') setTimeout(() => checkShadowExtractions(), 1000);
     saveGame();
 
     return { quest, allCleared };
