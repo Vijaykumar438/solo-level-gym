@@ -239,24 +239,6 @@ const TUTORIAL_SECTIONS = [
         <span class="tut-tip">💡 Cloud save is automatic — no manual saves needed. Your grind is always protected.</span>`
     },
     {
-        id: 'domain',
-        icon: '🌌',
-        title: "Hunter's Domain (Status Background)",
-        content: `The Status tab background is a <strong>living environment</strong> called the <strong>Hunter's Domain</strong>. It evolves as you rank up — from a dim dungeon to the Shadow Sovereign's dimension.<br><br>
-        <strong>Rank Environments:</strong><br>
-        <div class="tut-rank-list">
-            <span class="tut-rank rank-e">E-Rank</span> Dark cavern — dim gray particles, faint fog<br>
-            <span class="tut-rank rank-d">D-Rank</span> Green dungeon — bioluminescent orbs<br>
-            <span class="tut-rank rank-c">C-Rank</span> Crystal cavern — blue energy sweeps<br>
-            <span class="tut-rank rank-b">B-Rank</span> Shadow realm — purple mist, energy pillars<br>
-            <span class="tut-rank rank-a">A-Rank</span> Monarch's domain — golden aura, rune circle<br>
-            <span class="tut-rank rank-s">S-Rank</span> Sovereign throne — gold &amp; cyan, dual rune rings<br>
-            <span class="tut-rank rank-x">X-Rank</span> Shadow dimension — red/black chaos, 3 rune circles<br>
-        </div><br>
-        <strong>Animated effects:</strong> Floating particles drift left→right, energy lines sweep across the screen, ground fog pulses, energy pillars breathe upward, and rotating rune circles appear at higher ranks. Everything intensifies as you progress.<br><br>
-        <span class="tut-tip">💡 The domain is your realm. It reflects your power. Train harder and watch it transform with you.</span>`
-    },
-    {
         id: 'tips',
         icon: '🗡',
         title: 'Pro Hunter Tips',

@@ -8,7 +8,7 @@
     <!-- Force clear old service worker cache (one-time purge) -->
     <script>
         (function(){
-            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v42a')) {
+            if ('serviceWorker' in navigator && !sessionStorage.getItem('sw_purged_v42b')) {
                 navigator.serviceWorker.getRegistrations().then(function(regs) {
                     var hadOld = false;
                     regs.forEach(function(r) { r.unregister(); hadOld = true; });
@@ -17,7 +17,7 @@
                             names.forEach(function(n) { caches.delete(n); });
                         });
                     }
-                    sessionStorage.setItem('sw_purged_v42a', '1');
+                    sessionStorage.setItem('sw_purged_v42b', '1');
                     if (hadOld) { setTimeout(function(){ location.reload(true); }, 500); }
                 });
             }
@@ -45,11 +45,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css?v=42a">
-    <link rel="stylesheet" href="css/panels.css?v=42a">
-    <link rel="stylesheet" href="css/animations.css?v=42a">
-    <link rel="stylesheet" href="css/features.css?v=42a">
-    <link rel="stylesheet" href="css/mobile.css?v=42a">
+    <link rel="stylesheet" href="css/main.css?v=42b">
+    <link rel="stylesheet" href="css/panels.css?v=42b">
+    <link rel="stylesheet" href="css/animations.css?v=42b">
+    <link rel="stylesheet" href="css/features.css?v=42b">
+    <link rel="stylesheet" href="css/mobile.css?v=42b">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Firebase SDKs (compat mode for vanilla JS) -->
@@ -155,12 +155,12 @@
 
         <!-- Tab Navigation -->
         <nav class="tab-nav">
-            <button class="tab active" data-tab="status"><span class="tab-icon">◈</span> Status</button>
-            <button class="tab" data-tab="gates"><span class="tab-icon">⬡</span> Daily Gate</button>
-            <button class="tab" data-tab="log"><span class="tab-icon">⬢</span> Log</button>
-            <button class="tab" data-tab="shop"><span class="tab-icon">⬟</span> Shop</button>
-            <button class="tab" data-tab="skills"><span class="tab-icon">◇</span> Skills</button>
-            <button class="tab" data-tab="analysis"><span class="tab-icon">△</span> Analysis</button>
+            <button class="tab active" data-tab="status"><span class="tab-icon">⚔️</span> Status</button>
+            <button class="tab" data-tab="gates"><span class="tab-icon">🚪</span> Daily Gate</button>
+            <button class="tab" data-tab="log"><span class="tab-icon">📝</span> Log</button>
+            <button class="tab" data-tab="shop"><span class="tab-icon">🛒</span> Shop</button>
+            <button class="tab" data-tab="skills"><span class="tab-icon">💎</span> Skills</button>
+            <button class="tab" data-tab="analysis"><span class="tab-icon">📊</span> Analysis</button>
             <button class="tab" data-tab="journal"><span class="tab-icon">📖</span> Journal</button>
             <button class="tab" data-tab="tutorial"><span class="tab-icon">📜</span> Guide</button>
         </nav>
@@ -808,23 +808,23 @@
         </div>
     </div>
 
-    <script src="js/firebase-config.js?v=42a"></script>
-    <script src="js/auth.js?v=42a"></script>
-    <script src="js/db.js?v=42a"></script>
-    <script src="js/data.js?v=42a"></script>
-    <script src="js/sounds.js?v=42a"></script>
-    <script src="js/engine.js?v=42a"></script>
-    <script src="js/quests.js?v=42a"></script>
-    <script src="js/shop.js?v=42a"></script>
-    <script src="js/ui.js?v=42a"></script>
-    <script src="js/charts.js?v=42a"></script>
-    <script src="js/features.js?v=42a"></script>
-    <script src="js/tutorial.js?v=42a"></script>
-    <script src="js/journal.js?v=42a"></script>
-    <script src="js/templates.js?v=42a"></script>
-    <script src="js/avatar.js?v=42a"></script>
-    <script src="js/narrator.js?v=42a"></script>
-    <script src="js/app.js?v=42a"></script>
+    <script src="js/firebase-config.js?v=42b"></script>
+    <script src="js/auth.js?v=42b"></script>
+    <script src="js/db.js?v=42b"></script>
+    <script src="js/data.js?v=42b"></script>
+    <script src="js/sounds.js?v=42b"></script>
+    <script src="js/engine.js?v=42b"></script>
+    <script src="js/quests.js?v=42b"></script>
+    <script src="js/shop.js?v=42b"></script>
+    <script src="js/ui.js?v=42b"></script>
+    <script src="js/charts.js?v=42b"></script>
+    <script src="js/features.js?v=42b"></script>
+    <script src="js/tutorial.js?v=42b"></script>
+    <script src="js/journal.js?v=42b"></script>
+    <script src="js/templates.js?v=42b"></script>
+    <script src="js/avatar.js?v=42b"></script>
+    <script src="js/narrator.js?v=42b"></script>
+    <script src="js/app.js?v=42b"></script>
 
     <!-- PWA Service Worker -->
     <script>
